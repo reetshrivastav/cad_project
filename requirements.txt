@@ -15,7 +15,7 @@ requests>=2.31.0
 # Tokenization & Embeddings
 tiktoken>=0.8.0
 sentence-transformers>=3.0.0
-transformers>=4.40.0
+transformers>=4.40.0,<4.48.0
 huggingface-hub>=0.20.0
 
 # Machine Learning & Routing
