@@ -56,7 +56,7 @@ def main():
     for i in range(args.samples):
         extraction.append(measure(lambda: app.extract_real_features(prompt, f'profile-{i}')))
         embedding.append(measure(lambda: app._embedder.encode(
-            [prompt], convert_to_numpy=True, normalize_embeddings=True)))
+            [prompt], convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False)))
     result = {
         'timestamp_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),

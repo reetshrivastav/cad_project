@@ -55,3 +55,18 @@ Before a stress-test report: resolve artifact compatibility, validate sandbox/ba
 ## Cloud regression validation for this change
 
 Eight CPU regression tests passed via `python -m unittest discover -s tests -v`: labeled/multiple-engine metric parsing; invalid/missing metrics; pressure and exact threshold boundaries; stale telemetry; conversation and finish-reason forwarding; HTTP timeout handling; quarantine without a backend call; and sandbox caps with matching policy metadata. Python syntax compilation and `git diff --check` passed. These tests use mocks and do not establish lab GPU performance or backend cancellation. The profiler CLI was checked; actual CUDA profiling is pending execution on the lab.
+
+## First warmed lab profiling runs
+
+The operator pulled commit `397f6d82ab47434c468c618a10038debbfb2632f` and all eight regression tests passed on the lab host. The uploaded console transcript is retained in [evidence/lab_ingress_console.txt](evidence/lab_ingress_console.txt); exact extracted summaries and the transcript SHA-256 are in [evidence/ingress_console_summaries.json](evidence/ingress_console_summaries.json). Per-sample arrays remain in the lab's JSON outputs and have not yet been supplied here.
+
+Both runs used NVIDIA RTX A4000, CUDA device 0, FP16, Python 3.10.12, 10 warmups and 100 measured samples of one short prompt. Reported actual packages: torch 2.13.0, sentence-transformers 3.4.1, transformers 5.17.0, scikit-learn 1.7.2 and xgboost 3.2.0. These differ from the originally reported PyTorch stack and the repository's Transformers pin. Pulling source does not synchronize installed packages. Do not force a downgrade or claim reproducible dependency compatibility until separate environment reconciliation is completed.
+
+| Torch CPU threads | Extraction mean (ms) | Extraction p95 (ms) | Extraction p99 (ms) | Embedding mean (ms) | Embedding p99 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 24 (default) | 2.897 | 3.579 | 4.121 | 2.351 | 3.254 |
+| 1 | 2.848 | 2.946 | 3.068 | 2.404 | 3.243 |
+
+These isolated warmed measurements are lower than the previously observed live API timings but do not establish the cause of that difference. Embedding mean remains above 2 ms. Extraction excludes classifier, network and backend generation; a sub-5ms end-to-end ingress claim remains unproven. One short prompt and one run per configuration are insufficient to establish a general performance improvement or CPU thread optimum.
+
+The transcript shows a progress bar for every encode call, because the application enables INFO logging and SentenceTransformer defaults to showing progress at that level. This change disables progress rendering explicitly in live extraction and the profiler's embedding-only call. Terminal I/O is unnecessary per-request overhead; its contribution to the earlier latency has not yet been quantified. Reprofile with fresh output names `results/ingress_default_quiet.json` and `results/ingress_threads1_quiet.json` before attributing any speedup. The original measurements are preserved unchanged.

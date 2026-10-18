@@ -152,7 +152,7 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
         jb_sim = 0.0
 
     # 4. Dense Semantic Similarity (Calibrated above 0.30 natural text floor)
-    prompt_emb = _embedder.encode([prompt], convert_to_numpy=True, normalize_embeddings=True)
+    prompt_emb = _embedder.encode([prompt], convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False)
     raw_sem_sim = float(np.max(np.dot(prompt_emb, _ref_embeddings.T)[0]))
     sem_sim = max(0.0, (raw_sem_sim - 0.30) / 0.70)
 
