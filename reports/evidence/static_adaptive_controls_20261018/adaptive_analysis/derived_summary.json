@@ -1,0 +1,41 @@
+{
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "metadata_accuracy_scope": "training_set_resubstitution_not_held_out",
+  "training_set_accuracy": 0.9824,
+  "trials": [
+    {
+      "round": 1,
+      "arm": "gateway",
+      "demand_count": 8,
+      "benign_count": 8,
+      "benign_completed": 8,
+      "benign_failed": 0,
+      "demands_quarantined": 8,
+      "benign_mean_http_ms": 302.811593253864,
+      "benign_min_http_ms": 290.0245580240153,
+      "benign_max_http_ms": 342.028577986639,
+      "benign_p99_http_ms": null,
+      "request_wall_span_seconds": 21.334744707972277,
+      "backend_prompt_tokens_delta": 296.0,
+      "backend_generation_tokens_delta": 128.0,
+      "backend_successful_requests_delta": 8.0,
+      "http_reported_prompt_tokens": 296,
+      "http_reported_completion_tokens": 128,
+      "counter_usage_matches": true,
+      "observed_peak_kv_fraction": 0.008810572687224627,
+      "peak_waiting": 0.0,
+      "peak_running": 1.0,
+      "gpu0_min_memory_mib": 7428.0,
+      "gpu0_max_memory_mib": 7522.0,
+      "high_pressure_policy_samples": 0,
+      "request_policy_counts": {
+        "normal": 16
+      },
+      "telemetry_samples": 80
+    }
+  ],
+  "scope": "One calibration run; no p99 below 100 successful probes; no causal static-vs-adaptive conclusion.",
+  "source_sha256": "354495f465bce12c2a1fbe7c9dca5ff138d214b5d5830673a15023e8c101fddf",
+  "metadata_sha256": "ad08f23a7f64190755d27f53e3caeb2a0f24d8c3c6c90f413d0528033110628f",
+  "source_client_commit": "e93a40a6e73134ef406de2df2483791dfa39776c"
+}

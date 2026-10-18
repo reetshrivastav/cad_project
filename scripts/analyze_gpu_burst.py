@@ -93,7 +93,8 @@ def render(data, directory):
     trace_rows = []
     for trial in data['trials']:
         color = '#c75b39' if trial['arm'] == 'direct' else '#227e75'
-        label = f"R{trial['round']} {trial['arm']}"
+        mode = data.get("gateway_status", {}).get("routing_mode", "unknown")
+        label = f"R{trial['round']} {trial['arm']}" + (f" ({mode})" if trial["arm"] == "gateway" else "")
         start = min(r['started_monotonic'] for r in trial['requests'])
         times, kvs, queues, gpu_times, memories = [], [], [], [], []
         for sample in trial['telemetry']:
@@ -124,8 +125,13 @@ def render(data, directory):
         ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
         ax.grid(alpha=.2); ax.legend()
     axes[0, 0].axhline(85, color='gray', linestyle='--', linewidth=1)
-    fig.suptitle('RTX A4000 calibration: 256 MiB KV pool, 8 forced-length demands + 8 probes\n'
-                 'One direct-first comparison; controlled resource pressure, not default-cache or P99 evidence', fontsize=11)
+    direct_present = any(trial["arm"] == "direct" for trial in data["trials"])
+    subtitle = ('Direct/gateway calibration; controlled resource pressure' if direct_present else
+                f'Gateway-only {data.get("gateway_status", {}).get("routing_mode", "unknown")} control')
+    config = data["configuration"]
+    fig.suptitle(f'RTX A4000: {config.get("demands_per_round", 1)} capped demands + '
+                 f'{config.get("benign_per_round", 1)} probes per trial\n'
+                 f'{subtitle}; not default-cache or P99 evidence', fontsize=11)
     fig.savefig(directory / 'burst_comparison.png', dpi=200)
     fig.savefig(directory / 'burst_comparison.svg')
     plt.close(fig)

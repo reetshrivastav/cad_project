@@ -30,3 +30,18 @@ class BurstEvidenceTests(unittest.TestCase):
         self.assertEqual(gateway['peak_waiting'], 0)
         self.assertIsNone(gateway['benign_p99_http_ms'])
         self.assertEqual(gateway['request_policy_counts'], {'normal': 16})
+
+    def test_controls_share_workload_model_and_reconcile_counters(self):
+        root = self.root.parent / 'static_adaptive_controls_20261018'
+        configs = []
+        for mode in ('static', 'adaptive'):
+            data = json.loads((root / f'gpu_{mode}_control_native_v1.json').read_text())
+            self.assertEqual(data['gateway_status']['routing_mode'], mode)
+            result = analysis.summarize(data, self.meta)['trials'][0]
+            self.assertTrue(result['counter_usage_matches'])
+            self.assertEqual(result['backend_generation_tokens_delta'], 128)
+            self.assertEqual(result['demands_quarantined'], 8)
+            self.assertEqual(result['peak_waiting'], 0)
+            configs.append({k: v for k, v in data['configuration'].items()
+                            if k not in ('require_routing_mode', 'output')})
+        self.assertEqual(configs[0], configs[1])
