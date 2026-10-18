@@ -70,3 +70,16 @@ Both runs used NVIDIA RTX A4000, CUDA device 0, FP16, Python 3.10.12, 10 warmups
 These isolated warmed measurements are lower than the previously observed live API timings but do not establish the cause of that difference. Embedding mean remains above 2 ms. Extraction excludes classifier, network and backend generation; a sub-5ms end-to-end ingress claim remains unproven. One short prompt and one run per configuration are insufficient to establish a general performance improvement or CPU thread optimum.
 
 The transcript shows a progress bar for every encode call, because the application enables INFO logging and SentenceTransformer defaults to showing progress at that level. This change disables progress rendering explicitly in live extraction and the profiler's embedding-only call. Terminal I/O is unnecessary per-request overhead; its contribution to the earlier latency has not yet been quantified. Reprofile with fresh output names `results/ingress_default_quiet.json` and `results/ingress_threads1_quiet.json` before attributing any speedup. The original measurements are preserved unchanged.
+
+## Warmed profiling with progress output disabled
+
+The operator pulled `182f426154ae61b76f5ed58543d89c94c3f02103` and completed both repeat profiles. The console is preserved in [evidence/lab_ingress_quiet_console.txt](evidence/lab_ingress_quiet_console.txt); extracted summaries and its SHA-256 are in [evidence/ingress_quiet_console_summaries.json](evidence/ingress_quiet_console_summaries.json). Hardware, package versions, 10 warmups, 100 samples and prompt were the same as the initial profiles. Per-sample JSON files remain on the lab host.
+
+| Torch CPU threads | Extraction mean (ms) | Extraction p95 (ms) | Extraction p99 (ms) | Embedding mean (ms) | Embedding p99 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 24 (default) | 2.647 | 2.758 | 2.883 | 2.082 | 2.222 |
+| 1 | 2.651 | 2.790 | 2.825 | 2.118 | 2.340 |
+
+Relative to each original run, extraction means were lower by about 8.6% and 6.9%, and embedding means by about 11.4% and 11.9%, respectively. These are descriptive comparisons of single sequential runs, not controlled causal estimates or statistical evidence of a general speedup. Sub-2ms mean embedding remains unachieved; no CPU thread configuration is selected as superior. Do not equate these isolated extraction measurements with live Flask or end-to-end classification latency.
+
+The next check is `python scripts/check_live_gateway.py --output results/live_gateway_quiet.json` after restarting the gateway from current source. Keep vLLM running and otherwise idle. This sends 3 warmup and 10 measured benign requests with an eight-token output cap and unique session IDs, followed by one short sponge-demand request. It records HTTP errors, routing outcomes, live extraction timings and pressure snapshots. Output is retained even when a measured routing assertion fails; preflight/connection failures may prevent the run from starting. This is bounded functional checking, not a concurrent stress benchmark, and does not prove backend cancellation or zero backend work for the blocked request.

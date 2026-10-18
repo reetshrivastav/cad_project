@@ -1,0 +1,73 @@
+{
+  "source": "User-supplied lab terminal transcript; summaries extracted without modification.",
+  "source_sha256": "33cef4b59075cfa4d05ea814e9c100d26e9bdc4e765473854aa346f655fec28e",
+  "raw_per_sample_arrays_present": false,
+  "runs": [
+    {
+      "timestamp_utc": "2026-10-18T07:01:37Z",
+      "commit": "182f426154ae61b76f5ed58543d89c94c3f02103",
+      "git_status": "?? results/ingress_default.json\n?? results/ingress_threads1.json\n",
+      "python": "3.10.12",
+      "packages": {
+        "torch": "2.13.0",
+        "sentence-transformers": "3.4.1",
+        "transformers": "5.17.0",
+        "scikit-learn": "1.7.2",
+        "xgboost": "3.2.0"
+      },
+      "device": "cuda:0",
+      "dtype": "torch.float16",
+      "gpu": "NVIDIA RTX A4000",
+      "torch_threads": 24,
+      "prompt": "Explain binary search in one sentence.",
+      "samples": 100,
+      "warmup": 10,
+      "extraction": {
+        "mean_ms": 2.6466259313747287,
+        "p50_ms": 2.639649494085461,
+        "p95_ms": 2.7581964677665383,
+        "p99_ms": 2.883010101504625
+      },
+      "embedding": {
+        "mean_ms": 2.081787631032057,
+        "p50_ms": 2.0840529759880155,
+        "p95_ms": 2.1709020831622183,
+        "p99_ms": 2.2222836734727025
+      },
+      "scope": "Separate process; no backend requests or classifier timing. Shared GPU contention may affect results."
+    },
+    {
+      "timestamp_utc": "2026-10-18T07:01:45Z",
+      "commit": "182f426154ae61b76f5ed58543d89c94c3f02103",
+      "git_status": "?? results/ingress_default.json\n?? results/ingress_default_quiet.json\n?? results/ingress_threads1.json\n",
+      "python": "3.10.12",
+      "packages": {
+        "torch": "2.13.0",
+        "sentence-transformers": "3.4.1",
+        "transformers": "5.17.0",
+        "scikit-learn": "1.7.2",
+        "xgboost": "3.2.0"
+      },
+      "device": "cuda:0",
+      "dtype": "torch.float16",
+      "gpu": "NVIDIA RTX A4000",
+      "torch_threads": 1,
+      "prompt": "Explain binary search in one sentence.",
+      "samples": 100,
+      "warmup": 10,
+      "extraction": {
+        "mean_ms": 2.651220212574117,
+        "p50_ms": 2.6410720020066947,
+        "p95_ms": 2.790160820586607,
+        "p99_ms": 2.82541835505981
+      },
+      "embedding": {
+        "mean_ms": 2.117692179745063,
+        "p50_ms": 2.086356980726123,
+        "p95_ms": 2.1857780608115718,
+        "p99_ms": 2.3397039296105637
+      },
+      "scope": "Separate process; no backend requests or classifier timing. Shared GPU contention may affect results."
+    }
+  ]
+}
