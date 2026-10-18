@@ -1,0 +1,131 @@
+(.venv) reet@sjt418scope035:~/cad_project$ cd ~/cad_project
+git pull --ff-only origin main &&
+.venv/bin/python -m unittest discover -s tests -v &&
+GATEWAY_MODELS_DIR=models/lab_native_v1 .venv/bin/python scripts/calibrate_policy_candidates.py --output results/policy_candidate_calibration_native_v1.json
+remote: Enumerating objects: 35, done.
+remote: Counting objects: 100% (35/35), done.
+remote: Compressing objects: 100% (15/15), done.
+remote: Total 27 (delta 12), reused 27 (delta 12), pack-reused 0 (from 0)
+Unpacking objects: 100% (27/27), 465.66 KiB | 4.35 MiB/s, done.
+From https://github.com/reetshrivastav/cad_project
+ * branch            main       -> FETCH_HEAD
+   e93a40a..ef91336  main       -> origin/main
+Updating e93a40a..ef91336
+Fast-forward
+ reports/LAB_GPU_PROGRESS.md                                                               |    8 +
+ reports/STATIC_ADAPTIVE_CONTROL_REPORT.md                                                 |   70 +
+ reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/burst_comparison.png |  Bin 0 -> 247932 bytes
+ reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/burst_comparison.svg | 3132 ++++++++++++++++++++++++++++++++++++++++++++
+ reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/derived_summary.json |   41 +
+ reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/telemetry_trace.csv  |   81 ++
+ reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/trial_metrics.csv    |    2 +
+ reports/evidence/static_adaptive_controls_20261018/gpu_adaptive_control_native_v1.json    | 7323 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ reports/evidence/static_adaptive_controls_20261018/gpu_static_control_native_v1.json      | 7420 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ reports/evidence/static_adaptive_controls_20261018/static_analysis/burst_comparison.png   |  Bin 0 -> 250302 bytes
+ reports/evidence/static_adaptive_controls_20261018/static_analysis/burst_comparison.svg   | 3164 +++++++++++++++++++++++++++++++++++++++++++++
+ reports/evidence/static_adaptive_controls_20261018/static_analysis/derived_summary.json   |   41 +
+ reports/evidence/static_adaptive_controls_20261018/static_analysis/telemetry_trace.csv    |   81 ++
+ reports/evidence/static_adaptive_controls_20261018/static_analysis/trial_metrics.csv      |    2 +
+ scripts/analyze_gpu_burst.py                                                              |   12 +-
+ scripts/calibrate_policy_candidates.py                                                    |  109 ++
+ tests/test_burst_analysis.py                                                              |   15 +
+ tests/test_policy_calibration.py                                                          |   36 +
+ 18 files changed, 21534 insertions(+), 3 deletions(-)
+ create mode 100644 reports/STATIC_ADAPTIVE_CONTROL_REPORT.md
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/burst_comparison.png
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/burst_comparison.svg
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/derived_summary.json
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/telemetry_trace.csv
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/adaptive_analysis/trial_metrics.csv
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/gpu_adaptive_control_native_v1.json
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/gpu_static_control_native_v1.json
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/static_analysis/burst_comparison.png
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/static_analysis/burst_comparison.svg
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/static_analysis/derived_summary.json
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/static_analysis/telemetry_trace.csv
+ create mode 100644 reports/evidence/static_adaptive_controls_20261018/static_analysis/trial_metrics.csv
+ create mode 100644 scripts/calibrate_policy_candidates.py
+ create mode 100644 tests/test_policy_calibration.py
+test_all_supplied_trial_counters_reconcile (test_burst_analysis.BurstEvidenceTests) ... ok
+test_controls_share_workload_model_and_reconcile_counters (test_burst_analysis.BurstEvidenceTests) ... ok
+test_rejects_mismatched_classifier_metadata (test_burst_analysis.BurstEvidenceTests) ... ok
+test_forwarder_preserves_conversation_and_finish_reason (test_gpu_gateway.GatewayTests) ... ok
+test_forwarder_timeout (test_gpu_gateway.GatewayTests) ... ok
+test_quarantine_does_not_call_backend (test_gpu_gateway.GatewayTests) ... ok
+test_sandbox_caps_and_reports_policy (test_gpu_gateway.GatewayTests) ... ok
+test_high_pressure_and_boundaries (test_gpu_gateway.PressureTests) ... ok
+test_invalid_metrics (test_gpu_gateway.PressureTests) ... ok
+test_labeled_metrics_and_multiple_engines (test_gpu_gateway.PressureTests) ... ok
+test_stale_telemetry_is_conservative (test_gpu_gateway.PressureTests) ... ok
+test_static_policy_preserves_telemetry_but_uses_base_thresholds (test_gpu_gateway.StaticPolicyTests) ... ok
+test_gateway_only_skips_direct_load (test_gpu_pilot.PilotTests) ... ok
+test_generation_requires_actual_output_and_token_cap (test_gpu_pilot.PilotTests) ... ok
+test_metrics_preserve_labels_and_filter_histograms (test_gpu_pilot.PilotTests) ... ok
+test_missing_pressure_target_keeps_evidence_and_fails (test_gpu_pilot.PilotTests) ... ok
+test_multi_request_burst_and_staggered_probes (test_gpu_pilot.PilotTests) ... ok
+test_only_gateway_quarantine_is_successful_block (test_gpu_pilot.PilotTests) ... ok
+test_pilot_records_both_arms_and_alternates_order (test_gpu_pilot.PilotTests) ... ok
+test_required_mode_mismatch_stops_before_generation (test_gpu_pilot.PilotTests) ... ok
+test_unexpected_outcome_stops_following_arms_and_preserves_data (test_gpu_pilot.PilotTests) ... ok
+test_refuses_nonempty_output_before_loading_models (test_lab_training.LabTrainingTests) ... ok
+test_versioned_export_and_runtime_metadata (test_lab_training.LabTrainingTests) ... ok
+test_http_failure_is_preserved (test_live_check.LiveCheckTests) ... ok
+test_partial_or_error_responses_are_not_success (test_live_check.LiveCheckTests) ... ok
+test_quantiles (test_live_check.LiveCheckTests) ... ok
+test_counter_reset_is_rejected (test_pilot_analysis.AnalysisTests) ... ok
+test_labeled_counter_series_are_summed (test_pilot_analysis.AnalysisTests) ... ok
+test_missing_counter_not_zero (test_pilot_analysis.AnalysisTests) ... ok
+test_original_plot_refuses_burst_data (test_pilot_analysis.AnalysisTests) ... ok
+test_empty_band_is_reported_without_inventing_a_candidate (test_policy_calibration.CalibrationTests) ... ok
+test_retains_all_scores_and_does_not_forward (test_policy_calibration.CalibrationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.214s
+
+OK
+17:23:15  INFO      Initializing Tokenizer (tiktoken cl100k_base)...
+17:23:15  INFO      Loading SentenceTransformer ('all-MiniLM-L6-v2')...
+17:23:15  INFO      Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+17:23:19  INFO      MiniLM device=cuda:0, dtype=torch.float16
+17:23:19  INFO      Loading pre-trained model artifacts from models/ ...
+17:23:19  INFO      Pre-trained artifacts loaded successfully.
+{
+  "purpose": "Calibration for a subsequent live policy mechanism test, not accuracy evaluation.",
+  "client_commit": "ef913365d0a603ece25e92b91a9e83880931a93e",
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "models_directory": "/home/reet/cad_project/models/lab_native_v1",
+  "runtime": {
+    "python": "3.10.12",
+    "packages": {
+      "torch": "2.13.0",
+      "sentence-transformers": "3.4.1",
+      "transformers": "4.47.1",
+      "scikit-learn": "1.7.2",
+      "xgboost": "3.2.0"
+    }
+  },
+  "embedding_device": "cuda:0",
+  "embedding_dtype": "torch.float16",
+  "corpus_version": 1,
+  "corpus_sha256": "2948efe959303029e6d592024ad5104831f17ce5edd7f4b4160df45ba0b98974",
+  "max_session_repeats": 10,
+  "selection_rule": "First corpus/repeat-order candidate in each predefined changed decision band; retain all scores.",
+  "bands": {
+    "full_to_sandbox": {
+      "count": 0,
+      "first_id": null
+    },
+    "sandbox_to_quarantine": {
+      "count": 0,
+      "first_id": null
+    }
+  },
+  "candidate_count": 100,
+  "limitations": [
+    "No real backend pressure or live request decisions are exercised.",
+    "Repeated-session state is private to this process; live reproduction needs explicit priming.",
+    "Risk-selected inputs cannot be used as unbiased detection/false-positive evaluation.",
+    "No model retraining, model-file changes or LLM generation requests occur."
+  ]
+}
+(.venv) reet@sjt418scope035:~/cad_project$ 

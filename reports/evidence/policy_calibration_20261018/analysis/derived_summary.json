@@ -1,0 +1,316 @@
+{
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "corpus_sha256": "2948efe959303029e6d592024ad5104831f17ce5edd7f4b4160df45ba0b98974",
+  "candidate_count": 100,
+  "prompt_families": 10,
+  "unique_risk_values": 20,
+  "minimum_risk": 0.03635817766189575,
+  "maximum_risk": 0.999798595905304,
+  "normal_tier_counts": {
+    "full": 32,
+    "quarantine": 64,
+    "sandbox": 4
+  },
+  "high_pressure_tier_counts": {
+    "full": 32,
+    "quarantine": 64,
+    "sandbox": 4
+  },
+  "changed_decisions": 0,
+  "bands": {
+    "full_to_sandbox": {
+      "count": 0,
+      "first_id": null
+    },
+    "sandbox_to_quarantine": {
+      "count": 0,
+      "first_id": null
+    }
+  },
+  "families": [
+    {
+      "family": "P01",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "risks_by_repeat": [
+        0.23708760738372803,
+        0.23708760738372803,
+        0.23708760738372803,
+        0.23708760738372803,
+        0.9956907629966736,
+        0.9956907629966736,
+        0.9956907629966736,
+        0.9956907629966736,
+        0.9956907629966736,
+        0.9956907629966736
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P02",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "risks_by_repeat": [
+        0.059574127197265625,
+        0.059574127197265625,
+        0.059574127197265625,
+        0.059574127197265625,
+        0.991659939289093,
+        0.991659939289093,
+        0.991659939289093,
+        0.991659939289093,
+        0.991659939289093,
+        0.991659939289093
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P03",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "risks_by_repeat": [
+        0.10473549365997314,
+        0.10473549365997314,
+        0.10473549365997314,
+        0.10473549365997314,
+        0.9897932410240173,
+        0.9897932410240173,
+        0.9897932410240173,
+        0.9897932410240173,
+        0.9897932410240173,
+        0.9897932410240173
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P04",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "risks_by_repeat": [
+        0.47733938694000244,
+        0.47733938694000244,
+        0.47733938694000244,
+        0.47733938694000244,
+        0.9987242817878723,
+        0.9987242817878723,
+        0.9987242817878723,
+        0.9987242817878723,
+        0.9987242817878723,
+        0.9987242817878723
+      ],
+      "normal_tiers_by_repeat": [
+        "sandbox",
+        "sandbox",
+        "sandbox",
+        "sandbox",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P05",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "risks_by_repeat": [
+        0.08389735221862793,
+        0.08389735221862793,
+        0.08389735221862793,
+        0.08389735221862793,
+        0.9977861046791077,
+        0.9977861046791077,
+        0.9977861046791077,
+        0.9977861046791077,
+        0.9977861046791077,
+        0.9977861046791077
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P06",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "risks_by_repeat": [
+        0.07500773668289185,
+        0.07500773668289185,
+        0.07500773668289185,
+        0.07500773668289185,
+        0.990514874458313,
+        0.990514874458313,
+        0.990514874458313,
+        0.990514874458313,
+        0.990514874458313,
+        0.990514874458313
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P07",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "risks_by_repeat": [
+        0.9020606279373169,
+        0.9020606279373169,
+        0.9020606279373169,
+        0.9020606279373169,
+        0.999798595905304,
+        0.999798595905304,
+        0.999798595905304,
+        0.999798595905304,
+        0.999798595905304,
+        0.999798595905304
+      ],
+      "normal_tiers_by_repeat": [
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P08",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "risks_by_repeat": [
+        0.03635817766189575,
+        0.03635817766189575,
+        0.03635817766189575,
+        0.03635817766189575,
+        0.9904789328575134,
+        0.9904789328575134,
+        0.9904789328575134,
+        0.9904789328575134,
+        0.9904789328575134,
+        0.9904789328575134
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P09",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "risks_by_repeat": [
+        0.12812960147857666,
+        0.12812960147857666,
+        0.12812960147857666,
+        0.12812960147857666,
+        0.9917250871658325,
+        0.9917250871658325,
+        0.9917250871658325,
+        0.9917250871658325,
+        0.9917250871658325,
+        0.9917250871658325
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    },
+    {
+      "family": "P10",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "risks_by_repeat": [
+        0.03739362955093384,
+        0.03739362955093384,
+        0.03739362955093384,
+        0.03739362955093384,
+        0.993392288684845,
+        0.993392288684845,
+        0.993392288684845,
+        0.993392288684845,
+        0.993392288684845,
+        0.993392288684845
+      ],
+      "normal_tiers_by_repeat": [
+        "full",
+        "full",
+        "full",
+        "full",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine",
+        "quarantine"
+      ]
+    }
+  ],
+  "first_first_session_sandbox_id": "P04-S01",
+  "scope": "Calibration states, not independent labeled accuracy samples or live high-pressure decisions.",
+  "source_sha256": "45312954136ce32047446e915e425c8d7a9a23e367da736ff2fd458d4486ea88",
+  "metadata_sha256": "ad08f23a7f64190755d27f53e3caeb2a0f24d8c3c6c90f413d0528033110628f"
+}

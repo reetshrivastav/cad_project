@@ -104,3 +104,20 @@ class StaticPolicyTests(unittest.TestCase):
         self.assertEqual(selected['telemetry_policy'], 'high_pressure')
         self.assertEqual(selected['quarantine_threshold'], .75)
         self.assertEqual(state['quarantine_threshold'], .65)
+
+class BackendFailureMetadataTests(unittest.TestCase):
+    def test_sandbox_timeout_reports_tier_and_cap(self):
+        classifier = Mock()
+        classifier.risk_scores.return_value = (pd.Series([.4773]), None, None)
+        features = {name: 0 for name in app.FEATURE_COLUMNS}
+        features['_extract_ms'] = 1
+        with patch.object(app, '_classifier', classifier), \
+             patch.object(app, 'extract_real_features', return_value=features), \
+             patch.object(app, 'pressure_snapshot', return_value={'sandbox_threshold': .35, 'quarantine_threshold': .75}), \
+             patch.object(app, 'call_vllm', return_value={'ok': False, 'error': 'vllm_request_timeout'}):
+            response = app.app.test_client().post('/v1/chat/completions', json={
+                'messages': [{'role': 'user', 'content': 'test'}], 'max_tokens': 1024})
+        self.assertEqual(response.status_code, 502)
+        self.assertEqual(response.json['router_meta']['applied_max_tokens'], 256)
+        self.assertEqual(response.json['router_meta']['backend_read_timeout_seconds'], 5)
+        self.assertEqual(response.json['router_meta']['tier'], 'sandbox')

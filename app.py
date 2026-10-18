@@ -394,8 +394,16 @@ def openai_compatible_completions():
     resp = call_vllm(messages=messages, max_tokens=max_tok,
                      timeout=5 if tier == "sandbox" else 90,
                      temperature=body.get("temperature"), ignore_eos=body.get("ignore_eos"))
+    backend_meta = {
+        "tier": tier, "risk_score": round(float(risk_s.iloc[0]), 4),
+        "extract_ms": raw["_extract_ms"],
+        "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]},
+        "pressure_policy": policy, "applied_max_tokens": max_tok,
+        "backend_read_timeout_seconds": 5 if tier == "sandbox" else 90,
+    }
     if not resp.get("ok"):
-        return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"}}), 502
+        return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"},
+                        "router_meta": backend_meta}), 502
 
     return jsonify({
         "id": f"chatcmpl-{hashlib.md5(str(time.time()).encode()).hexdigest()[:12]}",
@@ -412,13 +420,7 @@ def openai_compatible_completions():
             "completion_tokens": resp.get("response_tokens", 0),
             "total_tokens": resp.get("prompt_tokens", 0) + resp.get("response_tokens", 0)
         },
-        "router_meta": {
-            "tier": tier,
-            "risk_score": round(float(risk_s.iloc[0]), 4),
-            "extract_ms": raw["_extract_ms"],
-            "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]},
-            "pressure_policy": policy
-        }
+        "router_meta": backend_meta
     })
 
 
