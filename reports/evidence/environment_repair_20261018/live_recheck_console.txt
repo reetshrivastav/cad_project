@@ -1,0 +1,122 @@
+(.venv) reet@sjt418scope035:~/cad_project$ cd ~/cad_project
+git pull --ff-only origin main &&
+.venv/bin/python -m unittest discover -s tests -v
+remote: Enumerating objects: 23, done.
+remote: Counting objects: 100% (23/23), done.
+remote: Compressing objects: 100% (12/12), done.
+remote: Total 17 (delta 5), reused 17 (delta 5), pack-reused 0 (from 0)
+Unpacking objects: 100% (17/17), 153.73 KiB | 2.61 MiB/s, done.
+From https://github.com/reetshrivastav/cad_project
+ * branch            main       -> FETCH_HEAD
+   9ea2103..551d7d4  main       -> origin/main
+Updating 9ea2103..551d7d4
+Fast-forward
+ reports/GPU_PILOT_REPORT.md                                       |   62 +++
+ reports/LAB_GPU_PROGRESS.md                                       |    6 +
+ reports/evidence/gpu_pilot_20261018/analysis/derived_summary.json |  162 ++++++
+ reports/evidence/gpu_pilot_20261018/analysis/pilot_comparison.png |  Bin 0 -> 151132 bytes
+ reports/evidence/gpu_pilot_20261018/analysis/pilot_comparison.svg | 2059 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ reports/evidence/gpu_pilot_20261018/analysis/trial_metrics.csv    |    5 +
+ reports/evidence/gpu_pilot_20261018/gpu_protection_pilot.json     | 3532 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/analyze_gpu_pilot.py                                      |  123 +++++
+ tests/test_pilot_analysis.py                                      |   25 +
+ 9 files changed, 5974 insertions(+)
+ create mode 100644 reports/GPU_PILOT_REPORT.md
+ create mode 100644 reports/evidence/gpu_pilot_20261018/analysis/derived_summary.json
+ create mode 100644 reports/evidence/gpu_pilot_20261018/analysis/pilot_comparison.png
+ create mode 100644 reports/evidence/gpu_pilot_20261018/analysis/pilot_comparison.svg
+ create mode 100644 reports/evidence/gpu_pilot_20261018/analysis/trial_metrics.csv
+ create mode 100644 reports/evidence/gpu_pilot_20261018/gpu_protection_pilot.json
+ create mode 100644 scripts/analyze_gpu_pilot.py
+ create mode 100644 tests/test_pilot_analysis.py
+test_forwarder_preserves_conversation_and_finish_reason (test_gpu_gateway.GatewayTests) ... ok
+test_forwarder_timeout (test_gpu_gateway.GatewayTests) ... ok
+test_quarantine_does_not_call_backend (test_gpu_gateway.GatewayTests) ... ok
+test_sandbox_caps_and_reports_policy (test_gpu_gateway.GatewayTests) ... ok
+test_high_pressure_and_boundaries (test_gpu_gateway.PressureTests) ... ok
+test_invalid_metrics (test_gpu_gateway.PressureTests) ... ok
+test_labeled_metrics_and_multiple_engines (test_gpu_gateway.PressureTests) ... ok
+test_stale_telemetry_is_conservative (test_gpu_gateway.PressureTests) ... ok
+test_generation_requires_actual_output_and_token_cap (test_gpu_pilot.PilotTests) ... ok
+test_metrics_preserve_labels_and_filter_histograms (test_gpu_pilot.PilotTests) ... ok
+test_only_gateway_quarantine_is_successful_block (test_gpu_pilot.PilotTests) ... ok
+test_pilot_records_both_arms_and_alternates_order (test_gpu_pilot.PilotTests) ... ok
+test_http_failure_is_preserved (test_live_check.LiveCheckTests) ... ok
+test_partial_or_error_responses_are_not_success (test_live_check.LiveCheckTests) ... ok
+test_quantiles (test_live_check.LiveCheckTests) ... ok
+test_counter_reset_is_rejected (test_pilot_analysis.AnalysisTests) ... ok
+test_labeled_counter_series_are_summed (test_pilot_analysis.AnalysisTests) ... ok
+test_missing_counter_not_zero (test_pilot_analysis.AnalysisTests) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.010s
+
+OK
+(.venv) reet@sjt418scope035:~/cad_project$ .venv/bin/python scripts/check_live_gateway.py \
+  --output results/live_gateway_repaired_env.json
+{
+  "timestamp_utc": "2026-10-18T10:35:38.713275+00:00",
+  "client_commit": "551d7d4da000581c4f56ee329dd4c2ec4be84c8e",
+  "server_commit": "Not exposed by server; restart gateway after pulling source.",
+  "gateway": "http://127.0.0.1:5000",
+  "status": {
+    "backend": "vllm",
+    "models": [
+      "Qwen/Qwen2.5-3B-Instruct"
+    ],
+    "router_ready": true,
+    "target_model": "Qwen/Qwen2.5-3B-Instruct",
+    "target_ready": true,
+    "vllm": true
+  },
+  "initial_pressure": {
+    "last_error": "No successful sample yet",
+    "metric": "vllm:kv_cache_usage_perc",
+    "policy": "conservative_telemetry_unavailable",
+    "pressure": null,
+    "quarantine_threshold": 0.65,
+    "sample_age_seconds": null,
+    "sandbox_threshold": 0.25,
+    "stale": true
+  },
+  "final_pressure": {
+    "last_error": null,
+    "metric": "vllm:kv_cache_usage_perc",
+    "policy": "normal",
+    "pressure": 0.0002982700338038935,
+    "quarantine_threshold": 0.75,
+    "sample_age_seconds": 0.18822288897354156,
+    "sandbox_threshold": 0.35,
+    "stale": false
+  },
+  "quarantine": {
+    "status": 403,
+    "http_ms": 22.06849301001057,
+    "body": {
+      "error": {
+        "code": "risk_quarantine",
+        "message": "Request blocked by Adaptive LLM Router under the current routing policy (Risk 0.990)",
+        "type": "security_quarantine_error"
+      }
+    }
+  },
+  "all_benign_passed": true,
+  "quarantine_passed": true,
+  "warmed_extraction": {
+    "count": 10,
+    "mean_ms": 5.748,
+    "p50_ms": 6.04,
+    "p95_ms": 6.775,
+    "p99_ms": 6.811
+  },
+  "warmed_http_including_backend": {
+    "count": 10,
+    "mean_ms": 154.48772250092588,
+    "p50_ms": 154.10449949558824,
+    "p95_ms": 156.62467104266398,
+    "p99_ms": 157.03625580645166
+  },
+  "scope": "One short benign prompt, sequential requests, max_tokens=8. Unique session IDs avoid burst rejection. HTTP includes backend generation; extract_ms excludes classifier. Does not prove absent backend work for quarantine or high-pressure protection."
+}
+(.venv) reet@sjt418scope035:~/cad_project$ 
+

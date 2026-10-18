@@ -1,0 +1,43 @@
+{
+  "method": "Static inspection of XGBoost UBJSON version triples embedded in classifier.joblib; sklearn version marker in the classifier pickle; read-only loading in matching cloud packages.",
+  "stored_xgboost_versions": [
+    "3.4.1"
+  ],
+  "classifier_label_encoder_sklearn_version_marker": "1.9.0",
+  "verification_runtime": {
+    "location": "Cloud checkout, not the lab GPU",
+    "python": "3.12.14",
+    "packages": {
+      "xgboost": {
+        "version": "3.4.1",
+        "requires_python": ">=3.12"
+      },
+      "scikit-learn": {
+        "version": "1.9.0",
+        "requires_python": ">=3.11"
+      },
+      "joblib": {
+        "version": "1.6.0",
+        "requires_python": ">=3.10"
+      }
+    }
+  },
+  "matching_runtime_load_warnings": [],
+  "classes": [
+    "benign",
+    "exhaustion",
+    "injection"
+  ],
+  "tfidf_vocabulary_size": 589,
+  "files": {
+    "models/classifier.joblib": {
+      "sha256": "03d99c3f5ec65328720ab3b282feec83b5ce209079525200a2600fa82b9ede59",
+      "bytes": 925187
+    },
+    "models/tfidf.joblib": {
+      "sha256": "0ebd2f5b0ee186837612ab472b9ecd37223800ecd66ec9069587a36ea544747d",
+      "bytes": 26621
+    }
+  },
+  "limits": "No GPU inference or accuracy claim; matching package metadata does not independently prove training Python version or full environment provenance."
+}
