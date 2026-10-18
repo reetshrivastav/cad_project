@@ -19,6 +19,11 @@ Empirical dataset training pipeline for the Adaptive LLM Router.
 """
 
 import os
+import argparse
+import hashlib
+import platform
+from importlib.metadata import version
+from pathlib import Path
 import re
 import json
 import time
@@ -245,7 +250,7 @@ def extract_features_for_prompt(
     jb_sim = float(cosine_similarity(t_vec, jb_matrix)[0].max())
 
     # 4. Dense Semantic Similarity (Calibrated with realistic margin)
-    emb = embedder.encode([text], convert_to_numpy=True, normalize_embeddings=True)
+    emb = embedder.encode([text], convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False)
     raw_sem_sim = float(np.max(np.dot(emb, ref_embeddings.T)[0]))
     # Threshold floor: 0.30 is the natural upper boundary of unrelated benign technical English text
     sem_sim = max(0.0, (raw_sem_sim - 0.30) / 0.70)
@@ -270,6 +275,17 @@ def extract_features_for_prompt(
 
 
 def main():
+    global MODELS_DIR
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path,
+                        help="New empty directory for a separately versioned model; never overwrites it")
+    args = parser.parse_args()
+    if args.output_dir is not None:
+        target = args.output_dir.resolve()
+        if target.exists() and any(target.iterdir()):
+            parser.error("output directory is not empty; choose a new model version")
+        target.mkdir(parents=True, exist_ok=True)
+        MODELS_DIR = str(target)
     log.info("=" * 60)
     log.info("  ADAPTIVE LLM ROUTER — DATASET TRAINING PIPELINE")
     log.info("=" * 60)
@@ -285,7 +301,7 @@ def main():
     log.info("Fitting TF-IDF and encoding dense reference jailbreak embeddings...")
     tfidf = TfidfVectorizer(ngram_range=(1, 3), max_features=8000, sublinear_tf=True)
     jb_matrix = tfidf.fit_transform(REFERENCE_JAILBREAKS)
-    ref_embeddings = embedder.encode(REFERENCE_JAILBREAKS, convert_to_numpy=True, normalize_embeddings=True)
+    ref_embeddings = embedder.encode(REFERENCE_JAILBREAKS, convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False)
 
     # 3. Ingest Datasets
     advbench_prompts = download_advbench()
@@ -366,7 +382,16 @@ def main():
         json.dump(REFERENCE_JAILBREAKS, f, indent=2)
 
     meta = {
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "accuracy_scope": "training_set_resubstitution_not_held_out",
+        "runtime": {"python": platform.python_version(),
+                    "packages": {name: version(name) for name in (
+                        "torch", "sentence-transformers", "transformers", "scikit-learn", "xgboost")}},
+        "dataset_files": {name: hashlib.sha256(Path(DATA_DIR, name).read_bytes()).hexdigest()
+                          for name in ("advbench_harmful_behaviors.csv", "alpaca_sample.json")
+                          if Path(DATA_DIR, name).is_file()},
+        "artifact_sha256": {name: hashlib.sha256(Path(MODELS_DIR, name).read_bytes()).hexdigest()
+                            for name in ("classifier.joblib", "tfidf.joblib", "ref_embeddings.npy", "reference_jailbreaks.json")},
         "total_samples": len(df_train),
         "benign_samples": int((df_train["true_type"] == "benign").sum()),
         "injection_samples": int((df_train["true_type"] == "injection").sum()),

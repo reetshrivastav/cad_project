@@ -6,6 +6,8 @@ and SentenceTransformers dense semantic embeddings.
 """
 
 import sys
+import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import joblib
@@ -21,10 +23,12 @@ print("  VALIDATING EMPIRICAL ROUTING PIPELINE (AdvBench + MiniLM)")
 print("=" * 65)
 
 # Load artifacts
+MODELS_DIR = Path(__file__).resolve().parent / os.getenv("GATEWAY_MODELS_DIR", "models")
+print(f"Artifact directory: {MODELS_DIR}")
 print("[1/3] Loading pre-trained models from models/ ...")
-classifier = joblib.load("models/classifier.joblib")
-tfidf = joblib.load("models/tfidf.joblib")
-ref_embeddings = np.load("models/ref_embeddings.npy")
+classifier = joblib.load(MODELS_DIR / "classifier.joblib")
+tfidf = joblib.load(MODELS_DIR / "tfidf.joblib")
+ref_embeddings = np.load(MODELS_DIR / "ref_embeddings.npy")
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 tokenizer = tiktoken.get_encoding("cl100k_base")
 jb_matrix = tfidf.transform([

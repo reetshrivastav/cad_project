@@ -33,6 +33,8 @@ def derive(data):
     rows = []
     for trial in data['trials']:
         requests = trial['requests']
+        if len(requests) != 2 or {r['kind'] for r in requests} != {'demand', 'benign'}:
+            raise ValueError('This pilot plot supports one demand and one probe per trial; burst data needs separate analysis')
         demand = next(r for r in requests if r['kind'] == 'demand')
         benign = next(r for r in requests if r['kind'] == 'benign')
         samples = trial['telemetry']

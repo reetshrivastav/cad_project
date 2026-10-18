@@ -23,3 +23,8 @@ class AnalysisTests(unittest.TestCase):
         samples = [{'metrics': [{'name': 'tokens', 'value': v},
                                 {'name': 'tokens', 'value': 1}]} for v in [3, 8]]
         self.assertEqual(analysis.counter_delta(samples, 'tokens'), 5)
+
+    def test_original_plot_refuses_burst_data(self):
+        with self.assertRaisesRegex(ValueError, 'burst data'):
+            analysis.derive({'trials': [{'requests': [
+                {'kind': 'demand'}, {'kind': 'demand'}, {'kind': 'benign'}]}]})

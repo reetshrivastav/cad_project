@@ -92,3 +92,15 @@ class GatewayTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class StaticPolicyTests(unittest.TestCase):
+    def test_static_policy_preserves_telemetry_but_uses_base_thresholds(self):
+        state = {'policy': 'high_pressure', 'pressure': .95,
+                 'sandbox_threshold': .25, 'quarantine_threshold': .65}
+        with patch.object(app, 'ROUTING_MODE', 'static'), \
+             patch.object(app, 'pressure_snapshot', return_value=state):
+            selected = app.routing_policy()
+        self.assertEqual(selected['policy'], 'static')
+        self.assertEqual(selected['telemetry_policy'], 'high_pressure')
+        self.assertEqual(selected['quarantine_threshold'], .75)
+        self.assertEqual(state['quarantine_threshold'], .65)

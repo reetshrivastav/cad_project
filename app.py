@@ -63,9 +63,13 @@ VLLM_BASE = os.getenv("VLLM_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
 VLLM_MODEL = os.getenv("VLLM_MODEL", "Qwen/Qwen2.5-3B-Instruct")
 BASE_DIR     = os.path.dirname(os.path.abspath(__file__))
 DEMO_DIR     = os.path.join(BASE_DIR, "demo")
-MODELS_DIR   = os.path.join(BASE_DIR, "models")
+MODELS_DIR = os.path.abspath(os.path.join(BASE_DIR, os.getenv("GATEWAY_MODELS_DIR", "models")))
+ROUTING_MODE = os.getenv("GATEWAY_ROUTING_MODE", "adaptive")
+if ROUTING_MODE not in ("static", "adaptive"):
+    raise ValueError("GATEWAY_ROUTING_MODE must be static or adaptive")
 
 # ── Global State ───────────────────────────────────────────────────────────
+_artifact_id    = None
 _classifier     = None
 _tfidf          = None
 _jb_matrix      = None
@@ -77,7 +81,7 @@ _session_counts: dict = {}
 
 
 def _init_models():
-    global _classifier, _tfidf, _jb_matrix, _embedder, _ref_embeddings, _tokenizer, _ref_phrases
+    global _classifier, _tfidf, _jb_matrix, _embedder, _ref_embeddings, _tokenizer, _ref_phrases, _artifact_id
 
     log.info("Initializing Tokenizer (tiktoken cl100k_base)...")
     _tokenizer = tiktoken.get_encoding("cl100k_base")
@@ -106,6 +110,8 @@ def _init_models():
             _jb_matrix = _tfidf.transform(_ref_phrases)
         log.info("Pre-trained artifacts loaded successfully.")
     else:
+        if os.getenv("GATEWAY_MODELS_DIR"):
+            raise FileNotFoundError(f"Selected model directory is incomplete: {MODELS_DIR}")
         log.info("Pre-trained artifacts not found in models/. Initializing fast training pipeline...")
         from train_on_datasets import main as run_training
         run_training()
@@ -116,6 +122,17 @@ def _init_models():
             _ref_phrases = json.load(f)
         _jb_matrix = _tfidf.transform(_ref_phrases)
         log.info("Pipeline trained and ready.")
+
+    with open(clf_path, "rb") as artifact:
+        _artifact_id = hashlib.sha256(artifact.read()).hexdigest()
+
+
+def routing_policy():
+    state = pressure_snapshot()
+    if ROUTING_MODE == "static":
+        state = dict(state, telemetry_policy=state["policy"], policy="static",
+                     sandbox_threshold=SANDBOX_THRESHOLD, quarantine_threshold=REJECT_THRESHOLD)
+    return state
 
 
 def _repetition_ratio(text: str) -> float:
@@ -180,7 +197,7 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
 
 
 def call_vllm(prompt=None, system_msg=None, max_tokens=None,
-              messages=None, timeout=90, temperature=None) -> dict:
+              messages=None, timeout=90, temperature=None, ignore_eos=None) -> dict:
     if messages is None:
         messages = []
         if system_msg:
@@ -194,6 +211,8 @@ def call_vllm(prompt=None, system_msg=None, max_tokens=None,
         "max_tokens": max_tokens if max_tokens is not None else 1024,
     }
 
+    if ignore_eos is not None:
+        payload["ignore_eos"] = ignore_eos
     if temperature is not None:
         payload["temperature"] = temperature
 
@@ -247,6 +266,9 @@ def status():
 
     return jsonify({
         "backend": "vllm",
+        "routing_mode": ROUTING_MODE,
+        "models_directory": MODELS_DIR,
+        "classifier_sha256": _artifact_id,
         "vllm": reachable,
         "models": models,
         "target_model": VLLM_MODEL,
@@ -257,8 +279,7 @@ def status():
 
 @app.route("/api/pressure")
 def cache_pressure_status():
-    from cache_pressure import snapshot
-    return jsonify(snapshot())
+    return jsonify(routing_policy())
 
 
 @app.route("/api/examples")
@@ -289,7 +310,7 @@ def route_request():
     probs = {k: round(float(v), 4) for k, v in proba_df.iloc[0].items()}
 
     # 3. Tier Decision
-    policy = pressure_snapshot()
+    policy = routing_policy()
     thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
     tier_s     = assign_tier(risk_s, thresholds=thresholds)
     tier       = str(tier_s.iloc[0])
@@ -350,7 +371,7 @@ def openai_compatible_completions():
     raw = extract_real_features(user_prompt, session_id)
     feat_df = pd.DataFrame([{c: raw[c] for c in FEATURE_COLUMNS}])
     risk_s, _, _ = _classifier.risk_scores(feat_df)
-    policy = pressure_snapshot()
+    policy = routing_policy()
     thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
     tier = str(assign_tier(risk_s, thresholds=thresholds).iloc[0])
 
@@ -360,7 +381,10 @@ def openai_compatible_completions():
                 "message": f"Request blocked by Adaptive LLM Router under the current routing policy (Risk {float(risk_s.iloc[0]):.3f})",
                 "type": "security_quarantine_error",
                 "code": "risk_quarantine"
-            }
+            },
+            "router_meta": {"risk_score": float(risk_s.iloc[0]), "tier": tier,
+                            "pressure_policy": policy,
+                            "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]}}
         }), 403
 
     max_tok = body.get("max_tokens", 1024)
@@ -369,7 +393,7 @@ def openai_compatible_completions():
 
     resp = call_vllm(messages=messages, max_tokens=max_tok,
                      timeout=5 if tier == "sandbox" else 90,
-                     temperature=body.get("temperature"))
+                     temperature=body.get("temperature"), ignore_eos=body.get("ignore_eos"))
     if not resp.get("ok"):
         return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"}}), 502
 
