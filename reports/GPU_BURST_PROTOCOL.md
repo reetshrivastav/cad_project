@@ -76,3 +76,41 @@ Once calibration is measured, plan repeated direct/static/adaptive comparisons. 
 To distinguish adaptive from static policies, use independently selected traffic whose risks lie in the changed decision bands (0.25–0.35 or 0.65–0.75), and comparable exogenous backend pressure when appropriate. The highest-risk demands in this calibration are blocked by either policy. If protection keeps the adaptive arm below its pressure threshold, that does not prove threshold tightening caused the benefit. Retain negative results rather than choosing prompts after seeing an outcome.
 
 Live FP16 parity, held-out detection/false-positive evaluation, full-conversation/context controls, sandbox cancellation and precise ingress profiling remain separate work. Native retraining removes serialization version mismatch; it does not automatically validate those properties. No GPU-dollar or publication-readiness conclusion follows from this calibration alone.
+
+## Gateway-only static negative control (after calibration)
+
+The first native burst calibration has now been measured; see [GPU_BURST_REPORT.md](GPU_BURST_REPORT.md). It reached 99.56% direct cache occupancy and a sampled waiting queue of 13, but all protected decisions used normal thresholds. A static negative control is therefore needed before attributing any benefit to adaptation.
+
+The runner now accepts `--arms gateway` to avoid repeating the direct load and `--require-routing-mode` to prevent accidentally testing the wrong running mode. Unexecuted arms are explicitly marked `executed=false`. A direct-pressure target is invalid with gateway-only runs; low pressure is expected when demands are rejected. Warmup still includes one benign request to each endpoint, outside measured totals.
+
+For a fresh-cache pair, pull current source, stop both servers, and use these identical backend settings in Terminal 1 for **each** mode (Ctrl+C and restart between modes):
+
+```bash
+bash scripts/start_lab_vllm.sh
+```
+
+Terminal 2, static control:
+
+```bash
+bash scripts/start_lab_gateway.sh static
+```
+
+Terminal 3:
+
+```bash
+.venv/bin/python scripts/benchmark_gpu_pilot.py --arms gateway --require-routing-mode static --rounds 1 --demands-per-round 8 --benign-per-round 8 --probe-interval 3 --attack-tokens 1792 --request-timeout 240 --ignore-eos --output results/gpu_static_control_native_v1.json
+```
+
+After that run finishes, stop and restart both servers with the same backend launcher and, in Terminal 2:
+
+```bash
+bash scripts/start_lab_gateway.sh adaptive
+```
+
+Terminal 3:
+
+```bash
+.venv/bin/python scripts/benchmark_gpu_pilot.py --arms gateway --require-routing-mode adaptive --rounds 1 --demands-per-round 8 --benign-per-round 8 --probe-interval 3 --attack-tokens 1792 --request-timeout 240 --ignore-eos --output results/gpu_adaptive_control_native_v1.json
+```
+
+The launcher defaults to the already trained `models/lab_native_v1`. Require the same classifier SHA-256 in both output status records. Do not retrain or change packages between modes. These are low-sample negative controls, not a P99 study or proof that the two modes are statistically equivalent. Static protection is expected to reject these same high-risk demands; record that result rather than claiming adaptation is responsible. Subsequent paired repetitions should counterbalance mode order and evaluate independent risk bands under matched pressure.

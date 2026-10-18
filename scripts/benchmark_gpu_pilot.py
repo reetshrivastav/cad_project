@@ -139,6 +139,9 @@ def main():
     parser.add_argument('--gateway', default='http://127.0.0.1:5000')
     parser.add_argument('--model', default='Qwen/Qwen2.5-3B-Instruct')
     parser.add_argument('--rounds', type=int, default=2)
+    parser.add_argument('--arms', nargs='+', choices=('direct', 'gateway'), default=['direct', 'gateway'])
+    parser.add_argument('--require-routing-mode', choices=('static', 'adaptive'),
+                        help='Abort if gateway status does not match the requested experiment mode')
     parser.add_argument('--attack-tokens', type=int, default=256)
     parser.add_argument('--demands-per-round', type=int, default=1)
     parser.add_argument('--benign-per-round', type=int, default=1)
@@ -163,6 +166,8 @@ def main():
         parser.error('request-timeout must be 1..300 seconds')
     if args.target_pressure is not None and not 0 < args.target_pressure <= 1:
         parser.error('target-pressure must be a fraction in (0, 1]')
+    if args.target_pressure is not None and 'direct' not in args.arms:
+        parser.error('target-pressure requires the direct arm; protected-only runs need not reach high pressure')
     if args.output.exists():
         parser.error('output exists; choose a fresh filename')
     backend, gateway = args.backend.rstrip('/'), args.gateway.rstrip('/')
@@ -171,6 +176,8 @@ def main():
     status = status_response.json()
     if not all(status.get(k) for k in ('router_ready', 'vllm', 'target_ready')):
         raise SystemExit(f'Gateway not ready: {status}')
+    if args.require_routing_mode and status.get('routing_mode') != args.require_routing_mode:
+        raise SystemExit('Gateway routing mode differs from --require-routing-mode; restart the intended server')
     if status.get('target_model') != args.model:
         raise SystemExit('Gateway model differs from --model; cannot compare')
     models = requests.get(f'{backend}/v1/models', timeout=(3, 5))
@@ -196,7 +203,7 @@ def main():
                   f'and 20 characters. Do not truncate or shorten any part. '
                   f'Use the chapter theme number {index + 1}.')
         order = ('direct', 'gateway') if index % 2 == 0 else ('gateway', 'direct')
-        for arm in order:
+        for arm in (arm for arm in order if arm in args.arms):
             base = backend if arm == 'direct' else gateway
             count = args.demands_per_round + args.benign_per_round
             gate = threading.Barrier(count)
@@ -237,6 +244,7 @@ def main():
         rows = [row for trial in trials if trial['arm'] == arm for row in trial['requests']]
         probes = [r['http_ms'] for r in rows if r['kind'] == 'benign' and expected_result(arm, r)]
         summary[arm] = {
+            'executed': any(t['arm'] == arm for t in trials),
             'benign_completed': len(probes),
             'benign_mean_http_ms': statistics.mean(probes) if probes else None,
             'benign_p99_http_ms': (sorted(probes)[int((len(probes)-1)*.99)] if len(probes) >= 100 else None),

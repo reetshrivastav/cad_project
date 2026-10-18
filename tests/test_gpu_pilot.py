@@ -80,7 +80,7 @@ class PilotTests(unittest.TestCase):
         self.assertEqual(result['summary']['gateway']['demand_quarantined'], 2)
         self.assertEqual(result['summary']['direct']['reported_completion_tokens'], 2 * (256 + 16))
 
-    def run_burst(self, peak, fail_benign=False):
+    def run_burst(self, peak, fail_benign=False, gateway_only=False):
         import contextlib
         import io
         import json
@@ -113,6 +113,7 @@ class PilotTests(unittest.TestCase):
         manager.__exit__ = Mock(return_value=False)
         with tempfile.TemporaryDirectory() as directory:
             output = str(Path(directory) / 'burst.json')
+            extra = ['--arms', 'gateway'] if gateway_only else ['--target-pressure', '.85']
             with patch.object(pilot.requests, 'get', side_effect=get), \
                  patch.object(pilot, 'collect_telemetry', return_value={}), \
                  patch.object(pilot, 'Sampler', return_value=manager), \
@@ -121,9 +122,9 @@ class PilotTests(unittest.TestCase):
                  patch('sys.argv', ['pilot', '--output', output, '--rounds', '1',
                                     '--demands-per-round', '3', '--benign-per-round', '2',
                                     '--probe-interval', '1', '--attack-tokens', '1024',
-                                    '--ignore-eos', '--target-pressure', '.85']), \
+                                    '--ignore-eos'] + extra), \
                  contextlib.redirect_stdout(io.StringIO()):
-                if peak < .85 or fail_benign:
+                if (peak < .85 and not gateway_only) or fail_benign:
                     with self.assertRaises(SystemExit):
                         pilot.main()
                 else:
@@ -151,3 +152,25 @@ class PilotTests(unittest.TestCase):
         self.assertTrue(result['aborted_after_unexpected_outcome'])
         self.assertEqual(len(result['trials']), 1)
         self.assertFalse(result['all_expected_outcomes_passed'])
+
+    def test_gateway_only_skips_direct_load(self):
+        result, _ = self.run_burst(.1, gateway_only=True)
+        self.assertEqual([t['arm'] for t in result['trials']], ['gateway'])
+        self.assertFalse(result['summary']['direct']['executed'])
+        self.assertTrue(result['summary']['gateway']['executed'])
+        self.assertIsNone(result['target_pressure_reached'])
+
+    def test_required_mode_mismatch_stops_before_generation(self):
+        import tempfile
+        from unittest.mock import patch
+        response = Mock()
+        response.json.return_value = {'router_ready': True, 'vllm': True, 'target_ready': True,
+                                      'routing_mode': 'adaptive'}
+        with tempfile.TemporaryDirectory() as directory, \
+             patch('sys.argv', ['pilot', '--output', str(Path(directory) / 'out.json'),
+                                '--require-routing-mode', 'static']), \
+             patch.object(pilot.requests, 'get', return_value=response), \
+             patch.object(pilot, 'send') as send, \
+             self.assertRaisesRegex(SystemExit, 'routing mode'):
+            pilot.main()
+        send.assert_not_called()
