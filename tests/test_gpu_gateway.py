@@ -49,7 +49,8 @@ class GatewayTests(unittest.TestCase):
         messages = [{'role': 'system', 'content': 'Be concise'},
                     {'role': 'user', 'content': 'Hello'}]
         with patch.object(app.http_req, 'post', return_value=response) as post:
-            result = app.call_vllm(messages=messages, max_tokens=5)
+            result = app.call_vllm(messages=messages, max_tokens=5, temperature=0)
+        self.assertEqual(post.call_args.kwargs['json']['temperature'], 0)
         self.assertEqual(post.call_args.kwargs['json']['messages'], messages)
         self.assertTrue(post.call_args.args[0].endswith('/v1/chat/completions'))
         self.assertEqual(result['finish_reason'], 'length')
@@ -81,8 +82,9 @@ class GatewayTests(unittest.TestCase):
              patch.object(app, 'extract_real_features', return_value=features), \
              patch.object(app, 'call_vllm', return_value={'ok': True, 'text': 'ok'}) as forward:
             response = self.client.post('/v1/chat/completions', json={
-                'messages': [{'role': 'user', 'content': 'test'}], 'max_tokens': 1024})
+                'messages': [{'role': 'user', 'content': 'test'}], 'max_tokens': 1024, 'temperature': 0})
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(forward.call_args.kwargs['temperature'], 0)
         self.assertEqual(forward.call_args.kwargs['max_tokens'], 256)
         self.assertEqual(forward.call_args.kwargs['timeout'], 5)
         self.assertEqual(response.json['router_meta']['thresholds']['quarantine'], .65)

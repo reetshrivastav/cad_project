@@ -83,3 +83,31 @@ The operator pulled `182f426154ae61b76f5ed58543d89c94c3f02103` and completed bot
 Relative to each original run, extraction means were lower by about 8.6% and 6.9%, and embedding means by about 11.4% and 11.9%, respectively. These are descriptive comparisons of single sequential runs, not controlled causal estimates or statistical evidence of a general speedup. Sub-2ms mean embedding remains unachieved; no CPU thread configuration is selected as superior. Do not equate these isolated extraction measurements with live Flask or end-to-end classification latency.
 
 The next check is `python scripts/check_live_gateway.py --output results/live_gateway_quiet.json` after restarting the gateway from current source. Keep vLLM running and otherwise idle. This sends 3 warmup and 10 measured benign requests with an eight-token output cap and unique session IDs, followed by one short sponge-demand request. It records HTTP errors, routing outcomes, live extraction timings and pressure snapshots. Output is retained even when a measured routing assertion fails; preflight/connection failures may prevent the run from starting. This is bounded functional checking, not a concurrent stress benchmark, and does not prove backend cancellation or zero backend work for the blocked request.
+
+## Raw lab samples and first live gateway check
+
+The operator supplied the five original JSON outputs in `cad-gpu-results.tar.gz`. Exact extracted file bytes are committed under [evidence/lab_gpu_run_20261018/](evidence/lab_gpu_run_20261018/); `manifest.json` records SHA-256 digests and byte counts. Each isolated profile contains 100 extraction and 100 embedding samples, plus metadata. The live file contains all three warmups, ten measured requests, quarantine response and telemetry snapshots. Earlier statements that raw arrays were unavailable are superseded by this upload.
+
+The live check client ran commit `50ea2e507b7376a8317f9c1b2a8633df9b261e83`; the operator reports restarting the gateway in Terminal 2. The server does not expose a source revision, so that revision was not independently verified. All 13 benign requests succeeded; one short novel-demand request was rejected with HTTP 403 and risk about 0.990. First warmup extraction was 166.54 ms; later warmups were 7.03 and 6.97 ms. The 10 measured extractions averaged 6.357 ms, p95 7.8545 ms and p99 8.4269 ms. Their range was 4.24–8.57 ms. HTTP including backend generation averaged 156.462 ms, p99 160.289 ms. The quarantine HTTP response took 17.192 ms.
+
+Final cache usage was 0.000323485 (about 0.03235%); telemetry was fresh and normal. All stored request policy snapshots were normal. This run does not exercise high-pressure adaptation. The initial pressure endpoint response was unsampled/conservative as designed, and recovered during the run.
+
+Live extraction is slower than isolated warmed extraction. The current measurements do not isolate CPU scheduling, Flask request threads, GPU contention, clocks or other causes. A sub-5ms live ingress or sub-2ms embedding claim remains unsupported. HTTP generation time must not be called ingress overhead.
+
+## Next: bounded GPU protection pilot
+
+`scripts/benchmark_gpu_pilot.py` compares direct vLLM with the adaptive gateway. It sends a short 100,000-word *output-demand* prompt capped to 256 generated tokens, concurrently with one benign probe capped to 16 tokens. Defaults are two rounds per arm with alternating arm order, four demand requests total plus probes and two warmups. No actual 100,000-word input is sent. The gateway now forwards an explicit `temperature` parameter so both arms can request greedy sampling.
+
+Each trial records raw HTTP outcomes, requested caps, backend usage counts, request intervals, selected Prometheus metrics and `nvidia-smi` memory/utilization/power CSV. Telemetry collection is approximate and can miss brief peaks. The trial fails validation on unexpected responses or telemetry errors and retains completed-trial data. Preflight failures prevent starting the workload. HTTP timeouts do not guarantee backend cancellation; if requests time out, stop the pilot and inspect outstanding vLLM requests before repeating.
+
+This is a low-load instrumentation/functional pilot, not proof of GPU saturation, OOM prevention, sustained DoS resistance, dollar savings, static-vs-adaptive superiority or high-pressure behavior. Prefix-cache state persists across arms and GPU clocks are uncontrolled. With only two probes per arm, do not report a reliable tail-latency estimate. Reserved VRAM may remain flat while live KV-block occupancy changes. Pending artifact compatibility warnings remain in force.
+
+Run with both servers active and no unrelated traffic:
+
+```bash
+python scripts/benchmark_gpu_pilot.py --output results/gpu_protection_pilot.json
+```
+
+The script has CPU tests for telemetry parsing and outcome validation; it has not been run against a GPU in the cloud. Hardware results must be supplied by the lab operator before any efficacy conclusion is added.
+
+Cloud validation of the pilot change: all 15 CPU regression tests passed, including a mocked complete two-round pilot checking arm order, persisted outcomes and token accounting. Temperature forwarding is covered in adapter and sandbox route tests. The pilot CLI, Python syntax compilation and whitespace checks passed. No pilot GPU measurements have been executed here.

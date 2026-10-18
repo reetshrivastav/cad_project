@@ -180,7 +180,7 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
 
 
 def call_vllm(prompt=None, system_msg=None, max_tokens=None,
-              messages=None, timeout=90) -> dict:
+              messages=None, timeout=90, temperature=None) -> dict:
     if messages is None:
         messages = []
         if system_msg:
@@ -193,6 +193,9 @@ def call_vllm(prompt=None, system_msg=None, max_tokens=None,
         "stream": False,
         "max_tokens": max_tokens if max_tokens is not None else 1024,
     }
+
+    if temperature is not None:
+        payload["temperature"] = temperature
 
     t0 = time.perf_counter()
     try:
@@ -364,7 +367,9 @@ def openai_compatible_completions():
     if tier == "sandbox":
         max_tok = min(max_tok, SANDBOX_MAX_OUTPUT_TOKENS)
 
-    resp = call_vllm(messages=messages, max_tokens=max_tok, timeout=5 if tier == "sandbox" else 90)
+    resp = call_vllm(messages=messages, max_tokens=max_tok,
+                     timeout=5 if tier == "sandbox" else 90,
+                     temperature=body.get("temperature"))
     if not resp.get("ok"):
         return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"}}), 502
 
