@@ -111,3 +111,9 @@ python scripts/benchmark_gpu_pilot.py --output results/gpu_protection_pilot.json
 The script has CPU tests for telemetry parsing and outcome validation; it has not been run against a GPU in the cloud. Hardware results must be supplied by the lab operator before any efficacy conclusion is added.
 
 Cloud validation of the pilot change: all 15 CPU regression tests passed, including a mocked complete two-round pilot checking arm order, persisted outcomes and token accounting. Temperature forwarding is covered in adapter and sandbox route tests. The pilot CLI, Python syntax compilation and whitespace checks passed. No pilot GPU measurements have been executed here.
+
+## Pilot executed and analyzed
+
+The lab operator completed the bounded pilot and supplied its full JSON. See [GPU_PILOT_REPORT.md](GPU_PILOT_REPORT.md) for per-trial counter reconciliation, GPU allocation ranges, overlap, a CSV and exportable PNG/SVG figures. Both gateway demands returned 403; backend interval deltas match only benign requests in those trials. Across both rounds the gateway avoided the direct arm's 140 demand prompt tokens and 512 generated demand tokens. All benign probes completed.
+
+This supersedes the earlier pending-pilot status. Cache usage stayed below 0.22%, queue depth was zero, all recorded gateway policies were normal, and GPU allocation was 12,404–12,412 MiB. No saturation protection, static-vs-adaptive benefit, zero VRAM delta or monetary savings is established. Raw evidence is retained under `reports/evidence/gpu_pilot_20261018/`. The offline analysis and all 18 CPU regression tests completed successfully; actual saturation testing remains pending.
