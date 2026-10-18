@@ -1,0 +1,22 @@
+{
+  "source_sha256": "9e6ac27234ede721f16dd6dc0db1776c9f2ce3a645330346ee0ccfa47ebf2d8e",
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "client_commit": "fc724e3450009197f6c275d4911a42a9ecf484da",
+  "verified_http_status": 200,
+  "finish_reason": "length",
+  "counter_deltas": {
+    "vllm:prompt_tokens_total": 42.0,
+    "vllm:generation_tokens_total": 256.0,
+    "vllm:request_success_total": 1.0
+  },
+  "post_response_observation_seconds": 3.014359155029524,
+  "post_response_generation_delta": 0,
+  "all_samples_idle": true,
+  "all_samples_kv_fraction": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}

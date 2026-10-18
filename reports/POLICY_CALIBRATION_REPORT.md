@@ -47,6 +47,8 @@ All 35 CPU regression tests passed while adding this analysis and the sandbox ch
 
 ## Next validation
 
+Update: the lab completed the live sandbox check. The [sandbox validation report](SANDBOX_VALIDATION_REPORT.md) reconciles its 256-token cap with backend counters and records startup-telemetry and timeout limitations. The instructions below document that completed run.
+
 Do not alter thresholds merely to manufacture a positive comparison. A larger calibration, if justified, would need its own fixed corpus, complete retained outcomes and an explicit mechanism-test label, separate from held-out evaluation. For now the report retains the absence of observed changed-band candidates and the lack of an isolated dynamic-policy benefit.
 
 The next concrete enforcement check is `scripts/check_sandbox_live.py`, using the already scored first-session sandbox candidate, a unique live session ID and the same model hash. It warms the idle backend with one eight-token request, then asks the gateway for 1,024 tokens with `ignore_eos=true`; correct sandbox forwarding caps the backend at 256. Response metadata now exposes the applied cap and backend read timeout on successes and failures. Classification, thresholds and timeout behavior themselves were not changed by this instrumentation.
