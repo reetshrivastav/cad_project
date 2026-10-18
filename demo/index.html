@@ -1001,13 +1001,13 @@ async function fetchSystemStatus() {
     const statusText = document.getElementById('gateway-status');
     const chip = document.getElementById('engine-chip');
 
-    if (data.ollama) {
+    if (data.vllm) {
       dot.className = 'indicator-dot online';
-      statusText.textContent = data.target_ready ? 'Ollama Online' : 'Ollama (Model Missing)';
+      statusText.textContent = data.target_ready ? 'vLLM Online' : 'vLLM (Model Missing)';
       chip.textContent = data.target_model;
     } else {
       dot.className = 'indicator-dot offline';
-      statusText.textContent = 'Ollama Offline (Simulated Fallback)';
+      statusText.textContent = 'vLLM Offline';
     }
   } catch (err) {
     document.getElementById('gateway-dot').className = 'indicator-dot offline';
@@ -1229,10 +1229,10 @@ function renderResponseStream(d) {
   if (!llm.ok) {
     target.innerHTML = `
       <div class="response-stream-box" style="border-color: rgba(245, 158, 11, 0.3);">
-        <p style="color: var(--tier-sand); font-weight: 600; margin-bottom: 8px;">⚠️ Local Ollama Not Connected</p>
+        <p style="color: var(--tier-sand); font-weight: 600; margin-bottom: 8px;">⚠️ vLLM Request Failed</p>
         <p style="color: var(--text-secondary); font-size: 12.5px;">
           The multi-tier ML routing classification above completed in real-time. To see live LLM generation:
-          <br>1. Run <code>ollama pull llama3.2:3b</code>
+          <br>1. Check the vLLM server on port 8000 and gateway logs
           <br>2. Resend your query.
         </p>
       </div>

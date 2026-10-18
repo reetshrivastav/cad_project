@@ -36,10 +36,12 @@ def composite_score(cost_signal, cache_signal, risk_signal, w1=0.4, w2=0.3, w3=1
     return w1 * cost_signal + w2 * cache_signal - w3 * risk_signal
 
 
-def assign_tier(risk: pd.Series) -> pd.Series:
+def assign_tier(risk: pd.Series, thresholds=None) -> pd.Series:
+    """Assign tiers; offline callers use static policy, live callers pass telemetry."""
+    sandbox, quarantine = thresholds or (SANDBOX_THRESHOLD, REJECT_THRESHOLD)
     tier = pd.Series("full", index=risk.index)
-    tier[risk > SANDBOX_THRESHOLD] = "sandbox"
-    tier[risk > REJECT_THRESHOLD] = "quarantine"
+    tier[risk >= sandbox] = "sandbox"
+    tier[risk >= quarantine] = "quarantine"
     return tier
 
 

@@ -17,7 +17,7 @@ Production-grade ML routing gateway combining:
      - QUARANTINE (Risk >= 0.75) -> 403 Rejection before GPU compute is consumed
   4. OpenAI-Compatible API endpoint (/v1/chat/completions)
 
-LLM backend: Local Ollama (llama3.2:3b by default)
+LLM backend: vLLM OpenAI-compatible API (Qwen2.5-3B-Instruct by default)
 """
 
 import os
@@ -36,8 +36,10 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import tiktoken
 from sklearn.metrics.pairwise import cosine_similarity
+import torch
 from sentence_transformers import SentenceTransformer
 
+from cache_pressure import snapshot as pressure_snapshot
 from features import FEATURE_COLUMNS
 from classifier import RiskClassifier
 from router import (
@@ -57,8 +59,8 @@ logging.basicConfig(
 log = logging.getLogger("router_gateway")
 
 # ── Config ─────────────────────────────────────────────────────────────────
-OLLAMA_BASE  = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL",    "llama3.2:3b")
+VLLM_BASE = os.getenv("VLLM_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
+VLLM_MODEL = os.getenv("VLLM_MODEL", "Qwen/Qwen2.5-3B-Instruct")
 BASE_DIR     = os.path.dirname(os.path.abspath(__file__))
 DEMO_DIR     = os.path.join(BASE_DIR, "demo")
 MODELS_DIR   = os.path.join(BASE_DIR, "models")
@@ -81,7 +83,12 @@ def _init_models():
     _tokenizer = tiktoken.get_encoding("cl100k_base")
 
     log.info("Loading SentenceTransformer ('all-MiniLM-L6-v2')...")
-    _embedder = SentenceTransformer("all-MiniLM-L6-v2")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    _embedder = SentenceTransformer("all-MiniLM-L6-v2", device=device)
+    if device == "cuda":
+        _embedder.half()
+    log.info("MiniLM device=%s, dtype=%s",
+             _embedder.device, next(_embedder.parameters()).dtype)
 
     clf_path = os.path.join(MODELS_DIR, "classifier.joblib")
     tfidf_path = os.path.join(MODELS_DIR, "tfidf.joblib")
@@ -172,36 +179,45 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
     }
 
 
-def call_ollama(prompt: str, system_msg=None, max_tokens=None) -> dict:
-    messages = []
-    if system_msg:
-        messages.append({"role": "system", "content": system_msg})
-    messages.append({"role": "user", "content": prompt})
+def call_vllm(prompt=None, system_msg=None, max_tokens=None,
+              messages=None, timeout=90) -> dict:
+    if messages is None:
+        messages = []
+        if system_msg:
+            messages.append({"role": "system", "content": system_msg})
+        messages.append({"role": "user", "content": prompt})
 
-    payload = {"model": OLLAMA_MODEL, "messages": messages, "stream": False}
-    if max_tokens:
-        payload["options"] = {"num_predict": max_tokens}
+    payload = {
+        "model": VLLM_MODEL,
+        "messages": messages,
+        "stream": False,
+        "max_tokens": max_tokens if max_tokens is not None else 1024,
+    }
 
     t0 = time.perf_counter()
     try:
-        r = http_req.post(f"{OLLAMA_BASE}/api/chat", json=payload, timeout=90)
+        r = http_req.post(
+            f"{VLLM_BASE}/v1/chat/completions",
+            json=payload,
+            timeout=(3, timeout),
+        )
         r.raise_for_status()
-        d = r.json()
+        data = r.json()
+        usage = data.get("usage", {})
         return {
-            "ok":              True,
-            "text":            d.get("message", {}).get("content", ""),
-            "prompt_tokens":   d.get("prompt_eval_count", 0),
-            "response_tokens": d.get("eval_count", 0),
-            "latency_ms":      round((time.perf_counter() - t0) * 1000),
+            "ok": True,
+            "text": data["choices"][0]["message"]["content"],
+            "prompt_tokens": usage.get("prompt_tokens", 0),
+            "response_tokens": usage.get("completion_tokens", 0),
+            "finish_reason": data["choices"][0].get("finish_reason", "stop"),
+            "latency_ms": round((time.perf_counter() - t0) * 1000),
         }
+    except http_req.exceptions.Timeout:
+        return {"ok": False, "error": "vllm_request_timeout"}
     except http_req.exceptions.ConnectionError:
-        return {
-            "ok":    False,
-            "error": "ollama_not_running",
-            "hint":  "Install Ollama from https://ollama.ai then run: ollama pull llama3.2:3b",
-        }
-    except Exception as e:
-        return {"ok": False, "error": str(e)}
+        return {"ok": False, "error": "vllm_not_running"}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
 
 
 # ── Flask Application ──────────────────────────────────────────────────────
@@ -216,25 +232,30 @@ def index():
 
 @app.route("/api/status")
 def status():
+    models = []
+    reachable = False
     try:
-        r = http_req.get(f"{OLLAMA_BASE}/api/tags", timeout=3)
-        models = [m["name"] for m in r.json().get("models", [])]
-        target_ready = any(OLLAMA_MODEL.split(":")[0] in m for m in models)
-        return jsonify({
-            "ollama": True,
-            "models": models,
-            "target_model": OLLAMA_MODEL,
-            "target_ready": target_ready,
-            "router_ready": _classifier is not None,
-        })
+        r = http_req.get(f"{VLLM_BASE}/v1/models", timeout=3)
+        r.raise_for_status()
+        models = [item["id"] for item in r.json().get("data", [])]
+        reachable = True
     except Exception:
-        return jsonify({
-            "ollama": False,
-            "models": [],
-            "target_model": OLLAMA_MODEL,
-            "target_ready": False,
-            "router_ready": _classifier is not None,
-        })
+        pass
+
+    return jsonify({
+        "backend": "vllm",
+        "vllm": reachable,
+        "models": models,
+        "target_model": VLLM_MODEL,
+        "target_ready": VLLM_MODEL in models,
+        "router_ready": _classifier is not None,
+    })
+
+
+@app.route("/api/pressure")
+def cache_pressure_status():
+    from cache_pressure import snapshot
+    return jsonify(snapshot())
 
 
 @app.route("/api/examples")
@@ -265,7 +286,9 @@ def route_request():
     probs = {k: round(float(v), 4) for k, v in proba_df.iloc[0].items()}
 
     # 3. Tier Decision
-    tier_s     = assign_tier(risk_s)
+    policy = pressure_snapshot()
+    thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
+    tier_s     = assign_tier(risk_s, thresholds=thresholds)
     tier       = str(tier_s.iloc[0])
     cache_prob = np.array([0.85 if raw["uses_cached_prefix"] else 0.03])
     cost_usd   = round(float(estimate_cost_dollars(feat_df, tier_s, cache_prob).iloc[0]), 6)
@@ -277,14 +300,14 @@ def route_request():
             "blocked": True,
             "text":    None,
             "reason":  (
-                f"Risk score {risk:.3f} exceeded quarantine safety threshold ({REJECT_THRESHOLD}). "
-                "Request halted at gateway — zero GPU inference compute was consumed."
+                f"Risk score {risk:.3f} triggered quarantine under the current routing policy. "
+                "Request halted before backend LLM inference; gateway embedding compute was used."
             ),
         }
     else:
         sys_msg  = "You are a helpful AI assistant. Keep your response concise and under 150 words." if tier == "sandbox" else None
         max_tok  = SANDBOX_MAX_OUTPUT_TOKENS if tier == "sandbox" else None
-        llm      = call_ollama(prompt, sys_msg, max_tok)
+        llm      = call_vllm(prompt, sys_msg, max_tok, timeout=5 if tier == "sandbox" else 90)
         llm["blocked"] = False
 
     return jsonify({
@@ -297,8 +320,9 @@ def route_request():
         "cost_usd":           cost_usd,
         "total_latency_ms":   round((time.perf_counter() - t_total) * 1000),
         "llm":                llm,
-        "thresholds":         {"sandbox": SANDBOX_THRESHOLD, "quarantine": REJECT_THRESHOLD},
-        "model":              OLLAMA_MODEL,
+        "thresholds":         {"sandbox": thresholds[0], "quarantine": thresholds[1]},
+        "pressure_policy": policy,
+        "model":              VLLM_MODEL,
         "sandbox_token_cap":  SANDBOX_MAX_OUTPUT_TOKENS,
     })
 
@@ -323,12 +347,14 @@ def openai_compatible_completions():
     raw = extract_real_features(user_prompt, session_id)
     feat_df = pd.DataFrame([{c: raw[c] for c in FEATURE_COLUMNS}])
     risk_s, _, _ = _classifier.risk_scores(feat_df)
-    tier = str(assign_tier(risk_s).iloc[0])
+    policy = pressure_snapshot()
+    thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
+    tier = str(assign_tier(risk_s, thresholds=thresholds).iloc[0])
 
     if tier == "quarantine":
         return jsonify({
             "error": {
-                "message": f"Request blocked by Adaptive LLM Router (Risk {float(risk_s.iloc[0]):.3f} >= {REJECT_THRESHOLD})",
+                "message": f"Request blocked by Adaptive LLM Router under the current routing policy (Risk {float(risk_s.iloc[0]):.3f})",
                 "type": "security_quarantine_error",
                 "code": "risk_quarantine"
             }
@@ -338,7 +364,7 @@ def openai_compatible_completions():
     if tier == "sandbox":
         max_tok = min(max_tok, SANDBOX_MAX_OUTPUT_TOKENS)
 
-    resp = call_ollama(user_prompt, max_tokens=max_tok)
+    resp = call_vllm(messages=messages, max_tokens=max_tok, timeout=5 if tier == "sandbox" else 90)
     if not resp.get("ok"):
         return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"}}), 502
 
@@ -346,11 +372,11 @@ def openai_compatible_completions():
         "id": f"chatcmpl-{hashlib.md5(str(time.time()).encode()).hexdigest()[:12]}",
         "object": "chat.completion",
         "created": int(time.time()),
-        "model": OLLAMA_MODEL,
+        "model": VLLM_MODEL,
         "choices": [{
             "index": 0,
             "message": {"role": "assistant", "content": resp.get("text", "")},
-            "finish_reason": "stop"
+            "finish_reason": resp.get("finish_reason", "stop")
         }],
         "usage": {
             "prompt_tokens": resp.get("prompt_tokens", 0),
@@ -360,7 +386,9 @@ def openai_compatible_completions():
         "router_meta": {
             "tier": tier,
             "risk_score": round(float(risk_s.iloc[0]), 4),
-            "extract_ms": raw["_extract_ms"]
+            "extract_ms": raw["_extract_ms"],
+            "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]},
+            "pressure_policy": policy
         }
     })
 
@@ -431,7 +459,7 @@ if __name__ == "__main__":
     log.info("  🚀  ADAPTIVE LLM ROUTER GATEWAY IS ONLINE!")
     log.info("  🌐  Dashboard Interface : http://localhost:5000")
     log.info("  🔌  OpenAI API Endpoint : http://localhost:5000/v1/chat/completions")
-    log.info("  🤖  Ollama Backend      : %s (%s)", OLLAMA_BASE, OLLAMA_MODEL)
+    log.info("  🤖  vLLM Backend      : %s (%s)", VLLM_BASE, VLLM_MODEL)
     log.info("=" * 64)
 
     app.run(debug=False, port=5000, use_reloader=False)
