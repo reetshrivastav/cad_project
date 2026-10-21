@@ -1,6 +1,6 @@
 # Prespecified native GPU stress replications
 
-Status: prepared on 21 October 2026; real GPU runs are pending lab execution. Earlier calibration and controls are exploratory evidence, not replications from this schedule. This protocol leaves the application, trained model and benchmark workload unchanged.
+Status: all nine lab runs have been supplied and analyzed; see [GPU_REPLICATION_REPORT.md](GPU_REPLICATION_REPORT.md). Earlier calibration and controls are exploratory evidence, not replications from this schedule. This protocol leaves the application, trained model and benchmark workload unchanged.
 
 ## Model preservation
 

@@ -1,0 +1,15 @@
+{
+  "archive_name": "cad-gpu-replication-v1.tar.gz",
+  "archive_sha256": "b4c80312c2a6ae74591356a83f301623940d960000dd965f05be836d79662ec2",
+  "files_sha256": {
+    "b1_adaptive.json": "42e886ef836c1ec4a039ad0e3430328c2011912e1748a987d5d7c98c223b8824",
+    "b1_direct.json": "bc619477d1edee3325ef5084a519f312614910f1a33d020a84e9bd87e618a05f",
+    "b1_static.json": "9aaf48be69c610ef3c64f80f57bd088400096a59aa2de061e0bda1a8365f8ba9",
+    "b2_adaptive.json": "5cef7ed5b3e6691599aa09c414917bef2d7ec2111f1e5ce3bf05f72975568ea8",
+    "b2_direct.json": "4003f10d55a7a388850c8f67ba422c3e489febb1eff0d6f038ec4d4d1717884b",
+    "b2_static.json": "96a1d6e6e6d31fa5592b05d3810685c440fdbe7d49827b8b57664bd8c06cad0e",
+    "b3_adaptive.json": "04913bbd24d995de0473766fa272ac57431dbf7b7bfff4df27fe990b71f430e6",
+    "b3_direct.json": "25f052f93978229abc0b50c6d1dd234f0367e78628aa0dd960092ba84f0567f0",
+    "b3_static.json": "841e2b6a314a9aa8a48f4a997af7ea2331e4dba75564a5a10d11173b4048f5ea"
+  }
+}
