@@ -1,0 +1,13 @@
+{
+  "archive": "cad-lab-native-v1.tar.gz",
+  "archive_sha256": "995c8c4cf9fb797ccd3e09c673bbf5a4e13f9540e3dd4cf29e01d6f316fd17ae",
+  "archive_bytes": 289105,
+  "metadata": "../native_burst_20261018/lab_native_v1_metadata.json",
+  "source": "Operator-uploaded lab-native export; byte hashes verified without deserializing joblib files.",
+  "artifact_sha256": {
+    "classifier.joblib": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+    "tfidf.joblib": "463ee22d078525d041b82acd8e5c27eedd68aadd93b1b1c15621b9f64e6591ba",
+    "ref_embeddings.npy": "039e785f3c1d07062aef9dcd26ecefebd81e23738917f21a49f471f53c88b46c",
+    "reference_jailbreaks.json": "032f0a5a1ca3ce9d05e95bfe8dc330c976c5509d0400048a7f6bd4901c0440ed"
+  }
+}

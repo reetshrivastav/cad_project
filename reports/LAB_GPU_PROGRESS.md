@@ -165,3 +165,9 @@ See [POLICY_CALIBRATION_REPORT.md](POLICY_CALIBRATION_REPORT.md) for exact input
 The full native sandbox JSON confirms HTTP 200, a 256-token length-limited completion despite a requested 1,024 tokens, and matching backend interval deltas of 42 prompt tokens, 256 generated tokens and one length completion. All four post-response samples were idle with unchanged generation counters over 3.014 seconds. The native classifier hash matches calibration. See [SANDBOX_VALIDATION_REPORT.md](SANDBOX_VALIDATION_REPORT.md) for preserved raw evidence, checksum and limitations.
 
 The decision used conservative startup telemetry, not actual high pressure. The request completed in 4.608 seconds, so no timeout/cancellation or hard GPU deadline was tested. This supersedes the pending sandbox status above; adaptive causal benefit and held-out security performance remain unproven. No application code or native model was changed for this report.
+
+## Native artifact preservation and repeatability protocol (21 October 2026)
+
+The operator's 289,105-byte native archive is retained under `reports/evidence/native_model_20261018/`. All four artifact hashes and the included metadata match the recorded native experiment. The archive checksum is recorded in its manifest. Verification uses bytes/JSON only, without deserializing joblib files; no model/runtime compatibility claim is inferred. Existing default models and lab-native directories are preserved.
+
+[GPU_REPLICATION_PROTOCOL.md](GPU_REPLICATION_PROTOCOL.md) prespecifies three fresh-server repetitions of direct/static/adaptive conditions in balanced order, using the unchanged bounded workload and constrained KV pool. All outcomes, failed runs and target misses must be retained. The first next lab action is `b1_direct`; actual replication results remain pending. This is a small repeatability study, not a P99 or adaptive-superiority claim.

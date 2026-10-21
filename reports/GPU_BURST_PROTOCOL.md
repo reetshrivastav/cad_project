@@ -1,5 +1,7 @@
 # Lab-native retraining and controlled KV-pressure calibration
 
+Follow-up: native model bytes are now retained and verified. Use [GPU_REPLICATION_PROTOCOL.md](GPU_REPLICATION_PROTOCOL.md) for the fixed nine-run repeatability schedule; the sections below retain the original calibration procedure. Do not rerun training over the existing native directory.
+
 This protocol is a new experiment, not an extension of the old model's accuracy claim. It does not require Python 3.12 or changing the vLLM environment. It preserves all previously published artifacts and evidence.
 
 ## What the existing pilot did and why a bigger client burst alone is insufficient
