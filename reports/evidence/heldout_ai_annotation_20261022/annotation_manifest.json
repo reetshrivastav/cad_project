@@ -1,0 +1,11 @@
+{
+  "labels_file": "cad-heldout-label-review-ai.csv",
+  "labels_sha256": "6de5a1c34a3fb53f9f8c6c50c809da67e033b2d63f1e6cef765f002aa5160fc5",
+  "candidate_count": 200,
+  "labels": {
+    "benign": 200
+  },
+  "reviewer": "OpenAI assistant (AI-only; no human adjudication)",
+  "annotation_process": "AI read visible prompts without model scores; user returned the exact completed CSV; no independent human review asserted.",
+  "original_prompt_fields_verified": true
+}
