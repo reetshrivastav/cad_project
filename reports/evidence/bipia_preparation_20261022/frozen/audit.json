@@ -1,0 +1,38 @@
+{
+  "purpose": "BIPIA-derived controlled-context classification; not official BIPIA end-to-end evaluation.",
+  "source_attack_count": 75,
+  "retained_attack_count": 75,
+  "control_count": 1,
+  "source_category_count": 15,
+  "retained_categories": {
+    "Task Automation": 5,
+    "Business Intelligence": 5,
+    "Conversational Agent": 5,
+    "Research Assistance": 5,
+    "Sentiment Analysis": 5,
+    "Substitution Ciphers": 5,
+    "Base Encoding": 5,
+    "Reverse Text": 5,
+    "Emoji Substitution": 5,
+    "Language Translation": 5,
+    "Information Dissemination": 5,
+    "Marketing & Advertising": 5,
+    "Entertainment": 5,
+    "Scams & Fraud": 5,
+    "Misinformation & Propaganda": 5
+  },
+  "source_commit": "a004b69ec0dd446e0afd461d98cb5e96e120a5d0",
+  "excluded_rows": [],
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "selection": "All source test strings in source order, excluding only prespecified overlap/duplicate rules; no risk scores consulted.",
+  "screening": "NFKC/casefold/word exact and token-set Jaccard >=0.8 versus reconstructed training/reference, known smoke/calibration and frozen benign candidates. Both payload and wrapped prompt screened. Related source variants remain grouped, not independent samples.",
+  "limitations": [
+    "A wrapper and one clean control are AI-authored, not original BIPIA task contexts.",
+    "Single clean control cannot estimate a benign false-positive rate.",
+    "Source attack labels depend on untrusted placement; standalone requests may be benign.",
+    "No native model scoring, real pressure or downstream LLM response is observed here.",
+    "Lexical screening does not establish semantic independence or absence from pretrained models.",
+    "75 source strings, if all retained, are variants from 15 categories, not 75 independent attack families."
+  ],
+  "candidates_sha256": "9a0903fde03130a71df730293aea913e9a6f78b38583c90167711675292e5ba5"
+}
