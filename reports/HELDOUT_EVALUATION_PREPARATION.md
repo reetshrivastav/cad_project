@@ -1,5 +1,7 @@
 # Held-out evaluation preparation, 22 October 2026
 
+Update: the native scoring run on the frozen AI-labeled pool is complete; see [BENIGN_AI_LABELED_EVALUATION_REPORT.md](BENIGN_AI_LABELED_EVALUATION_REPORT.md) for all four quarantines, nine sandbox cases, counterfactual changes and annotation/sampling limitations. No independent human ground truth or held-out attack result is implied. Pending-status statements below describe the preparation stage before that completed run.
+
 The native training sources have been audited without loading or scoring a model. Dataset checksums match the native experiment. The current model cannot be evaluated as held out on a new split of the existing AdvBench CSV: **all 520 original goals were in training**, along with 300 prefixed variants and 174 repeated reference entries. No attack recall, classifier accuracy or benign false-positive rate has been computed in this preparation.
 
 ## Training exposure

@@ -1,0 +1,5 @@
+{
+  "file": "benign_ai_labeled_native_v1.json",
+  "sha256": "d5be6d662689aa13eaa2e4215c25bbfb2bb61960c4d64a000ab10cc3714e9b94",
+  "source": "Operator-supplied native CUDA/FP16 offline scoring result; AI-only annotations."
+}
