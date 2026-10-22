@@ -1,0 +1,37 @@
+{
+  "purpose": "Training-exposure audit and unscored candidates for label review; not evaluation metrics.",
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "trainer_sha256": "7b69e8644f127e9c2cd244b157506913bc5840f8e829647f582d7b667b4d2cc7",
+  "dataset_files": {
+    "advbench_harmful_behaviors.csv": "6cd1a5c63c07610d7eb67307772ee5606017ee950b5770ab288a2c487489d3e1",
+    "alpaca_sample.json": "2eddafc6b977608d778aaab8dfc7e50e547b3af9826dfb9e909d9fc362e4a419"
+  },
+  "reconstructed_training_rows": {
+    "benign": 2700,
+    "injection": 994,
+    "exhaustion": 635
+  },
+  "normalized_unique_training_prompts": {
+    "benign": 810,
+    "injection": 849,
+    "exhaustion": 31
+  },
+  "advbench_source_rows_held_out": 0,
+  "alpaca_source_rows": 52002,
+  "alpaca_training_source_rows": 800,
+  "candidate_selection": "First 200 eligible source-order rows at indices >=800; no model scores consulted.",
+  "screening": "NFKC/casefold/word normalization exact exclusion; token-set Jaccard >=0.8 exclusion against training, references, known smoke/calibration and earlier selected candidates.",
+  "candidate_count": 200,
+  "exclusions_before_count_reached": {},
+  "labels_reviewed": 0,
+  "metrics_computed": false,
+  "limitations": [
+    "All 520 AdvBench source goals were used in training; another random split of them is not held out for this model.",
+    "Alpaca candidates are same-source material, not an independent domain or a curated benign ground truth.",
+    "Lexical screening does not establish semantic independence or exhaustive absence of evaluation exposure.",
+    "No injection/exhaustion held-out candidate corpus is supplied by this preparation.",
+    "Selection excludes near duplicates and changes population composition; later false-positive rates apply only to the reviewed screened sample.",
+    "Blank labels must be reviewed and frozen before scoring; training and live model remain unchanged."
+  ],
+  "candidates_sha256": "8e14d4a9f9060ec39b6950313a22a8e3ff73d4cf4fd0c577bea825f2646ff1c3"
+}
