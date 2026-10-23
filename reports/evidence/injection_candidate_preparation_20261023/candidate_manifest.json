@@ -1,0 +1,12 @@
+{
+  "reference_url": "https://raw.githubusercontent.com/protectai/llm-guard/main/llm_guard/input_scanners/prompt_injection.py",
+  "reference_sha256": "eb318874b9f6bd684652da6c57bc013c9f3b15fa3718ff3c103a8a0710eb17ed",
+  "observed_on": "2026-10-23",
+  "selected_model": "protectai/deberta-v3-base-prompt-injection-v2",
+  "pinned_revision": "89b085cd330414d3e7d9dd787870f315957e1e9f",
+  "observed_default_threshold": 0.92,
+  "decision_rule": "injection_score > threshold",
+  "additional_prespecified_diagnostic_threshold": 0.5,
+  "cloud_model_access": "Hugging Face denied by cloud destination policy; pinned weights/tokenizer/model card not downloaded or executed in cloud. Lab inference pending.",
+  "annotation_scope": "Previously inspected AI-labeled and source-derived diagnostic cases, not new held-out data; candidate training overlap unknown."
+}
