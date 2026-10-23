@@ -1,5 +1,7 @@
 # BIPIA-derived controlled memo classification protocol
 
+Update: the lab completed scoring, with 1/75 quarantine, 2/75 sandbox and 72/75 full at normal thresholds; see [BIPIA_CONTROLLED_EVALUATION_REPORT.md](BIPIA_CONTROLLED_EVALUATION_REPORT.md). Pending-status language below records the original preparation stage, not the current experiment status.
+
 Prepared 22 October 2026; native scoring results are pending. The existing native model and thresholds are frozen. This is a small, source-derived controlled-context classification experiment, not official BIPIA performance, downstream attack-success rate, exhaustive unseen-attack recall, or proof of indirect-injection resistance.
 
 ## Source and why placement matters

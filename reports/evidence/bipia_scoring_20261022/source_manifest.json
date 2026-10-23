@@ -1,0 +1,5 @@
+{
+  "file": "bipia_controlled_native_v1.json",
+  "sha256": "00f0e58bfbb3384ecfd4e266040e28923b639156c61d29a0e2d4de2216dc700e",
+  "source": "Operator-supplied native CUDA/FP16 controlled memo classification; no downstream LLM execution."
+}
