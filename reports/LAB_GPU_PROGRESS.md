@@ -270,3 +270,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Uploaded document byte counts and SHA256 digests reconcile. LLMail dataset card declares MIT; Tensor Trust license remains unresolved. Two GitHub listings were rate-limited despite overall audit completion.
 - Pinned downloader preserves Phase 1 raw grouping metadata, source annotations and scenario/benign support files. Phase 2 remains untouched. No training or classifier labels assigned; payloads stay local and are Git-ignored.
 - See [audit report](EXTERNAL_DATASET_AUDIT_REPORT.md) for terminal-3 intake and summary upload.
+
+### 23 October — LLMail intake completed; grouping audit prepared
+
+- Preserved operator intake summary: eight files, no errors, publisher row counts matched. 127,376 True, 9,452 False, 23,911 Unclear and two malformed annotation values; automated provenance remains explicit.
+- Added local hash verification, exact text-to-raw join statistics and connected-team analysis over shared raw texts. No split, near-duplicate guarantee, binary relabeling or training. See [intake report](LLMAIL_PHASE1_INTAKE_REPORT.md).

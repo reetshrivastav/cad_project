@@ -21,6 +21,6 @@ An [offline task/content v2 prototype](CONTEXT_V2_PROTOTYPE_PROTOCOL.md) is now 
 
 Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [benign scoring](BENIGN_AI_LABELED_EVALUATION_REPORT.md), [controlled injection scoring](BIPIA_CONTROLLED_EVALUATION_REPORT.md), [shadow detector](INJECTION_CANDIDATE_DIAGNOSTIC_REPORT.md), [matched wrappers](WRAPPER_DIAGNOSTIC_REPORT.md).
 
-Current cloud regression verification: 88 CPU tests passed. Actual GPU outcomes are operator-supplied, preserved and reconciled in the linked reports; CPU test success does not establish injection efficacy.
+Current cloud regression verification: 90 CPU tests passed. Actual GPU outcomes are operator-supplied, preserved and reconciled in the linked reports; CPU test success does not establish injection efficacy.
 
-[External metadata audit verified](EXTERNAL_DATASET_AUDIT_REPORT.md): LLMail card declares MIT; Tensor Trust license remains unresolved. Next is pinned Phase 1 payload/schema intake on the lab, with Phase 2 untouched pending overlap checks. No external data has been used for training.
+[External metadata audit verified](EXTERNAL_DATASET_AUDIT_REPORT.md): LLMail card declares MIT; Tensor Trust license remains unresolved. [Phase 1 intake completed](LLMAIL_PHASE1_INTAKE_REPORT.md): 370,724 raw rows, 224 teams, 160,741 annotations, 203 benign emails. Next is exact text joins and team-component leakage analysis. Phase 2 remains untouched; no external data has been used for training.
