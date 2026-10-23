@@ -1,0 +1,145 @@
+Ran 79 tests in 3.912s
+
+OK
+Loading MiniLM on CUDA/FP16; training/validation only, no test encoding.
+{
+  "output_dir": "models/context_native_v2",
+  "test_inputs_encoded": 0,
+  "models": {
+    "pair": {
+      "training_resubstitution": {
+        "count": 280,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 112,
+        "false_review": 0,
+        "correct_allow": 168,
+        "missed_review": 0,
+        "workflow_proxy_accuracy": 1.0,
+        "review_coverage": 1.0,
+        "false_review_rate": 0.0,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      },
+      "validation_topic_groups": {
+        "count": 60,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 24,
+        "false_review": 0,
+        "correct_allow": 36,
+        "missed_review": 0,
+        "workflow_proxy_accuracy": 1.0,
+        "review_coverage": 1.0,
+        "false_review_rate": 0.0,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      }
+    },
+    "task_only": {
+      "training_resubstitution": {
+        "count": 280,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 112,
+        "false_review": 56,
+        "correct_allow": 112,
+        "missed_review": 0,
+        "workflow_proxy_accuracy": 0.8,
+        "review_coverage": 1.0,
+        "false_review_rate": 0.3333333333333333,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      },
+      "validation_topic_groups": {
+        "count": 60,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 24,
+        "false_review": 12,
+        "correct_allow": 24,
+        "missed_review": 0,
+        "workflow_proxy_accuracy": 0.8,
+        "review_coverage": 1.0,
+        "false_review_rate": 0.3333333333333333,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      }
+    },
+    "content_only": {
+      "training_resubstitution": {
+        "count": 280,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 58,
+        "false_review": 58,
+        "correct_allow": 110,
+        "missed_review": 54,
+        "workflow_proxy_accuracy": 0.6,
+        "review_coverage": 0.5178571428571429,
+        "false_review_rate": 0.34523809523809523,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      },
+      "validation_topic_groups": {
+        "count": 60,
+        "threshold": 0.5,
+        "rule": "review_probability >= 0.5",
+        "true_review": 10,
+        "false_review": 10,
+        "correct_allow": 26,
+        "missed_review": 14,
+        "workflow_proxy_accuracy": 0.6,
+        "review_coverage": 0.4166666666666667,
+        "false_review_rate": 0.2777777777777778,
+        "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+      }
+    }
+  }
+}
+reet@sjt418scope035:~/cad_project$ .venv/bin/python scripts/evaluate_context_v2.py \
+  --models-dir models/context_native_v2 \
+  --output results/context_v2_topic_test.json
+Loading recorded MiniLM checkpoint; scoring only the 60 topic-test cases.
+{
+  "models": {
+    "pair": {
+      "count": 60,
+      "threshold": 0.5,
+      "rule": "review_probability >= 0.5",
+      "true_review": 24,
+      "false_review": 1,
+      "correct_allow": 35,
+      "missed_review": 0,
+      "workflow_proxy_accuracy": 0.9833333333333333,
+      "review_coverage": 1.0,
+      "false_review_rate": 0.027777777777777776,
+      "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+    },
+    "task_only": {
+      "count": 60,
+      "threshold": 0.5,
+      "rule": "review_probability >= 0.5",
+      "true_review": 24,
+      "false_review": 12,
+      "correct_allow": 24,
+      "missed_review": 0,
+      "workflow_proxy_accuracy": 0.8,
+      "review_coverage": 1.0,
+      "false_review_rate": 0.3333333333333333,
+      "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+    },
+    "content_only": {
+      "count": 60,
+      "threshold": 0.5,
+      "rule": "review_probability >= 0.5",
+      "true_review": 8,
+      "false_review": 8,
+      "correct_allow": 28,
+      "missed_review": 16,
+      "workflow_proxy_accuracy": 0.6,
+      "review_coverage": 0.3333333333333333,
+      "false_review_rate": 0.2222222222222222,
+      "scope": "Synthetic workflow-proxy labels, not deployment accuracy, malicious-intent truth or downstream attack success."
+    }
+  },
+  "output": "results/context_v2_topic_test.json"
+}
+reet@sjt418scope035:~/cad_project$ tar -czf ~/Desktop/context-v2-lab-results.tar.gz \
+  models/context_native_v2 results/context_v2_topic_test.json
+reet@sjt418scope035:~/cad_project$ 

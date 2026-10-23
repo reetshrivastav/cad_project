@@ -247,3 +247,9 @@ A separate offline prototype receives trusted task and untrusted content as dist
 The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/60/60 train/validation/test splits. Eighty distinct content texts have contrasting task-dependent workflow labels. Metadata is excluded from features, duplicate pairs/group leakage are rejected, trainer never encodes/scores test inputs, and test evaluation is a separate command. Templates are shared across splits, so these are controlled sanity checks rather than independent real-world/novel-template accuracy measurements.
 
 [CONTEXT_V2_PROTOTYPE_PROTOCOL.md](CONTEXT_V2_PROTOTYPE_PROTOCOL.md) supplies the exact input/label contract, new-directory export, hash/revision checks and lab commands. Cloud checks use fake embeddings and tiny real CPU XGBoost models solely to verify software and split isolation. Native training and test outcomes remain pending.
+
+### 23 October — task/content v2 native results
+
+- Archived exact lab model/training/test bundle; hashes, splits, frozen inputs and per-row/per-topic metrics reconcile offline. Pair: 59/60 topic-test correct, all 24 redirections reviewed, one clean summary falsely reviewed. Task-only: 48/60; content-only: 36/60.
+- Synthetic AI-authored shared-template evidence only; no independent security accuracy or live protection claim. Existing gateway unchanged.
+- Prepared 48-case new-wording diagnostic for frozen models, with task-dependent analysis/quotation controls; no retraining. See [v2 report](CONTEXT_V2_PROTOTYPE_REPORT.md) for terminal-3 commands.
