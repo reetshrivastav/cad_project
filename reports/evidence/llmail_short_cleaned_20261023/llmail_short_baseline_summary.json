@@ -1,0 +1,95 @@
+{
+  "source_preparation_sha256": "9a7b34e18d5730663d3aa8eb940c49bdcf35859945ff24bb7df67d5cbb74130d",
+  "script_sha256": "930b7c786695b5db9fcf2f67a93c7b47921d1421e10a6fe966f3b7e6e54eb8a8",
+  "tokenizer_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "window_including_specials": 256,
+  "eligible_short_counts": {
+    "train": {
+      "True": 39229,
+      "False": 2596
+    },
+    "validation": {
+      "True": 10707,
+      "False": 396
+    },
+    "test": {
+      "True": 13282,
+      "False": 707
+    }
+  },
+  "excluded_long_counts": {
+    "train": {
+      "True": 54487,
+      "False": 5437
+    },
+    "validation": {
+      "True": 6382,
+      "False": 52
+    },
+    "test": {
+      "True": 3283,
+      "False": 264
+    }
+  },
+  "lexical_cleanup": {
+    "counts": {
+      "lsh_candidates": 23674542,
+      "rows": 66917,
+      "verified_comparisons": 1548001,
+      "conservative_candidate_rows": 11896,
+      "conservatively_excluded_candidate_edges": 22126541,
+      "normalized_text_cross_split_pairs": 12,
+      "token_bag_cross_split_pairs": 215,
+      "verified_jaccard_pairs": 623,
+      "excluded_rows": 47140
+    },
+    "verified_jaccard_pairs_by_split": {
+      "train/validation": 106,
+      "test/train": 463,
+      "test/validation": 54
+    },
+    "surviving_normalized_exact_keys_cross_splits": 0,
+    "scope": "Complete normalized-text/token-bag exact cleanup among short rows; approximate 64-permutation 16x4 MinHash candidates with unigram Jaccard >=0.8. Overflow/budget candidates conservatively excluded rather than skipped. Does not establish absence of semantic/template leakage."
+  },
+  "removed_for_overlap": {
+    "train": {
+      "True": 35581,
+      "False": 2348
+    },
+    "validation": {
+      "True": 8855,
+      "False": 356
+    },
+    "test": {}
+  },
+  "retained_counts": {
+    "train": {
+      "True": 3648,
+      "False": 248
+    },
+    "validation": {
+      "True": 1852,
+      "False": 40
+    },
+    "test": {
+      "True": 13282,
+      "False": 707
+    }
+  },
+  "files": {
+    "train": {
+      "sha256": "e7e508724496f2d591c253178d9d883b812384483adfe3d687eac7c1e4d2747a",
+      "bytes": 4469258
+    },
+    "validation": {
+      "sha256": "f39d10783774f43afc6b1db752aae905539a6201900cca44fcf4212116d61168",
+      "bytes": 2512303
+    },
+    "test": {
+      "sha256": "307214d3981d1cbc2c4578e919962d82a6593f1844c5efdfc700e54f019035df",
+      "bytes": 14716303
+    }
+  },
+  "training_performed": false,
+  "scope": "Short-email source-annotation baseline preparation only. Long emails excluded with explicit coverage counts. Not a general prompt-injection safety evaluation. Higher-priority test > validation > train retained; no rows moved between original team splits."
+}

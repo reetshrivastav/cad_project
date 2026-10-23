@@ -297,3 +297,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Retained exact uploaded summary and reconciled source/preparation digests. Train/validation/test long-email counts: 59,924/6,434/3,547. Initial lexical screening detected 872 pairs but exhausted two-million budget and skipped overfull queries. Not a clean leakage result.
 - Prepared explicitly selective short-email baseline with no truncation, exhaustive normalized exact-key cleanup and approximate MinHash candidates. Candidate overflow is handled by conservative lower-priority exclusion, not skipped comparisons. Source-label, coverage and approximate-search limitations retained. No fitting/GPU work.
+
+### 23 October — cleaned short subset verified; actual baseline training ready
+
+- Retained uploaded cleanup evidence and reconciled digests/counts. 3,896 train, 1,892 validation, 13,989 reserved test; 47,140 conservative removals are not all verified duplicates. Development distribution heavily selected and negatives scarce.
+- Prepared pair/task-only/content-only CPU XGBoost heads on pinned CUDA/FP16 MiniLM embeddings; fixed weights/parameters/cutoff, always-positive comparator, imbalance-aware validation metrics. Test file hashed but not parsed/encoded/scored. No integration or serving changes.
+- See [training protocol](LLMAIL_SHORT_TRAINING_PROTOCOL.md) for terminal-3 training and small model archive upload.

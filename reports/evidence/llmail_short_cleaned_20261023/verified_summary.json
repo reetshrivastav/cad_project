@@ -1,0 +1,8 @@
+{
+  "source_sha256": "5605965e08d8bd624bc41e8a2387004c130901408e725f1cce1c1e075bc5d36c",
+  "preparation_and_script_digests_reconcile": true,
+  "eligible_short_rows": 66917,
+  "retained_rows": 19777,
+  "removed_rows": 47140,
+  "scope": "Operator-reported cleanup aggregates reconciled; conservative removals are not all verified near duplicates. No model scores yet."
+}
