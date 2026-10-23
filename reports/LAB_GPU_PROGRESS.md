@@ -264,3 +264,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Added a standard-library, metadata-only audit for LLMail-Inject (Hugging Face), its companion analysis repository and Tensor Trust. Exact revisions, cards, listings, license documents and digests precede any payload ingestion or training. Cloud Hugging Face access is denied; run audit on the lab host.
 - See [intake protocol](EXTERNAL_DATASET_AUDIT_PROTOCOL.md) for terminal-3 commands and audit archive upload. Existing models and servers unchanged.
+
+### 23 October — external audit verified; LLMail Phase 1 intake prepared
+
+- Uploaded document byte counts and SHA256 digests reconcile. LLMail dataset card declares MIT; Tensor Trust license remains unresolved. Two GitHub listings were rate-limited despite overall audit completion.
+- Pinned downloader preserves Phase 1 raw grouping metadata, source annotations and scenario/benign support files. Phase 2 remains untouched. No training or classifier labels assigned; payloads stay local and are Git-ignored.
+- See [audit report](EXTERNAL_DATASET_AUDIT_REPORT.md) for terminal-3 intake and summary upload.

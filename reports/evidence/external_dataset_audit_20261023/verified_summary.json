@@ -1,0 +1,99 @@
+{
+  "archive_sha256": "5a3a51b5d417b2731d09916896a0b874013d2d503ed475d1d06b785acb25fb07",
+  "verified_documents": [
+    "llmail_dataset_README.md",
+    "llmail_dataset_metadata.json",
+    "tensor-trust-data_README.md",
+    "llmail-inject-challenge-analysis_README.md",
+    "llmail-inject-challenge-analysis_LICENSE"
+  ],
+  "sources": {
+    "llmail_huggingface": {
+      "source": "https://huggingface.co/datasets/microsoft/llmail-inject-challenge",
+      "revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+      "card_metadata": {
+        "license": "mit",
+        "task_categories": [
+          "text2text-generation"
+        ],
+        "pretty_name": "LLMail-Inject: Adaptive Prompt Injection Challenge",
+        "size_categories": [
+          "100K<n<1M"
+        ],
+        "configs": [
+          {
+            "config_name": "default",
+            "data_files": [
+              {
+                "split": "Phase1",
+                "path": "data/raw_submissions_phase1.jsonl"
+              },
+              {
+                "split": "Phase2",
+                "path": "data/raw_submissions_phase2.jsonl"
+              }
+            ]
+          }
+        ]
+      },
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/emails_for_fp_tests.json",
+        "data/labelled_unique_submissions_phase1.json",
+        "data/labelled_unique_submissions_phase2.json",
+        "data/levels_descriptions.json",
+        "data/objectives_descriptions.json",
+        "data/raw_submissions_phase1.jsonl",
+        "data/raw_submissions_phase2.jsonl",
+        "data/scenarios.json",
+        "data/system_prompt.json"
+      ],
+      "provenance": {
+        "file": "llmail_dataset_metadata.json",
+        "bytes": 2539,
+        "sha256": "72639af3973e2dab3f35383e2f9626b1713f8f09e390b1959484cacad3363c7a"
+      },
+      "payloads_downloaded": false,
+      "readme": {
+        "file": "llmail_dataset_README.md",
+        "bytes": 23628,
+        "sha256": "d85767e349ab1abbaf43db9390c4e906e34954e5df3a1335c8f1516efa64e812"
+      }
+    },
+    "HumanCompatibleAI/tensor-trust-data": {
+      "source": "https://github.com/HumanCompatibleAI/tensor-trust-data",
+      "revision": "747a75e096761ebc01bd3970158827326b4add23",
+      "payloads_downloaded": false,
+      "readme": {
+        "file": "tensor-trust-data_README.md",
+        "bytes": 693,
+        "sha256": "f9d84aee43137dbeed87a97330d6035468ea8cc0e5aaa58b7f0bdef2ba911c09"
+      },
+      "listing_error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "license_files": [],
+      "license_status": "No root license collected; do not infer reuse permission"
+    },
+    "microsoft/llmail-inject-challenge-analysis": {
+      "source": "https://github.com/microsoft/llmail-inject-challenge-analysis",
+      "revision": "3c6e0069e7609d7ef100694c9c29e12aa488452e",
+      "payloads_downloaded": false,
+      "readme": {
+        "file": "llmail-inject-challenge-analysis_README.md",
+        "bytes": 23069,
+        "sha256": "3da726197c4227b2fe519b261ce3cc25a0373510f782f266dff509118a11bf48"
+      },
+      "listing_error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "license_files": [
+        {
+          "file": "llmail-inject-challenge-analysis_LICENSE",
+          "bytes": 1141,
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+        }
+      ],
+      "license_status": "Documents collected; dataset-specific reuse terms still require review"
+    }
+  },
+  "errors": {},
+  "interpretation": "GitHub tree requests were rate-limited despite overall source completion; Tensor Trust license unresolved. LLMail card declares MIT. No payloads ingested."
+}
