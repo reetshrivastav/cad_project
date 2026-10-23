@@ -239,3 +239,11 @@ All 308 observations reconcile with frozen cases, scripts, prior result and reco
 [WRAPPER_DIAGNOSTIC_REPORT.md](WRAPPER_DIAGNOSTIC_REPORT.md) retains raw data, paired probabilities, all outcomes, figures and interpretation. This supports wrapper sensitivity on matched development inputs, not task-relative injection efficacy. The candidate stays offline; removing safety wording or tuning a cutoff is not a demonstrated fix. The planned wrapper diagnosis is complete; the next injection revision requires an explicit task/trust input/label contract and new group-separated data with untouched evaluation.
 
 [CURRENT_STATUS.md](CURRENT_STATUS.md) consolidates measured evidence and remaining gaps. README's opening/architecture claims now distinguish demonstrated constrained resource protection from unresolved injection/latency/zero-cost claims; original experimental artifacts and model weights remain unchanged.
+
+## Task/content v2 representation prototype prepared (23 October 2026)
+
+A separate offline prototype receives trusted task and untrusted content as distinct strings and uses frozen MiniLM CUDA/FP16 embeddings with pair interactions. Pair, task-only and content-only XGBoost models use identical fixed hyperparameters. No new detector download, v1 replacement, serving route, threshold change or trust-claiming client API was added.
+
+The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/60/60 train/validation/test splits. Eighty distinct content texts have contrasting task-dependent workflow labels. Metadata is excluded from features, duplicate pairs/group leakage are rejected, trainer never encodes/scores test inputs, and test evaluation is a separate command. Templates are shared across splits, so these are controlled sanity checks rather than independent real-world/novel-template accuracy measurements.
+
+[CONTEXT_V2_PROTOTYPE_PROTOCOL.md](CONTEXT_V2_PROTOTYPE_PROTOCOL.md) supplies the exact input/label contract, new-directory export, hash/revision checks and lab commands. Cloud checks use fake embeddings and tiny real CPU XGBoost models solely to verify software and split isolation. Native training and test outcomes remain pending.

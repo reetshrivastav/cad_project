@@ -17,6 +17,8 @@ Native classifier 98.24% is **training-set resubstitution accuracy**, not held-o
 
 The next injection revision needs a task/trust-aware input and labeling contract, group-separated training/validation and a fresh untouched test corpus. Already-inspected cases can be diagnostics/regressions but cannot become fresh held-out evidence after tuning. Conversation/session robustness and real cancellation remain separate engineering work. No live detector or weights were changed during the diagnostic reports.
 
+An [offline task/content v2 prototype](CONTEXT_V2_PROTOTYPE_PROTOCOL.md) is now prepared. Its 400 synthetic contrast cases are split by topic (280/60/60), with pair/task-only/content-only models and separate test scoring. This supplies a development sanity check, not independent human-labeled/novel-template security validation. Actual native training/test results are pending; serving remains unchanged.
+
 Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [benign scoring](BENIGN_AI_LABELED_EVALUATION_REPORT.md), [controlled injection scoring](BIPIA_CONTROLLED_EVALUATION_REPORT.md), [shadow detector](INJECTION_CANDIDATE_DIAGNOSTIC_REPORT.md), [matched wrappers](WRAPPER_DIAGNOSTIC_REPORT.md).
 
-Current cloud regression verification: 74 CPU tests passed. Actual GPU outcomes are operator-supplied, preserved and reconciled in the linked reports; CPU test success does not establish injection efficacy.
+Current cloud regression verification: 79 CPU tests passed. Actual GPU outcomes are operator-supplied, preserved and reconciled in the linked reports; CPU test success does not establish injection efficacy.
