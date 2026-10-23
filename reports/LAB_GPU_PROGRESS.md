@@ -253,3 +253,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Archived exact lab model/training/test bundle; hashes, splits, frozen inputs and per-row/per-topic metrics reconcile offline. Pair: 59/60 topic-test correct, all 24 redirections reviewed, one clean summary falsely reviewed. Task-only: 48/60; content-only: 36/60.
 - Synthetic AI-authored shared-template evidence only; no independent security accuracy or live protection claim. Existing gateway unchanged.
 - Prepared 48-case new-wording diagnostic for frozen models, with task-dependent analysis/quotation controls; no retraining. See [v2 report](CONTEXT_V2_PROTOTYPE_REPORT.md) for terminal-3 commands.
+
+### 23 October — context v2 wording transfer exposes weak generalization
+
+- Exact uploaded result reconciles with frozen models, checkpoint, inputs and 0.5 cutoff. Pair: 35/48 correct, 4/16 redirections reviewed, 12 missed, one false review among 32 allowed. Task/content-only: 32/48, zero redirections reviewed.
+- Earlier shared-template topic-test success does not establish wording robustness. Keep v2 offline; broaden development data, split by template family and reserve independently reviewed tests before a separately versioned candidate.
+- See [transfer report](CONTEXT_V2_WORDING_TRANSFER_REPORT.md); no live gateway changes.

@@ -30,7 +30,7 @@ Models remain inside the evidence archive to avoid conflicts with the lab's untr
   --output results/context_v2_verified_summary.json
 ```
 
-## Next lab experiment: wording transfer
+## Follow-up: wording transfer (now completed)
 
 Keep the three models, encoder checkpoint and cutoff frozen. The prepared 48-case challenge uses eight new topics and different task, memo and redirection wording. It includes 16 redirection cases and 32 allowed cases, including analysis and quotation of the same instruction-bearing content. The runner never fits a model. Its labels are still AI-authored workflow proxies; this is a post-test diagnostic, not independently adjudicated security evidence. It was authored after seeing the original test result.
 
@@ -46,4 +46,6 @@ git pull --ff-only origin main &&
 cp results/context_v2_wording_transfer.json ~/Desktop/
 ```
 
-Upload `context_v2_wording_transfer.json`. Do not retrain or overwrite the existing models. If transfer fails, retain the failure and treat these cases as development data before any subsequent revision. Even success requires a further independently sourced, reviewed task/content evaluation before deployment. Real downstream attack-success measurement, trusted-context provenance, conversation handling and resource-pressure/cancellation work remain separate.
+**Completed outcome:** pair reviewed only 4/16 redirections and falsely reviewed 1/32 allowed cases. See [transfer report](CONTEXT_V2_WORDING_TRANSFER_REPORT.md). The commands above document the completed run; do not rerun unchanged scoring.
+
+Original execution instructions: Upload `context_v2_wording_transfer.json`. Do not retrain or overwrite the existing models. If transfer fails, retain the failure and treat these cases as development data before any subsequent revision. Even success requires a further independently sourced, reviewed task/content evaluation before deployment. Real downstream attack-success measurement, trusted-context provenance, conversation handling and resource-pressure/cancellation work remain separate.
