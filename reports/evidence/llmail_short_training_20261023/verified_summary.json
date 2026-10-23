@@ -1,0 +1,149 @@
+{
+  "archive_sha256": "364b304ef5cabd24940ca951498f6b8837998c5beef2007d1cb5fd3d560169a6",
+  "metadata_sha256": "2076b0660b6ec767d5de0cd31253b81ce896fd84ba43fee30b2cf69e1ee66692",
+  "artifact_sha256": {
+    "pair.ubj": "3c9dfa1ad1b0bf4d572b8ab5c3abdb80f81e9f635db1fb73298f3cf43bbd63a2",
+    "task_only.ubj": "b1bfe66d4671b4d6c8a5287f33a727c35bb06afbd9fca9e78e3934c2abe1b7b6",
+    "content_only.ubj": "8d6aa8305ea5d881f8c846cc135035921c16ac129b98a722e06afaaeda07845a",
+    "training_report.json": "7ae828de1b774476f21cc8ac314223ff743754f2c7b7c0bae85a329aba258d44"
+  },
+  "models": {
+    "pair": {
+      "train": {
+        "count": 3896,
+        "threshold": 0.5,
+        "tp": 3617,
+        "fn": 31,
+        "fp": 0,
+        "tn": 248,
+        "source_annotation_accuracy": 0.9920431211498973,
+        "source_positive_recall": 0.9915021929824561,
+        "source_negative_specificity": 1.0,
+        "balanced_accuracy": 0.9957510964912281,
+        "source_positive_precision": 1.0,
+        "roc_auc": 0.9999867359932089,
+        "average_precision": 0.9999991000681353,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation": {
+        "count": 1892,
+        "threshold": 0.5,
+        "tp": 1775,
+        "fn": 77,
+        "fp": 34,
+        "tn": 6,
+        "source_annotation_accuracy": 0.9413319238900634,
+        "source_positive_recall": 0.9584233261339092,
+        "source_negative_specificity": 0.15,
+        "balanced_accuracy": 0.5542116630669546,
+        "source_positive_precision": 0.9812050856826976,
+        "roc_auc": 0.8908544816414687,
+        "average_precision": 0.9974754621308364,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    },
+    "task_only": {
+      "train": {
+        "count": 3896,
+        "threshold": 0.5,
+        "tp": 3327,
+        "fn": 321,
+        "fp": 208,
+        "tn": 40,
+        "source_annotation_accuracy": 0.8642197125256673,
+        "source_positive_recall": 0.9120065789473685,
+        "source_negative_specificity": 0.16129032258064516,
+        "balanced_accuracy": 0.5366484507640068,
+        "source_positive_precision": 0.9411598302687412,
+        "roc_auc": 0.5627271461162988,
+        "average_precision": 0.9444012453516282,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation": {
+        "count": 1892,
+        "threshold": 0.5,
+        "tp": 1838,
+        "fn": 14,
+        "fp": 40,
+        "tn": 0,
+        "source_annotation_accuracy": 0.9714587737843552,
+        "source_positive_recall": 0.9924406047516199,
+        "source_negative_specificity": 0.0,
+        "balanced_accuracy": 0.49622030237580994,
+        "source_positive_precision": 0.9787007454739084,
+        "roc_auc": 0.7761609071274298,
+        "average_precision": 0.9905756655254215,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    },
+    "content_only": {
+      "train": {
+        "count": 3896,
+        "threshold": 0.5,
+        "tp": 3615,
+        "fn": 33,
+        "fp": 0,
+        "tn": 248,
+        "source_annotation_accuracy": 0.99152977412731,
+        "source_positive_recall": 0.990953947368421,
+        "source_negative_specificity": 1.0,
+        "balanced_accuracy": 0.9954769736842105,
+        "source_positive_precision": 1.0,
+        "roc_auc": 0.9999690506508206,
+        "average_precision": 0.999997900865771,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation": {
+        "count": 1892,
+        "threshold": 0.5,
+        "tp": 1779,
+        "fn": 73,
+        "fp": 33,
+        "tn": 7,
+        "source_annotation_accuracy": 0.9439746300211417,
+        "source_positive_recall": 0.9605831533477321,
+        "source_negative_specificity": 0.175,
+        "balanced_accuracy": 0.567791576673866,
+        "source_positive_precision": 0.9817880794701986,
+        "roc_auc": 0.8907059935205184,
+        "average_precision": 0.997458017992606,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    }
+  },
+  "always_source_positive": {
+    "train": {
+      "count": 3896,
+      "threshold": 0.5,
+      "tp": 3648,
+      "fn": 0,
+      "fp": 248,
+      "tn": 0,
+      "source_annotation_accuracy": 0.9363449691991786,
+      "source_positive_recall": 1.0,
+      "source_negative_specificity": 0.0,
+      "balanced_accuracy": 0.5,
+      "source_positive_precision": 0.9363449691991786,
+      "roc_auc": 0.5,
+      "average_precision": 0.9363449691991786,
+      "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+    },
+    "validation": {
+      "count": 1892,
+      "threshold": 0.5,
+      "tp": 1852,
+      "fn": 0,
+      "fp": 40,
+      "tn": 0,
+      "source_annotation_accuracy": 0.9788583509513742,
+      "source_positive_recall": 1.0,
+      "source_negative_specificity": 0.0,
+      "balanced_accuracy": 0.5,
+      "source_positive_precision": 0.9788583509513742,
+      "roc_auc": 0.5,
+      "average_precision": 0.9788583509513742,
+      "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+    }
+  },
+  "scope": "Recorded source/artifact hashes, IDs, class counts and metrics reconciled; actual CUDA embeddings/inference not reproduced."
+}

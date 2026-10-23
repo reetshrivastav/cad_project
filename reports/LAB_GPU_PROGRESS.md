@@ -303,3 +303,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Retained uploaded cleanup evidence and reconciled digests/counts. 3,896 train, 1,892 validation, 13,989 reserved test; 47,140 conservative removals are not all verified duplicates. Development distribution heavily selected and negatives scarce.
 - Prepared pair/task-only/content-only CPU XGBoost heads on pinned CUDA/FP16 MiniLM embeddings; fixed weights/parameters/cutoff, always-positive comparator, imbalance-aware validation metrics. Test file hashed but not parsed/encoded/scored. No integration or serving changes.
 - See [training protocol](LLMAIL_SHORT_TRAINING_PROTOCOL.md) for terminal-3 training and small model archive upload.
+
+### 23 October — first external-data model results verified
+
+- Archived exact three-head training bundle; source/artifact hashes, development IDs, class counts and per-observation metrics reconcile. Pair validation balanced accuracy 55.42%, 34/40 source negatives flagged; content-only 56.78%, 33/40 flagged. No demonstrated pair benefit or acceptable false-alarm rate; keep offline.
+- Prepared frozen-head diagnostic on publisher benign emails, preserving fixed cutoff and reporting length/development-overlap exclusions. No reserved test file opened and no retraining. See [training report](LLMAIL_SHORT_TRAINING_REPORT.md).
