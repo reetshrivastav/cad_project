@@ -320,3 +320,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Archived full reserved result; frozen source/policy/model/scorer digests, IDs/labels and per-probability metrics reconcile. Float aggregate comparisons tolerate 1e-12 reduction roundoff; counts exact.
 - Pair adjusted cutoff: 8,181/13,282 source positives flagged, 165/707 source negatives flagged (balanced accuracy 69.13%). Content-only: 7,233 positives, 141 negatives (67.26%). Empirical validation negative-flag target did not transfer.
 - Keep candidate offline and original/adjusted results together. Prepared blinded 80-case validation-only label review; no reserved text used for selecting the packet and no additional fitting. See [reserved test report](LLMAIL_RESERVED_TEST_REPORT.md).
+
+### 23 October — blinded packet AI review completed
+
+- Reviewed 80 uploaded validation cases: 24 benign-for-injection, 42 injection, 14 unclear. Every ID/task/email preserved exactly; AI-only reviewer provenance and individual reasons recorded. No source mapping/model probabilities consulted for labels; prior aggregate findings known.
+- Inert decoding distinguishes an ASCII85 instruction from a Base64 poem; no encoded instructions executed. Ambiguous recipient intent remains unclear.
+- Prepared local source-versus-review comparison without refitting or modifying publisher labels. See [review report](LLMAIL_AI_LABEL_REVIEW.md).
