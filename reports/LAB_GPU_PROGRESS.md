@@ -275,3 +275,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Preserved operator intake summary: eight files, no errors, publisher row counts matched. 127,376 True, 9,452 False, 23,911 Unclear and two malformed annotation values; automated provenance remains explicit.
 - Added local hash verification, exact text-to-raw join statistics and connected-team analysis over shared raw texts. No split, near-duplicate guarantee, binary relabeling or training. See [intake report](LLMAIL_PHASE1_INTAKE_REPORT.md).
+
+### 23 October — grouping evidence and Boolean-label parser correction
+
+- Preserved original group audit: 160,734/160,741 annotation texts matched; 142 components across 224 teams, largest 78. Counts and intake hash references reconcile.
+- Operator type inspection shows 1,399 Boolean True values, one numeric and one list. Corrected parser accepts JSON booleans and exact label strings without coercing numerics. Expected normalized positives 127,376; malformed two, not 1,401. Original result retained unchanged.
+- Fresh groups_v2 run adds per-component normalized-label counts and persisted team mapping to assess split feasibility. No training/split/Phase 2 use. See [group audit report](LLMAIL_GROUP_AUDIT_REPORT.md).

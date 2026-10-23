@@ -1,6 +1,6 @@
 """Exact Phase 1 annotation/raw join and team-component audit; no model fitting."""
 import argparse
-from collections import Counter,defaultdict
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -16,6 +16,7 @@ def text_key(subject,body):
 
 
 def label_class(value):
+    if type(value) is bool:return 'True' if value else 'False'
     if type(value) is str and value in ('True','False','Unclear'):return value
     return 'malformed'
 
@@ -46,10 +47,10 @@ def run(root,output):
     connection.execute('CREATE TABLE observations (text_sha256 TEXT, team TEXT, scenario TEXT, raw_line INTEGER)')
     print('Loading source annotations (448 MB JSON; allow several GB of host RAM)...',flush=True)
     annotations=json.loads((root/'data/labelled_unique_submissions_phase1.json').read_text())
-    labels=Counter();lookup=set()
+    labels=Counter();label_types=Counter();lookup=set()
     for text,record in annotations.items():
         key=hashlib.sha256(text.encode()).hexdigest();label=label_class(record.get('attack_attempt'))
-        labels[label]+=1;lookup.add(key)
+        labels[label]+=1;label_types[type(record.get('attack_attempt')).__name__]+=1;lookup.add(key)
         connection.execute('INSERT INTO annotations VALUES (?,?,?,?)',(key,label,str(record.get('reason')),len(text)))
     del annotations
     connection.commit()
@@ -79,8 +80,20 @@ def run(root,output):
     component_sizes=Counter(components.find(team) for team in teams)
     joined_by_label=dict(connection.execute('SELECT a.source_label,COUNT(DISTINCT a.text_sha256) FROM annotations a JOIN observations o USING(text_sha256) GROUP BY a.source_label'))
     matched_unique=sum(joined_by_label.values())
-    connection.close()
-    summary={'source_revision':REVISION,'annotation_count':len(lookup),'source_label_counts':dict(labels),
+    connection.execute('CREATE TABLE team_components (team TEXT PRIMARY KEY, component TEXT)')
+    connection.executemany('INSERT INTO team_components VALUES (?,?)',[(team,components.find(team)) for team in sorted(teams)])
+    connection.execute('CREATE INDEX observed_team ON observations(team)')
+    component_counts={}
+    for component,label,count in connection.execute('SELECT c.component,a.source_label,COUNT(DISTINCT a.text_sha256) FROM observations o JOIN team_components c ON o.team=c.team JOIN annotations a USING(text_sha256) GROUP BY c.component,a.source_label'):
+        component_counts.setdefault(component,{})[label]=count
+    component_details=[{'component_sha256':hashlib.sha256(component.encode()).hexdigest(),
+                        'teams':component_sizes[component],'matched_annotations_by_label':component_counts.get(component,{})}
+                       for component in sorted(component_sizes)]
+    connection.commit();connection.close()
+    summary={'source_revision':REVISION,'annotation_count':len(lookup),'source_label_counts':dict(labels),'source_label_types':dict(label_types),
+             'label_policy':'Exact True/False strings and JSON booleans accepted; Unclear preserved; other types excluded.',
+             'script_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+             'component_details':component_details,
              'raw_rows':total,'matched_raw_rows':matched,'matched_unique_annotations':matched_unique,
              'unmatched_annotations':len(lookup)-matched_unique,'matched_annotations_by_label':joined_by_label,
              'teams':len(teams),'team_components':len(component_sizes),'component_team_sizes_descending':sorted(component_sizes.values(),reverse=True),

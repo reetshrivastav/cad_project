@@ -1,0 +1,7 @@
+Operator-supplied label-type counts (23 October 2026):
+bool: True = 1399
+float: 1.0 = 1
+list: ['False', 'True', 'False', 'False'] = 1
+str: 'False' = 9452
+str: 'True' = 125977
+str: 'Unclear' = 23911
