@@ -259,3 +259,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Exact uploaded result reconciles with frozen models, checkpoint, inputs and 0.5 cutoff. Pair: 35/48 correct, 4/16 redirections reviewed, 12 missed, one false review among 32 allowed. Task/content-only: 32/48, zero redirections reviewed.
 - Earlier shared-template topic-test success does not establish wording robustness. Keep v2 offline; broaden development data, split by template family and reserve independently reviewed tests before a separately versioned candidate.
 - See [transfer report](CONTEXT_V2_WORDING_TRANSFER_REPORT.md); no live gateway changes.
+
+### 23 October — external dataset intake prepared
+
+- Added a standard-library, metadata-only audit for LLMail-Inject (Hugging Face), its companion analysis repository and Tensor Trust. Exact revisions, cards, listings, license documents and digests precede any payload ingestion or training. Cloud Hugging Face access is denied; run audit on the lab host.
+- See [intake protocol](EXTERNAL_DATASET_AUDIT_PROTOCOL.md) for terminal-3 commands and audit archive upload. Existing models and servers unchanged.
