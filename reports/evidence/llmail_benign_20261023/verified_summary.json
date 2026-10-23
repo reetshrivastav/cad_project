@@ -1,0 +1,34 @@
+{
+  "source_sha256": "8bfa1bef524b890c854f4711cce360a27839870619f82e9e9514e5c156a09e17",
+  "models": {
+    "pair": {
+      "count": 160,
+      "threshold": 0.5,
+      "flagged_publisher_benign": 20,
+      "allowed_publisher_benign": 140,
+      "publisher_benign_flag_rate": 0.125,
+      "scope": "Short eligible, development-disjoint by normalized exact text, publisher-designated benign collection. Not independently human-adjudicated production false-positive rate."
+    },
+    "task_only": {
+      "count": 160,
+      "threshold": 0.5,
+      "flagged_publisher_benign": 160,
+      "allowed_publisher_benign": 0,
+      "publisher_benign_flag_rate": 1.0,
+      "scope": "Short eligible, development-disjoint by normalized exact text, publisher-designated benign collection. Not independently human-adjudicated production false-positive rate."
+    },
+    "content_only": {
+      "count": 160,
+      "threshold": 0.5,
+      "flagged_publisher_benign": 8,
+      "allowed_publisher_benign": 152,
+      "publisher_benign_flag_rate": 0.05,
+      "scope": "Short eligible, development-disjoint by normalized exact text, publisher-designated benign collection. Not independently human-adjudicated production false-positive rate."
+    }
+  },
+  "eligible_count": 160,
+  "excluded_counts": {
+    "duplicate_in_benign_collection": 43
+  },
+  "scope": "Recorded probability metrics, ID coverage and source/model hashes reconciled; original source-text filtering and GPU inference not independently reproduced."
+}

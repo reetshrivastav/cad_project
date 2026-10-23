@@ -1,0 +1,85 @@
+{
+  "purpose": "Development operating-cutoff experiment; no probability calibration or deployment authorization.",
+  "rule": "Lowest cutoff at least 0.5 with at most floor(0.10*N) validation source negatives flagged; ties handled using float64 nextafter.",
+  "max_validation_source_negative_flag_rate": 0.1,
+  "metadata_sha256": "2076b0660b6ec767d5de0cd31253b81ce896fd84ba43fee30b2cf69e1ee66692",
+  "selector_module_sha256": "5f9a51e8ee08c0b981dc572c4b4f57dda3c16ce7f03b5a807d5a813e2c8fe572",
+  "thresholds": {
+    "pair": 0.9539673328399659,
+    "task_only": 0.7515993714332582,
+    "content_only": 0.9574561119079591
+  },
+  "validation": {
+    "pair": {
+      "count": 1892,
+      "threshold": 0.9539673328399659,
+      "tp": 1479,
+      "fn": 373,
+      "fp": 4,
+      "tn": 36,
+      "source_annotation_accuracy": 0.8007399577167019,
+      "source_positive_recall": 0.7985961123110151,
+      "source_negative_specificity": 0.9,
+      "balanced_accuracy": 0.8492980561555076,
+      "source_positive_precision": 0.9973027646662171,
+      "roc_auc": 0.8908544816414687,
+      "average_precision": 0.9974754621308364,
+      "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+    },
+    "task_only": {
+      "count": 1892,
+      "threshold": 0.7515993714332582,
+      "tp": 4,
+      "fn": 1848,
+      "fp": 0,
+      "tn": 40,
+      "source_annotation_accuracy": 0.023255813953488372,
+      "source_positive_recall": 0.0021598272138228943,
+      "source_negative_specificity": 1.0,
+      "balanced_accuracy": 0.5010799136069114,
+      "source_positive_precision": 1.0,
+      "roc_auc": 0.7761609071274298,
+      "average_precision": 0.9905756655254215,
+      "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+    },
+    "content_only": {
+      "count": 1892,
+      "threshold": 0.9574561119079591,
+      "tp": 1421,
+      "fn": 431,
+      "fp": 4,
+      "tn": 36,
+      "source_annotation_accuracy": 0.7700845665961945,
+      "source_positive_recall": 0.7672786177105831,
+      "source_negative_specificity": 0.9,
+      "balanced_accuracy": 0.8336393088552916,
+      "source_positive_precision": 0.9971929824561403,
+      "roc_auc": 0.8907059935205184,
+      "average_precision": 0.997458017992606,
+      "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+    }
+  },
+  "reused_benign_diagnostic": {
+    "pair": {
+      "count": 160,
+      "flagged": 0,
+      "scope": "Reused diagnostic; not independent confirmation."
+    },
+    "task_only": {
+      "count": 160,
+      "flagged": 0,
+      "scope": "Reused diagnostic; not independent confirmation."
+    },
+    "content_only": {
+      "count": 160,
+      "flagged": 0,
+      "scope": "Reused diagnostic; not independent confirmation."
+    }
+  },
+  "limitations": [
+    "Rule designed after inspecting validation and benign diagnostics; numeric cutoffs computed from validation negatives only.",
+    "Only 40 validation negatives; 10% is an empirical development target, not a guaranteed production rate.",
+    "Benign collection is now reused diagnostic evidence, not fresh validation of these cutoffs.",
+    "No reserved test rows or scores used for this policy."
+  ]
+}

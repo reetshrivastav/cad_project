@@ -308,3 +308,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Archived exact three-head training bundle; source/artifact hashes, development IDs, class counts and per-observation metrics reconcile. Pair validation balanced accuracy 55.42%, 34/40 source negatives flagged; content-only 56.78%, 33/40 flagged. No demonstrated pair benefit or acceptable false-alarm rate; keep offline.
 - Prepared frozen-head diagnostic on publisher benign emails, preserving fixed cutoff and reporting length/development-overlap exclusions. No reserved test file opened and no retraining. See [training report](LLMAIL_SHORT_TRAINING_REPORT.md).
+
+### 23 October — benign flags verified; validation-only cutoff policy frozen
+
+- Reconciled exact uploaded benign result: 160 eligible unique emails, 43 duplicates excluded. At 0.5, pair flags 20 (12.5%), content-only 8 (5%), task-only 160. Not independent human-reviewed production rates.
+- Frozen validation-negative-only cutoff rule (<=4/40 flags, cutoff >=0.5) yields pair recall 79.86%/specificity 90%, content-only 76.73%/90%; task-only recall 0.22%. Reused benign scores show zero flags at higher cutoffs, not independent confirmation.
+- Prepared one reserved short-email run reporting both cutoffs/all heads without fitting. Test remains unscored pending lab run. See [benign/cutoff report](LLMAIL_BENIGN_AND_CUTOFF_REPORT.md).
