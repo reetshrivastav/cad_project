@@ -1,0 +1,18 @@
+{
+  "purpose": "Matched development diagnostic for guard-wording/tag sensitivity; not fresh held-out efficacy.",
+  "source_corpus_sha256": "9a0903fde03130a71df730293aea913e9a6f78b38583c90167711675292e5ba5",
+  "case_count": 308,
+  "design": "2x2 guard sentence present/absent x untrusted_memo tags present/absent; fixed task/memo; 75 source insertions and two clean controls per cell.",
+  "thresholds": [
+    0.92,
+    0.5
+  ],
+  "limitations": [
+    "Cases/wrapper factors chosen after observing a clean-control failure; explicitly development diagnostics.",
+    "One clean memo and one harmless appendix per cell do not estimate a general false-positive rate.",
+    "Removing guard wording is an ablation, not a proposed security bypass or deployment preprocessing rule.",
+    "AI-authored wrapper/control content and source-derived insertion intent; no human adjudication.",
+    "No downstream LLM execution, live trust boundary, new model training or gateway change."
+  ],
+  "cases_sha256": "d1a7bfeec61245cbb441054768a004569a4feb72341d7991e1fc29f6e7e759dd"
+}

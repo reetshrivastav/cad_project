@@ -1,5 +1,7 @@
 # Specialized injection detector: shadow diagnostic
 
+Update: the lab completed all 276 cases with no errors. The candidate flagged 75/75 constructed attacks and 0/200 AI-labeled benign prompts, but also the clean memo control. See [INJECTION_CANDIDATE_DIAGNOSTIC_REPORT.md](INJECTION_CANDIDATE_DIAGNOSTIC_REPORT.md). This false alarm prevents interpreting the attack count as attack-specific separation; the candidate remains offline. Pending-status language below records the original preparation stage.
+
 Prepared 23 October 2026. Native candidate inference is pending; this does not claim the injection weakness has been fixed. The next concrete experiment evaluates a dedicated pretrained binary detector on the already-inspected cases, without changing the serving gateway or the frozen native baseline.
 
 ## Why a separate candidate
