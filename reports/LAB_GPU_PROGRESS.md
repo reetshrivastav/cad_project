@@ -287,3 +287,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Corrected source/label totals, component sums and grouping script checksum reconcile. Preserved full corrected summary.
 - Fixed whole-component 70/15/15 target-deficit assignment yields 101,749/17,537/17,536 definite-label texts, preserving shared exact text within one split. Near-duplicate/template independence remains unresolved.
 - Local export uses observed scenario legitimate user_query with one unchanged annotated email; source automated labels/projection limitations explicit. No GPU/fitting/Phase 2/benign-FP consumption. See [preparation protocol](LLMAIL_PREPARATION_PROTOCOL.md).
+
+### 23 October — Phase 1 export reconciled; readiness checks prepared
+
+- Uploaded export summary matches fixed split and exporter source digests; all source-label/reason/exclusion counts reconcile. Large file digests remain operator-reported.
+- Added cached CPU-tokenizer length measurements and capped, explicitly approximate lexical overlap screening across splits. No reserved model scores or fitting. See [readiness protocol](LLMAIL_READINESS_PROTOCOL.md).

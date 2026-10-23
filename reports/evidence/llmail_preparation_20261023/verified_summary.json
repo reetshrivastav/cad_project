@@ -1,0 +1,7 @@
+{
+  "source_sha256": "9a7b34e18d5730663d3aa8eb940c49bdcf35859945ff24bb7df67d5cbb74130d",
+  "split_and_source_hashes_reconcile": true,
+  "exported_definite_labels": 136822,
+  "excluded_annotations": 23919,
+  "scope": "Operator-reported split file digests retained; cloud has not independently hashed local exported payloads."
+}
