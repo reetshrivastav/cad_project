@@ -1,0 +1,5 @@
+{
+  "file": "wrapper_diagnostic_v1.json",
+  "sha256": "cda430332cf38649a11a6af779f3f81c26604dc85c1adecf22e3a4fe09482bc9",
+  "source": "Operator-supplied matched guard/tag CUDA/FP16 development diagnostic; no downstream LLM calls."
+}

@@ -231,3 +231,11 @@ All 276 candidate observations reconcile with the frozen diagnostic cases and bo
 The candidate remains outside live routing. Next is prespecified matched wrapper/content ablation before integration; neither labels, original model, gate thresholds nor serving code were changed to improve the result. The current resource-protection evidence remains separate from this unresolved injection-specificity issue.
 
 The matched wrapper follow-up is now frozen and scripted: four guard/tag cells, each with 75 source attacks, a clean memo and a harmless appendix (308 cases). The original guarded/tagged cell exactly reproduces the prior 76 prompts. The lab runner reuses cached pinned weights and verifies their digest. All 71 CPU tests passed; actual follow-up inference remains pending. See [WRAPPER_DIAGNOSTIC_PROTOCOL.md](WRAPPER_DIAGNOSTIC_PROTOCOL.md).
+
+## Matched wrapper evidence verified; no live integration (23 October 2026)
+
+All 308 observations reconcile with frozen cases, scripts, prior result and recorded pinned model artifacts. At >0.92, attack flags across guard+tags / guard-only / tags-only / neither were 75/75, 75/75, 70/75 and 1/75; at >0.50 tags-only rose to 73/75 and other counts stayed unchanged. Both harmless controls were flagged in all cells containing guard or tags, and passed when both were absent. No scoring errors occurred.
+
+[WRAPPER_DIAGNOSTIC_REPORT.md](WRAPPER_DIAGNOSTIC_REPORT.md) retains raw data, paired probabilities, all outcomes, figures and interpretation. This supports wrapper sensitivity on matched development inputs, not task-relative injection efficacy. The candidate stays offline; removing safety wording or tuning a cutoff is not a demonstrated fix. The planned wrapper diagnosis is complete; the next injection revision requires an explicit task/trust input/label contract and new group-separated data with untouched evaluation.
+
+[CURRENT_STATUS.md](CURRENT_STATUS.md) consolidates measured evidence and remaining gaps. README's opening/architecture claims now distinguish demonstrated constrained resource protection from unresolved injection/latency/zero-cost claims; original experimental artifacts and model weights remain unchanged.

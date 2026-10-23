@@ -1,5 +1,7 @@
 # Matched wrapper diagnostic, 23 October 2026
 
+Update: all 308 lab observations are complete and verified. See [WRAPPER_DIAGNOSTIC_REPORT.md](WRAPPER_DIAGNOSTIC_REPORT.md). Guard or tags caused control false alarms on these matched cases; removing both reduced attack flags to 1/75. The candidate remains offline. Pending-status language below describes the original preparation stage.
+
 The specialized candidate flagged the clean memo as strongly as many constructed attacks. Before integration, this development experiment varies guard wording and memo tags separately while holding the task, memo, insertion set, model revision and thresholds fixed. It does not retrain or deploy a detector. It is not fresh held-out evidence: its design follows an observed control failure.
 
 ## Fixed 2x2 design

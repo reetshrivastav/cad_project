@@ -1,9 +1,11 @@
 # 🛡️ Adaptive LLM Security & Resource Risk Gateway
 
-An empirical, sub-5ms intelligent ingress gateway for Large Language Model (LLM) serving architectures. Protects GPU clusters from **Adversarial Prompt Injections** and **Denial-of-Service / Resource Sponge Attacks** before prompts ever reach GPU memory.
+A research gateway that routes LLM requests into full, sandbox or quarantine tiers using content/resource features and live cache telemetry. Native GPU experiments demonstrate admission protection under a constrained KV-cache workload. General prompt-injection protection and consistent sub-5 ms live ingress remain experimental.
+
+**Measured status:** see [Current lab evidence](reports/CURRENT_STATUS.md). Older sections/documents include prototype goals and simulation results; they are not independent native-lab security validation.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![XGBoost](https://img.shields.io/badge/model-XGBoost_98.4%25-orange.svg)](https://xgboost.readthedocs.io/)
+[![XGBoost](https://img.shields.io/badge/model-XGBoost-orange.svg)](https://xgboost.readthedocs.io/)
 [![Sentence-Transformers](https://img.shields.io/badge/embeddings-all--MiniLM--L6--v2-green.svg)](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
 [![OpenAI Compatible](https://img.shields.io/badge/API-OpenAI_Compatible-purple.svg)](http://localhost:5000/v1/chat/completions)
 
@@ -18,8 +20,8 @@ This creates two critical vulnerabilities:
 2. **GPU Memory Starvation (OOM):** Unconstrained generation requests exhaust GPU VRAM pages on multi-tenant inference nodes (vLLM / TGI).
 
 **Our Gateway Intercepts Prompts at Ingress:**
-- **Zero GPU Cost for Attacks:** Blocked at the CPU proxy layer in $<5\text{ms}$ ($0.00 compute cost).
-- **Dense Semantic + Lexical Matching:** Fuses 384-dimensional `all-MiniLM-L6-v2` dense embeddings with TF-IDF n-grams to catch paraphrased zero-day attacks.
+- **Backend admission control:** Quarantine prevents LLM forwarding; ingress still uses CUDA embeddings. Zero total GPU cost and a sub-5 ms live SLA are not established.
+- **Dense Semantic + Lexical Features:** Combines 384-dimensional `all-MiniLM-L6-v2` embeddings and TF-IDF n-grams for an experimental risk classifier; unseen/contextual injection efficacy remains unresolved.
 - **Graduated Tiered Execution:** Routes queries into **Full Access**, **Constrained Sandbox** (256-token cap), or **Quarantine Drop**.
 
 ---
@@ -31,12 +33,12 @@ User / Client Request
         │
         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│             ADAPTIVE INGRESS GATEWAY (< 5ms)                │
+│             ADAPTIVE INGRESS GATEWAY                        │
 │                                                             │
 │  1. Feature Extractor (tiktoken BPE, Repetition, Heuristics) │
 │  2. Lexical Vectorizer (TF-IDF n-grams)                     │
 │  3. Dense Semantic Embedder (Sentence-Transformers MiniLM)  │
-│  4. Empirical XGBoost Multi-Class Classifier (98.41% Acc)   │
+│  4. XGBoost Multi-Class Risk Classifier                    │
 └──────────────────────────────┬──────────────────────────────┘
                                │
             ┌──────────────────┼──────────────────┐
@@ -46,7 +48,7 @@ User / Client Request
             │                  │                  │
             ▼                  ▼                  ▼
      Standard Context   Hard 256-Token Cap  Dropped at Gateway
-     Uncapped Output    5s Isolated Timer   $0.00 GPU Compute
+     Requested Cap      5s HTTP Timeout     No LLM Forwarding
             │                  │                  │
             └──────────┬───────┘                  │
                        ▼                          ▼
