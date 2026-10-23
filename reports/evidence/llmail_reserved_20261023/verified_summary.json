@@ -1,0 +1,125 @@
+{
+  "archive_sha256": "9855f1290ab1c98941189a4e9f695a9995c02b5f44744865794c0f3dd8dfa983",
+  "models": {
+    "pair": {
+      "original_cutoff": {
+        "count": 13989,
+        "threshold": 0.5,
+        "tp": 13024,
+        "fn": 258,
+        "fp": 557,
+        "tn": 150,
+        "source_annotation_accuracy": 0.9417399385231253,
+        "source_positive_recall": 0.9805752145761181,
+        "source_negative_specificity": 0.21216407355021216,
+        "balanced_accuracy": 0.5963696440631652,
+        "source_positive_precision": 0.9589868198218099,
+        "roc_auc": 0.7631380816142147,
+        "average_precision": 0.977434367381475,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation_selected_cutoff": {
+        "count": 13989,
+        "threshold": 0.9539673328399659,
+        "tp": 8181,
+        "fn": 5101,
+        "fp": 165,
+        "tn": 542,
+        "source_annotation_accuracy": 0.6235613696475802,
+        "source_positive_recall": 0.6159463936154194,
+        "source_negative_specificity": 0.7666195190947667,
+        "balanced_accuracy": 0.6912829563550931,
+        "source_positive_precision": 0.9802300503235083,
+        "roc_auc": 0.7631380816142147,
+        "average_precision": 0.977434367381475,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    },
+    "task_only": {
+      "original_cutoff": {
+        "count": 13989,
+        "threshold": 0.5,
+        "tp": 12386,
+        "fn": 896,
+        "fp": 661,
+        "tn": 46,
+        "source_annotation_accuracy": 0.8886982629208664,
+        "source_positive_recall": 0.9325402800783015,
+        "source_negative_specificity": 0.06506364922206506,
+        "balanced_accuracy": 0.4988019646501833,
+        "source_positive_precision": 0.9493370123400016,
+        "roc_auc": 0.43220669379089693,
+        "average_precision": 0.9427458770640446,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation_selected_cutoff": {
+        "count": 13989,
+        "threshold": 0.7515993714332582,
+        "tp": 19,
+        "fn": 13263,
+        "fp": 4,
+        "tn": 703,
+        "source_annotation_accuracy": 0.05161198084209021,
+        "source_positive_recall": 0.0014305074536967324,
+        "source_negative_specificity": 0.9943422913719944,
+        "balanced_accuracy": 0.49788639941284557,
+        "source_positive_precision": 0.8260869565217391,
+        "roc_auc": 0.43220669379089693,
+        "average_precision": 0.9427458770640446,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    },
+    "content_only": {
+      "original_cutoff": {
+        "count": 13989,
+        "threshold": 0.5,
+        "tp": 12939,
+        "fn": 343,
+        "fp": 492,
+        "tn": 215,
+        "source_annotation_accuracy": 0.9403102437629566,
+        "source_positive_recall": 0.9741755759674747,
+        "source_negative_specificity": 0.3041018387553041,
+        "balanced_accuracy": 0.6391387073613894,
+        "source_positive_precision": 0.9633683270046907,
+        "roc_auc": 0.7789772271051185,
+        "average_precision": 0.9752757755060715,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      },
+      "validation_selected_cutoff": {
+        "count": 13989,
+        "threshold": 0.9574561119079591,
+        "tp": 7233,
+        "fn": 6049,
+        "fp": 141,
+        "tn": 566,
+        "source_annotation_accuracy": 0.5575094717277861,
+        "source_positive_recall": 0.5445716006625508,
+        "source_negative_specificity": 0.8005657708628006,
+        "balanced_accuracy": 0.6725686857626757,
+        "source_positive_precision": 0.9808787632221319,
+        "roc_auc": 0.7789772271051185,
+        "average_precision": 0.9752757755060715,
+        "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+      }
+    }
+  },
+  "test_components": 69,
+  "always_source_positive": {
+    "count": 13989,
+    "threshold": 0.5,
+    "tp": 13282,
+    "fn": 0,
+    "fp": 707,
+    "tn": 0,
+    "source_annotation_accuracy": 0.9494602902280364,
+    "source_positive_recall": 1.0,
+    "source_negative_specificity": 0.0,
+    "balanced_accuracy": 0.5,
+    "source_positive_precision": 0.9494602902280364,
+    "roc_auc": 0.5,
+    "average_precision": 0.9494602902280364,
+    "scope": "Agreement with publisher automated source annotations on selectively retained short emails; not independent security accuracy or downstream attack success."
+  },
+  "scope": "Recorded hashes, source-label/ID alignment and all probability-derived cutoff metrics reconciled. Source inputs and CUDA inference not independently reproduced."
+}

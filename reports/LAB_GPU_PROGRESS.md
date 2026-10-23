@@ -314,3 +314,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Reconciled exact uploaded benign result: 160 eligible unique emails, 43 duplicates excluded. At 0.5, pair flags 20 (12.5%), content-only 8 (5%), task-only 160. Not independent human-reviewed production rates.
 - Frozen validation-negative-only cutoff rule (<=4/40 flags, cutoff >=0.5) yields pair recall 79.86%/specificity 90%, content-only 76.73%/90%; task-only recall 0.22%. Reused benign scores show zero flags at higher cutoffs, not independent confirmation.
 - Prepared one reserved short-email run reporting both cutoffs/all heads without fitting. Test remains unscored pending lab run. See [benign/cutoff report](LLMAIL_BENIGN_AND_CUTOFF_REPORT.md).
+
+### 23 October — reserved short test complete; operating point does not transfer
+
+- Archived full reserved result; frozen source/policy/model/scorer digests, IDs/labels and per-probability metrics reconcile. Float aggregate comparisons tolerate 1e-12 reduction roundoff; counts exact.
+- Pair adjusted cutoff: 8,181/13,282 source positives flagged, 165/707 source negatives flagged (balanced accuracy 69.13%). Content-only: 7,233 positives, 141 negatives (67.26%). Empirical validation negative-flag target did not transfer.
+- Keep candidate offline and original/adjusted results together. Prepared blinded 80-case validation-only label review; no reserved text used for selecting the packet and no additional fitting. See [reserved test report](LLMAIL_RESERVED_TEST_REPORT.md).
