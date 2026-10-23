@@ -1,0 +1,65 @@
+{
+  "preparation_summary_sha256": "9a7b34e18d5730663d3aa8eb940c49bdcf35859945ff24bb7df67d5cbb74130d",
+  "script_sha256": "dd1ad427bc2d62eef20ff88ad4ff90c9920bfa84b4276575bcaca03129d38b86",
+  "tokenizer_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "encoder_window_tokens_including_specials": 256,
+  "token_lengths": {
+    "train/task": {
+      "rows": 101749,
+      "over_256_tokens": 0,
+      "over_512_tokens": 0,
+      "maximum_tokens": 13
+    },
+    "train/untrusted_content": {
+      "rows": 101749,
+      "over_256_tokens": 59924,
+      "over_512_tokens": 41373,
+      "maximum_tokens": 30038
+    },
+    "validation/task": {
+      "rows": 17537,
+      "over_256_tokens": 0,
+      "over_512_tokens": 0,
+      "maximum_tokens": 13
+    },
+    "validation/untrusted_content": {
+      "rows": 17537,
+      "over_256_tokens": 6434,
+      "over_512_tokens": 5245,
+      "maximum_tokens": 20221
+    },
+    "test/task": {
+      "rows": 17536,
+      "over_256_tokens": 0,
+      "over_512_tokens": 0,
+      "maximum_tokens": 13
+    },
+    "test/untrusted_content": {
+      "rows": 17536,
+      "over_256_tokens": 3547,
+      "over_512_tokens": 921,
+      "maximum_tokens": 12912
+    }
+  },
+  "lexical_screen": {
+    "documents": 136822,
+    "candidate_pairs_compared": 2000000,
+    "pairs_jaccard_ge_0_8": {
+      "train/validation": 268,
+      "test/train": 562,
+      "test/validation": 42
+    },
+    "candidate_pairs_with_identical_normalized_token_bags": {
+      "train/validation": 20,
+      "test/train": 56,
+      "test/validation": 2
+    },
+    "rows_in_detected_pairs": 413,
+    "skipped_overfull_anchor_queries": 215753,
+    "pair_budget_exhausted": true,
+    "scope": "Approximate screening: eight lowest stable unigram hashes; capped buckets/comparisons. Token bags ignore ordering and negation. No guarantee of detecting all near duplicates or semantic/template leakage."
+  },
+  "training_performed": false,
+  "model_scores_computed": false,
+  "scope": "Dataset QA only; aggregate reserved-test lengths/similarity inspected. No efficacy measurement. No raw text printed."
+}

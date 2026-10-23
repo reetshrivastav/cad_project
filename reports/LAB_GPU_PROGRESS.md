@@ -292,3 +292,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Uploaded export summary matches fixed split and exporter source digests; all source-label/reason/exclusion counts reconcile. Large file digests remain operator-reported.
 - Added cached CPU-tokenizer length measurements and capped, explicitly approximate lexical overlap screening across splits. No reserved model scores or fitting. See [readiness protocol](LLMAIL_READINESS_PROTOCOL.md).
+
+### 23 October — readiness reveals long-input and leakage gaps
+
+- Retained exact uploaded summary and reconciled source/preparation digests. Train/validation/test long-email counts: 59,924/6,434/3,547. Initial lexical screening detected 872 pairs but exhausted two-million budget and skipped overfull queries. Not a clean leakage result.
+- Prepared explicitly selective short-email baseline with no truncation, exhaustive normalized exact-key cleanup and approximate MinHash candidates. Candidate overflow is handled by conservative lower-priority exclusion, not skipped comparisons. Source-label, coverage and approximate-search limitations retained. No fitting/GPU work.

@@ -1,0 +1,12 @@
+{
+  "source_sha256": "e65caa66f58a3b995886943a23ce56fe61a257e99cbb43a350f890416277e243",
+  "source_and_preparation_digests_reconcile": true,
+  "detected_lexical_pairs": 872,
+  "initial_screen_incomplete": true,
+  "short_email_counts_before_cleanup": {
+    "train": 41825,
+    "validation": 11103,
+    "test": 13989
+  },
+  "scope": "Operator-reported aggregates reconciled; no local payloads or tokenizer results independently reproduced."
+}
