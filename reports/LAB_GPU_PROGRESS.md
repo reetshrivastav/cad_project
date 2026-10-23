@@ -326,3 +326,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Reviewed 80 uploaded validation cases: 24 benign-for-injection, 42 injection, 14 unclear. Every ID/task/email preserved exactly; AI-only reviewer provenance and individual reasons recorded. No source mapping/model probabilities consulted for labels; prior aggregate findings known.
 - Inert decoding distinguishes an ASCII85 instruction from a Base64 poem; no encoded instructions executed. Ambiguous recipient intent remains unclear.
 - Prepared local source-versus-review comparison without refitting or modifying publisher labels. See [review report](LLMAIL_AI_LABEL_REVIEW.md).
+
+### 23 October — review comparison verified; diagnostic score reuse complete
+
+- Preserved uploaded source/AI cross-tab and verified 80 labels/provenance against frozen review manifest and source hashes. Eleven source negatives disagree as AI injection; 14 cases remain unclear. These are not proven source errors.
+- Joined original blinded text hashes to saved validation probabilities locally in cloud; no lab/GPU rerun needed. Pair source-negative flags: 19 AI benign, 11 AI injection, four unclear. Post-hoc AI-clear rescoring remains diagnostic, not held-out accuracy.
+- Provided blinded 25-case priority adjudication packet for an independent reviewer. No label overwrite, refit, threshold change or serving change. See [alignment diagnostic](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md).
