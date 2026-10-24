@@ -1,0 +1,6 @@
+\let\originaltableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{\originaltableofcontents\clearpage}
+\makeatletter
+\renewcommand{\l@section}{\@dottedtocline{1}{0em}{2.3em}}
+\makeatother
+\emergencystretch=2em

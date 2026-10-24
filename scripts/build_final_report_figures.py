@@ -1,0 +1,72 @@
+"""Build final report figures from retained measurements; no lab execution."""
+from pathlib import Path
+import csv
+import hashlib
+import json
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+ROOT=Path(__file__).resolve().parents[1]
+OUT=ROOT/'reports/final_report/figures'
+OUT.mkdir(parents=True,exist_ok=True)
+plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10,'axes.spines.top':False,'axes.spines.right':False,'figure.facecolor':'white','savefig.facecolor':'white'})
+NAVY='#17324D';BLUE='#2379A8';TEAL='#18837E';ORANGE='#CB6E35';GRAY='#B9C3CD'
+paths=['reports/evidence/replication_v1_20261021/analysis/per_run.csv','reports/evidence/llmail_reserved_20261023/verified_summary.json','reports/evidence/llmail_short_cleaned_20261023/llmail_short_baseline_summary.json']
+def save(fig,name):
+    fig.savefig(OUT/(name+'.png'),dpi=220,bbox_inches='tight');fig.savefig(OUT/(name+'.svg'),bbox_inches='tight');plt.close(fig)
+rows=list(csv.DictReader((ROOT/paths[0]).open()))
+conditions=['direct','static','adaptive'];labels=['Direct','Static','Adaptive'];colors=[ORANGE,BLUE,TEAL]
+fig,axes=plt.subplots(1,3,figsize=(12,3.6))
+for ax,col,scale,title in [(axes[0],'benign_mean_http_ms',.001,'Benign mean HTTP latency (s)'),(axes[1],'observed_peak_kv_fraction',100,'Sampled peak KV occupancy (%)'),(axes[2],'peak_waiting',1,'Sampled waiting requests')]:
+    data=[[float(r[col])*scale for r in rows if r['condition']==c] for c in conditions]
+    means=[np.mean(d) for d in data];ax.bar(labels,means,color=colors,width=.58,alpha=.85)
+    for i,values in enumerate(data):ax.scatter(i+np.linspace(-.10,.10,len(values)),values,c=NAVY,s=22,zorder=4)
+    ax.set_title(title,fontsize=10,pad=12);ax.grid(axis='y',alpha=.18);ax.set_axisbelow(True)
+    for i,value in enumerate(means):
+        text=f'{value:.2f}' if col!='peak_waiting' else f'{value:.2f}'
+        ax.annotate(text,(i,value),xytext=(0,9),textcoords='offset points',ha='center',fontsize=9)
+axes[0].set_yscale('log');axes[0].set_ylim(.1,150);axes[1].set_ylim(0,115);axes[2].set_ylim(0,15)
+fig.suptitle('Controlled 256 MiB KV pool: three runs per condition',fontsize=13,color=NAVY,y=1.06)
+fig.text(.5,-.03,'Bars: mean of three run summaries. Dots: individual runs. Peak occupancy is not total allocated VRAM.',ha='center',fontsize=9)
+fig.tight_layout();save(fig,'gpu_repeatability')
+reserved=json.loads((ROOT/paths[1]).read_text())
+fig,ax=plt.subplots(figsize=(7.4,4.5))
+for mode,label,color in [('pair','Pair',BLUE),('content_only','Content only',TEAL),('task_only','Task only',ORANGE)]:
+    data=reserved['models'][mode];a=data['original_cutoff'];b=data['validation_selected_cutoff']
+    xx=[100*(1-r['source_negative_specificity']) for r in (a,b)];yy=[100*r['source_positive_recall'] for r in (a,b)]
+    ax.plot(xx,yy,'--',color=color,alpha=.65,lw=1.4,label=label)
+    ax.scatter(xx[0],yy[0],marker='o',s=70,color=color);ax.scatter(xx[1],yy[1],marker='s',s=65,color=color)
+ax.axvline(10,color=GRAY,lw=1.4,ls=':');ax.text(11,8,'Validation design target\n(not attained by pair/content on test)',fontsize=8,color=NAVY)
+ax.set(xlim=(-3,103),ylim=(-4,105),xlabel='Source negatives flagged (%)',ylabel='Source positives flagged / recall (%)',title='Reserved short-email test: two frozen operating points')
+ax.grid(alpha=.18);ax.legend(loc='center right',frameon=False)
+fig.text(.5,-.01,'Circle: original cutoff 0.5. Square: validation-selected cutoff. Connecting segments are not ROC curves.',ha='center',fontsize=8)
+fig.tight_layout();save(fig,'reserved_operating_points')
+prep=json.loads((ROOT/paths[2]).read_text())
+fig,ax=plt.subplots(figsize=(8,3.5));splits=['train','validation','test'];x=np.arange(3);bottom=np.zeros(3)
+parts=[('Excluded: over 256 tokens','excluded_long_counts',GRAY),('Removed: lexical cleanup','removed_for_overlap',ORANGE),('Retained short emails','retained_counts',BLUE)]
+totals=[sum(prep['eligible_short_counts'][s].values())+sum(prep['excluded_long_counts'][s].values()) for s in splits]
+for label,key,color in parts:
+    amounts=np.array([sum(prep[key][s].values()) for s in splits]);percent=amounts/np.array(totals)*100
+    ax.bar(x,percent,bottom=bottom,label=label,color=color,width=.55)
+    for i,(n,p) in enumerate(zip(amounts,percent)):
+        if p>8:ax.text(i,bottom[i]+p/2,f'{int(n):,}\n({p:.1f}%)',ha='center',va='center',fontsize=9,color='white' if color==BLUE else NAVY)
+    bottom+=percent
+ax.set_xticks(x,['Training','Validation','Reserved test']);ax.set_ylim(0,105);ax.set_ylabel('Share of original assigned rows (%)');ax.set_title('Selective short-email coverage and cleanup')
+ax.legend(loc='upper center',bbox_to_anchor=(.5,-.14),ncol=3,frameon=False,fontsize=8);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
+fig.tight_layout();save(fig,'data_selection')
+fig,ax=plt.subplots(figsize=(10,5));ax.set_xlim(0,10);ax.set_ylim(0,5);ax.axis('off')
+def box(x,y,w,h,text,color=BLUE):
+    ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=0.08',fc='#F1F5F9',ec=color,lw=1.3));ax.text(x+w/2,y+h/2,text,ha='center',va='center',fontsize=9,color=NAVY)
+def arrow(start,end,color=NAVY):ax.annotate('',xy=end,xytext=start,arrowprops={'arrowstyle':'->','color':color,'lw':1.4})
+box(.2,3.25,1.25,.8,'Client\nmessages');box(2,3.1,2,1.1,'Native ingress features\n+ CUDA/FP16 MiniLM\n+ XGBoost risk');box(4.6,3.1,1.5,1.1,'Tier decision\n+ live cache\nthresholds');box(7,3.3,2.6,.8,'vLLM / Qwen 3B\nFull or token-capped sandbox',TEAL)
+arrow((1.45,3.65),(2,3.65));arrow((4,3.65),(4.6,3.65));arrow((6.1,3.65),(7,3.65))
+box(4.6,1.65,1.5,.7,'Quarantine\nHTTP 403',ORANGE);arrow((5.35,3.1),(5.35,2.35),ORANGE)
+box(7,1.65,2.6,.7,'vLLM /metrics\nKV occupancy in [0, 1]',TEAL);arrow((8.3,3.3),(8.3,2.35),TEAL);arrow((7,2),(6.1,3.1),TEAL)
+box(.35,.2,5.7,.85,'Separate offline research: trusted task + one untrusted email\nPair / task-only / content-only heads; no serving integration',GRAY)
+ax.text(7.9,.65,'Long-email support\ndeferred from final submission',ha='center',va='center',fontsize=10,color=ORANGE)
+ax.text(.2,4.65,'Measured gateway and offline research remain separate',fontsize=14,color=NAVY,weight='bold');save(fig,'architecture')
+manifest={'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},'script_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'scope':'Offline rendering from retained measurements; no new GPU or model experiment.'}
+(OUT/'figure_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+print('Built four figures (PNG and SVG) with source manifest.')

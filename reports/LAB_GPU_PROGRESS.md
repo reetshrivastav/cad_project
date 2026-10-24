@@ -349,3 +349,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 
 - Archived exact final lab bundle at source e037df8. Summary/logs reconcile: all 123 named regressions passed in 30.224 seconds, no reported errors, and four native artifact hashes match retained model evidence. Metadata matches; no native model deserialization.
 - Final checks verify software/artifact integrity only, not a new GPU/live-server/security-efficacy run. Current prototype verification milestone complete; no further CSV repair or repeated run required. General injection protection and other research gaps remain explicit in the handoff.
+
+### 24 October — deadline report package and bounded additional test
+
+- Prepared full technical report, editable Word/PDF, one-page professor summary and four figures from preserved measurements. All performance claims remain scoped; long-email implementation deferred by user for submission window.
+- At user request to continue testing, prespecified bounded Phase 2 transfer with unchanged heads/cutoffs, exact Phase 1 overlap exclusions and separate author-novel cohort reporting. Up to 5,000 hash-selected texts inspected and 2,000 short cases scored; no outcome-dependent sampling or retraining. Phase 2 results pending, not assumed in report.
+- Current software suite: 126 cloud tests pass. Historical final lab verification remains 123 tests at e037df8.
