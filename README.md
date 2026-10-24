@@ -2,7 +2,7 @@
 
 A research gateway that routes LLM requests into full, sandbox or quarantine tiers using content/resource features and live cache telemetry. Native GPU experiments demonstrate admission protection under a constrained KV-cache workload. General prompt-injection protection and consistent sub-5 ms live ingress remain experimental.
 
-**Measured status:** see [Current lab evidence](reports/CURRENT_STATUS.md). Older sections/documents include prototype goals and simulation results; they are not independent native-lab security validation.
+**Measured status:** see [Current lab evidence](reports/CURRENT_STATUS.md) and the [project handoff / final verification](reports/PROJECT_HANDOFF.md). Older sections/documents include prototype goals and simulation results; they are not independent native-lab security validation.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![XGBoost](https://img.shields.io/badge/model-XGBoost-orange.svg)](https://xgboost.readthedocs.io/)

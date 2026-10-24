@@ -1,44 +1,22 @@
-# Current lab evidence — 23 October 2026
+# Current project status — 24 October 2026
 
-The GPU-backed resource-risk gateway works. General prompt-injection protection is still experimental. This page summarizes measured native-lab outcomes; older project documents also contain design goals, training-set numbers and simulations that must not be presented as current independent evaluation.
+The GPU resource-risk gateway works and its controlled stress results are documented. General prompt-injection protection remains experimental. The [project handoff](PROJECT_HANDOFF.md) consolidates completed evidence, a final local verification command and the remaining security requirements.
 
-| Area | Observed evidence | Important boundary |
+| Area | Current result | Boundary |
 | --- | --- | --- |
-| GPU inference | Qwen2.5-3B-Instruct through vLLM; MiniLM CUDA/FP16 ingress | Consistent sub-2 ms embedding/sub-5 ms live ingress not established |
-| Admission protection | Nine controlled runs: direct benign mean 50.24 s, static 302.00 ms, adaptive 298.05 ms; all benign completed | Constrained 256 MiB KV pool, capped synthetic generation; not default-cache/OOM proof |
-| Adaptive benefit | Both gateway modes block all tested high-demand requests | Incremental benefit from threshold tightening not established |
-| Sandbox | Live request capped at 256 output tokens; backend counters match | Five-second HTTP read timeout does not prove GPU cancellation |
-| Native benign scoring | Four quarantines and nine sandbox cases among 200 AI-labeled benign prompts | Same-source screened sample, AI-only labels; not independent human ground truth |
-| Native controlled injection scoring | 1/75 quarantine, 2/75 sandbox, 72/75 full | Source-derived constructed contexts, not downstream ASR |
-| Specialized shadow detector | 75/75 attack flags, 0/200 AI-labeled benign flags, but clean memo also flagged | Shared-wrapper false alarm prevents calling this perfect detection; not integrated |
-| Matched wrapper follow-up | Guard or tags trigger harmless controls; neither clears controls but flags only 1/75 attacks | Sensitivity diagnosed on fixed development cases, not a security fix |
+| GPU routing | Qwen2.5-3B through vLLM; MiniLM CUDA/FP16; full/sandbox/quarantine and cache telemetry | Consistent sub-2 ms embeddings/sub-5 ms live ingress not established |
+| Admission protection | Nine runs: benign mean-of-run-means direct 50.24 s, static 302 ms, adaptive 298 ms; all benign completed | Constrained 256 MiB KV pool; no incremental adaptive benefit, P99, full-cache OOM or dollar-saving proof |
+| Sandbox | 256-token output cap verified live | Backend GPU cancellation not demonstrated |
+| Context v2 | 59/60 synthetic topic-test correct, but new wording reviewed only 4/16 redirections | Keep offline; template transfer weak |
+| External LLMail short baseline | Adjusted pair test recall 61.59%, specificity 76.66%, balanced accuracy 69.13% on 13,989 source-labeled rows | Source automated labels, aggressive selective cleanup, short-only one-email projections; not general defense |
+| Publisher benign diagnostic | At 0.5: pair flags 20/160, content-only 8/160, task-only 160/160 | Same-source previously inspected diagnostic |
+| Source/AI label audit | 80 selected validation cases expose disagreement and uncertainty | AI review is not independent human ground truth |
+| Reviewer-supplied priority audit | 24 intact cases: 13 injection, six benign, five unclear; one changed-input row excluded | Prior AI exposure and targeted selection; not fresh independent evaluation |
 
-Native classifier 98.24% is **training-set resubstitution accuracy**, not held-out accuracy. GPU ingress itself uses CUDA, so quarantine is not zero total GPU work. Avoided backend tokens were measured for the controlled stress workload; GPU dollars, zero-VRAM deltas and zero-FLOP claims were not established.
+No experimental head has replaced the gateway native classifier. No source labels were overwritten. Inspected reserved results remain frozen and cannot become fresh tests after further tuning. Phase 2 remains unused; its suitability as an external test still depends on overlap checks. Long-input, conversation/trust boundaries and downstream agent protection remain unresolved.
 
-The next injection revision needs a task/trust-aware input and labeling contract, group-separated training/validation and a fresh untouched test corpus. Already-inspected cases can be diagnostics/regressions but cannot become fresh held-out evidence after tuning. Conversation/session robustness and real cancellation remain separate engineering work. No live detector or weights were changed during the diagnostic reports.
+Native classifier 98.24% is training resubstitution, not held-out accuracy. Quarantine still uses CUDA ingress work. Backend-token avoidance is measured only for the controlled resource workload; zero-GPU-cost/zero-VRAM/zero-FLOP claims are unsupported. Older architecture documents also contain targets and historical simulations.
 
-An [offline task/content v2 prototype](CONTEXT_V2_PROTOTYPE_PROTOCOL.md) is now prepared. Its 400 synthetic contrast cases are split by topic (280/60/60), with pair/task-only/content-only models and separate test scoring. This supplies a development sanity check, not independent human-labeled/novel-template security validation. Native results are now verified: pair 59/60 correct, task-only 48/60 and content-only 36/60 on six synthetic test topics. The pair model reviewed all 24 redirections and falsely reviewed one of 36 allowed cases. See [v2 report](CONTEXT_V2_PROTOTYPE_REPORT.md). The subsequent [48-case wording-transfer diagnostic](CONTEXT_V2_WORDING_TRANSFER_REPORT.md) exposed poor transfer: pair reviewed only 4/16 redirections, missed 12 and falsely reviewed 1/32 allowed cases (35/48 correct). Both single-input baselines reviewed zero redirections. Keep v2 offline; next work is broader family-separated data and independently reviewed reserved tests. Serving remains unchanged.
+Cloud CPU regression verification: 123 tests passed. Actual GPU outcomes are operator-supplied and reconciled through hashes and probability/counter analysis; CPU tests do not independently reproduce lab inference or establish efficacy.
 
-Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [benign scoring](BENIGN_AI_LABELED_EVALUATION_REPORT.md), [controlled injection scoring](BIPIA_CONTROLLED_EVALUATION_REPORT.md), [shadow detector](INJECTION_CANDIDATE_DIAGNOSTIC_REPORT.md), [matched wrappers](WRAPPER_DIAGNOSTIC_REPORT.md).
-
-Current cloud regression verification: 121 CPU tests passed. Actual GPU outcomes are operator-supplied, preserved and reconciled in the linked reports; CPU test success does not establish injection efficacy.
-
-[External metadata audit verified](EXTERNAL_DATASET_AUDIT_REPORT.md): LLMail card declares MIT; Tensor Trust license remains unresolved. [Phase 1 intake completed](LLMAIL_PHASE1_INTAKE_REPORT.md): 370,724 raw rows, 224 teams, 160,741 annotations, 203 benign emails. [Original grouping audit](LLMAIL_GROUP_AUDIT_REPORT.md) matched 160,734/160,741 annotation texts; 224 teams form 142 exact-sharing components (largest: 78 teams). A parser correction accepts 1,399 Boolean positives previously counted as malformed; corrected component counts reconcile. A [fixed split and local projection export](LLMAIL_PREPARATION_PROTOCOL.md) are prepared: 101,749 training, 17,537 validation and 17,536 reserved test source-labeled texts. No near-duplicate independence or human ground truth is implied. Phase 2 remains untouched; the later short-only training run is summarized below.
-
-[Phase 1 export verified; readiness check prepared](LLMAIL_READINESS_PROTOCOL.md): 136,822 source-labeled projections, with long emails requiring explicit token-window handling. Token-length measurement and bounded screening were completed; findings and subsequent short-only training are summarized below.
-
-[Readiness result](LLMAIL_SHORT_BASELINE_PROTOCOL.md): 59,924/101,749 training emails exceed 256 tokens; initial lexical screen detected 872 cross-split pairs but exhausted its budget. Preparation of a no-truncation short-email subset with complete normalized exact-key cleanup and broader approximate MinHash screening is now available. Full-length email support remains unresolved; the short-only candidate remains offline.
-
-[Short baseline cleanup reconciled; training protocol prepared](LLMAIL_SHORT_TRAINING_PROTOCOL.md): retained 3,896 training (248 source negatives), 1,892 validation (40 negatives), 13,989 reserved test rows. Aggressive conservative cleanup removed 70.45% of eligible short rows; these are not all confirmed duplicates. First fixed class-balanced offline training has completed; its weak validation results are summarized below.
-
-[LLMail training evidence verified](LLMAIL_SHORT_TRAINING_REPORT.md): pair validation balanced accuracy 55.42%, 34/40 source negatives flagged; content-only 56.78%, 33/40 flagged. Keep models offline. Next frozen-head diagnostic uses the separate publisher benign collection with explicit short-input/overlap exclusions; reserved Phase 1 test remains unscored.
-
-[Benign diagnostic verified; cutoffs frozen for reserved scoring](LLMAIL_BENIGN_AND_CUTOFF_REPORT.md): 43 duplicate occurrences excluded from 203 publisher emails; flags among 160 eligible uniques: pair 20, content-only 8, task-only 160. A validation-negative-only cutoff rule now trades recall for at least 90% empirical validation specificity; pair recall 79.86%, content-only 76.73%. Benign rechecks are reused diagnostic evidence. The reserved short test is now completed and summarized below; no refit occurred.
-
-[Reserved short-email test verified](LLMAIL_RESERVED_TEST_REPORT.md): pair adjusted recall 61.59%, specificity 76.66%, balanced accuracy 69.13%; content-only 54.46%/80.06%/67.26%. Validation 10% negative-flag target did not transfer. Candidate stays offline. This test is now inspected; no retuning can make it fresh. Next is a blinded development-label audit, not another GPU rerun or deployment.
-
-[AI-only validation-label review completed](LLMAIL_AI_LABEL_REVIEW.md): 24 benign-for-injection, 42 injection, 14 unclear among the deliberately selected 80 cases. Source mapping/model probabilities were not consulted for review. Not human ground truth or a fresh model evaluation; next local comparison preserves provenance and does not refit or overwrite source labels.
-
-[Source/AI comparison verified and diagnostic rescoring completed](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md): source negatives include 24 AI benign, 11 AI injection and five unclear; source positives include 31 AI injection and nine unclear in the 80-case selected packet. Pair original 34 source-negative flags comprise 19 AI benign, 11 AI injection and four unclear. No labels overwritten or model refitted. Next useful work is independent adjudication, with a 25-case blinded priority packet; original reserved results remain unchanged.
-
-[Reviewer-supplied priority packet received, pending text-integrity recheck](LLMAIL_HUMAN_REVIEW_INTAKE.md), 24 October: 13 injection, six benign, six unclear under supplied reviewer Reet. Six email strings were encoding-corrupted. Restored originals with labels/notes preserved; recheck pending before accepting annotations. No model or source-label changes.
+Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [context transfer](CONTEXT_V2_WORDING_TRANSFER_REPORT.md), [external reserved test](LLMAIL_RESERVED_TEST_REPORT.md), [label alignment](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md), [handoff and final local checks](PROJECT_HANDOFF.md).

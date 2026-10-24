@@ -1,5 +1,7 @@
 # Reviewer-supplied priority packet intake — 24 October 2026
 
+Update: the corrected upload has now been processed. Twenty-four intact rows are accepted as reviewer-supplied development annotations; row 042, replaced with a placeholder, is excluded. The review cycle is closed. See [project handoff](PROJECT_HANDOFF.md); the pending instructions below document the earlier intake state.
+
 The uploaded 25-row packet records reviewer `Reet` on every row, with 13 injection, six benign and six unclear labels and nonempty notes. All expected IDs and columns are present. These are reviewer-supplied judgments; independence/blinding is not established because prior AI reviews were available.
 
 Input integrity did not pass: email text changed in rows 013, 014, 023, 042, 054 and 056 (full IDs begin `LLMAIL-REVIEW-`). Differences include mojibake in punctuation and Chinese characters. Four affected emails contain multilingual forged dialogue. A label on a garbled display cannot automatically be accepted as a review of the original multilingual text.

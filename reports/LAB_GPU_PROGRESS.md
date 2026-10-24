@@ -338,3 +338,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Received 25 rows attributed to Reet: 13 injection, six benign, six unclear. IDs/columns complete and notes populated. Independence not established; prior AI judgments available.
 - Six source email strings differ due to apparent encoding damage (013/014/023/042/054/056). Restored immutable text from original packet, preserving all supplied labels/notes, and verified exact fields after roundtrip. Original upload untouched; source payloads remain outside Git.
 - Annotations provisional pending reviewer recheck of restored rows. No fitting/cutoff/source-label change or GPU run. See [intake report](LLMAIL_HUMAN_REVIEW_INTAKE.md).
+
+### 24 October — corrected reviewer packet closed and prototype handoff prepared
+
+- Corrected upload records 13 injection, six benign, six unclear under supplied reviewer Reet. Twenty-four original-text rows match exactly; row 042 contains an explicit replacement placeholder and is excluded rather than sent through another repair loop. Nineteen clear, intact targeted cases support diagnostic-only score reuse. Prior AI exposure prevents a blinded-independent review claim.
+- Preserved review hashes/notes and integrity exclusion separately from publisher labels and original reserved results. No refit, cutoff change or serving change.
+- Consolidated current status and project handoff with measured claims and prioritized unresolved requirements. Prepared one CPU/software/artifact verification bundle for the lab; no additional GPU benchmark or CSV review required to close the current prototype evaluation.
