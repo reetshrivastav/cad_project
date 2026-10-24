@@ -332,3 +332,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Preserved uploaded source/AI cross-tab and verified 80 labels/provenance against frozen review manifest and source hashes. Eleven source negatives disagree as AI injection; 14 cases remain unclear. These are not proven source errors.
 - Joined original blinded text hashes to saved validation probabilities locally in cloud; no lab/GPU rerun needed. Pair source-negative flags: 19 AI benign, 11 AI injection, four unclear. Post-hoc AI-clear rescoring remains diagnostic, not held-out accuracy.
 - Provided blinded 25-case priority adjudication packet for an independent reviewer. No label overwrite, refit, threshold change or serving change. See [alignment diagnostic](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md).
+
+### 24 October — priority reviewer packet received; encoding correction pending recheck
+
+- Received 25 rows attributed to Reet: 13 injection, six benign, six unclear. IDs/columns complete and notes populated. Independence not established; prior AI judgments available.
+- Six source email strings differ due to apparent encoding damage (013/014/023/042/054/056). Restored immutable text from original packet, preserving all supplied labels/notes, and verified exact fields after roundtrip. Original upload untouched; source payloads remain outside Git.
+- Annotations provisional pending reviewer recheck of restored rows. No fitting/cutoff/source-label change or GPU run. See [intake report](LLMAIL_HUMAN_REVIEW_INTAKE.md).
