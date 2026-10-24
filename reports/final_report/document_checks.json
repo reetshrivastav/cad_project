@@ -1,17 +1,17 @@
 {
   "Adaptive_LLM_Gateway_Final_Report.pdf": {
-    "pages": 11,
+    "pages": 13,
     "out_of_page_text_blocks": [],
-    "bytes": 556810
+    "bytes": 654357
   },
   "Professor_Summary.pdf": {
     "pages": 1,
     "out_of_page_text_blocks": [],
-    "bytes": 33836
+    "bytes": 34343
   },
   "docx": {
-    "embedded_figures": 4,
-    "tables": 7,
-    "paragraphs": 113
+    "embedded_figures": 5,
+    "tables": 8,
+    "paragraphs": 125
   }
 }

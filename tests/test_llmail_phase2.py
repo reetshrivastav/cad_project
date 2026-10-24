@@ -19,3 +19,14 @@ class Phase2Tests(unittest.TestCase):
         a,b=keys('Alpha beta');c,d=keys('BETA alpha')
         self.assertNotEqual(a,c);self.assertEqual(b,d)
         self.assertEqual(keys('ALPHA   beta'),keys('alpha beta'))
+
+    def test_content_only_mode_never_needs_or_encodes_a_task(self):
+        import numpy as np
+        from evaluate_llmail_phase2 import transfer_vectors
+        from context_pair_v2 import pair_features
+        class Embedder:
+            def __init__(self):self.seen=[]
+            def tokenizer(self,texts,**kwargs):return {'input_ids':[[1,2,3] for t in texts]}
+            def encode(self,texts,**kwargs):self.seen.extend(texts);return np.array([[1.,2.] for t in texts])
+        embedder=Embedder();a,b=transfer_vectors([{'untrusted_content':'email','task':None}],embedder,True)
+        self.assertEqual(embedder.seen,['email']);np.testing.assert_array_equal(pair_features(a,b,'content_only'),b)

@@ -1,5 +1,7 @@
 # Long-email extension and Phase 2 parser repair — 24 October 2026
 
+Update: the long run has completed and its 300-email coverage/quality results are verified. The cached Phase 2 retry still failed on level3c before predictions. Do not rerun the two-job wrapper. Use the narrower content-only command in [extension results](LLMAIL_LONG_EMAIL_RESULTS.md), without guessing trusted task metadata. Earlier commands below document the executed protocol.
+
 The operator authorized continued testing, including long emails. This extends the short-email evidence edition; no long-email outcome is assumed in the existing report. Keep all heads, source labels and numerical cutoffs unchanged. These are offline evaluations, not deployment of the experimental detector.
 
 ## Phase 2 failed schema preflight preserved

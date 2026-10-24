@@ -23,6 +23,6 @@ Resource admission protection works for the measured workload. Injection protect
 
 ## Submission scope and future work
 
-**Long-email handling is deferred.** Current injection experiments cover selected short single-email projections. General conversation/trust-boundary protection, GPU cancellation on timeout, independent-source security evaluation and a causal adaptive-threshold advantage remain future work. No zero-total-GPU-cost, measured dollar saving or production-ready security claim is made.
+**Long-email offline coverage is now tested:** 300 emails, 723 windows, 130,735 content-token positions. Max pooling increases positive flags but also flags most source negatives; the live gateway is unchanged. General conversation/trust-boundary protection, GPU cancellation on timeout, independent-source security evaluation and a causal adaptive-threshold advantage remain future work. No zero-total-GPU-cost, measured dollar saving or production-ready security claim is made.
 
-**Deliverable:** technical report, figures, evidence index and reproducibility logs. A frozen Phase 2 check may be appended if completed; no outcome is assumed.
+**Deliverable:** technical report, figures, evidence index and reproducibility logs. Phase 2 context parsing failed before scoring; a narrower content-only diagnostic is pending.

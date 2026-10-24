@@ -1,26 +1,23 @@
 # Current project status — 24 October 2026
 
-The GPU resource-risk gateway works and its controlled stress results are documented. General prompt-injection protection remains experimental. The [project handoff](PROJECT_HANDOFF.md) consolidates completed evidence, a final local verification command and the remaining security requirements.
+The GPU resource-risk gateway works and its controlled stress results are documented. General prompt-injection protection remains experimental. [Final report edition 1.1](FINAL_PROJECT_REPORT.md), [PDF/Word package](final_report/README.md) and [professor summary](PROFESSOR_SUMMARY.md) include the completed long-email extension and its quality limitations.
 
-| Area | Current result | Boundary |
+| Area | Current evidence | Boundary |
 | --- | --- | --- |
-| GPU routing | Qwen2.5-3B through vLLM; MiniLM CUDA/FP16; full/sandbox/quarantine and cache telemetry | Consistent sub-2 ms embeddings/sub-5 ms live ingress not established |
-| Admission protection | Nine runs: benign mean-of-run-means direct 50.24 s, static 302 ms, adaptive 298 ms; all benign completed | Constrained 256 MiB KV pool; no incremental adaptive benefit, P99, full-cache OOM or dollar-saving proof |
-| Sandbox | 256-token output cap verified live | Backend GPU cancellation not demonstrated |
-| Context v2 | 59/60 synthetic topic-test correct, but new wording reviewed only 4/16 redirections | Keep offline; template transfer weak |
-| External LLMail short baseline | Adjusted pair test recall 61.59%, specificity 76.66%, balanced accuracy 69.13% on 13,989 source-labeled rows | Source automated labels, aggressive selective cleanup, short-only one-email projections; not general defense |
-| Publisher benign diagnostic | At 0.5: pair flags 20/160, content-only 8/160, task-only 160/160 | Same-source previously inspected diagnostic |
-| Source/AI label audit | 80 selected validation cases expose disagreement and uncertainty | AI review is not independent human ground truth |
-| Reviewer-supplied priority audit | 24 intact cases: 13 injection, six benign, five unclear; one changed-input row excluded | Prior AI exposure and targeted selection; not fresh independent evaluation |
+| GPU routing | Qwen2.5-3B/vLLM; CUDA/FP16 MiniLM; full/sandbox/quarantine and live cache telemetry | Consistent ingress-latency targets and complete context robustness not established |
+| Admission protection | Nine runs: direct benign mean 50.24 s, static 302 ms, adaptive 298 ms; all benign completed | Controlled 256 MiB pool; no isolated adaptive advantage, P99, default-cache OOM or dollar-saving proof |
+| Sandbox | 256-token live output cap reconciled with counters | GPU cancellation on deadline not demonstrated |
+| Context v2 | Synthetic topic test 59/60; new wording only 4/16 redirections reviewed | Weak transfer, kept offline |
+| LLMail short reserved test | Adjusted pair recall 61.59%, specificity 76.66%, balanced accuracy 69.13%, 13,989 rows | Automated source labels, selective cleanup; not general security accuracy |
+| Long-email extension | 300 emails completely covered by 723 windows, 130,735 content-token positions | Offline scoring only; no live long-context defense |
+| Long quality | Pair max at 0.5: 274/276 source positives, 22/24 source negatives flagged; higher cutoff 218/276 and 18/24 | High flags/recall do not imply useful discrimination; only 24 source negatives |
+| Reviewer packet | 24 intact cases: 13 injection, six benign, five unclear; changed-input row 042 excluded | Targeted development evidence with prior AI exposure, not independent blinded ground truth |
+| Phase 2 | Two attempts failed before predictions on unsupported level assumptions; failures preserved | Remaining check is content-only, with no inferred trusted query; not independent-source evaluation |
 
-No experimental head has replaced the gateway native classifier. No source labels were overwritten. Inspected reserved results remain frozen and cannot become fresh tests after further tuning. Phase 2 remains unused; its suitability as an external test still depends on overlap checks. Long-input, conversation/trust boundaries and downstream agent protection remain unresolved.
+No experimental head has replaced the native classifier. Source labels and original reserved findings remain unchanged. The long experiment establishes full token coverage for its sample, not semantic understanding, attack localization or downstream prevention. Max pooling amplifies false alarms; mean pooling can dilute instruction signals.
 
-Native classifier 98.24% is training resubstitution, not held-out accuracy. Quarantine still uses CUDA ingress work. Backend-token avoidance is measured only for the controlled resource workload; zero-GPU-cost/zero-VRAM/zero-FLOP claims are unsupported. Older architecture documents also contain targets and historical simulations.
+Next lab step: run only the cached [content-only Phase 2 command](LLMAIL_LONG_EMAIL_RESULTS.md). Models/cutoffs/sample rules remain fixed. Do not repeat the long run, retune against inspected tests, or run the obsolete two-job wrapper again.
 
-Final lab handoff verification passed at source `e037df8`: 123 tests in 30.224 seconds, plus all four native artifact digests matching retained evidence without unpickling. See [final verified summary](evidence/project_handoff_20261024/verified_summary.json). Cloud CPU regression verification also passed 123 tests. Actual GPU outcomes are operator-supplied and reconciled through hashes and probability/counter analysis; CPU tests do not independently reproduce lab inference or establish efficacy.
+Software checks: 133 current cloud CPU tests pass. Historical lab handoff passed 123 tests in 30.224 seconds and verified four native artifact hashes without unpickling. Actual GPU results are operator-supplied and reconciled through hashes, intervals and probability/counter analysis; cloud verification does not independently reproduce the lab embeddings.
 
-Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [context transfer](CONTEXT_V2_WORDING_TRANSFER_REPORT.md), [external reserved test](LLMAIL_RESERVED_TEST_REPORT.md), [label alignment](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md), [handoff and final local checks](PROJECT_HANDOFF.md).
-
-Final report package: [technical report](FINAL_PROJECT_REPORT.md), [professor summary](PROFESSOR_SUMMARY.md), PDF/DOCX and source-backed figures under `reports/final_report/`. Long-email handling explicitly deferred. An additional [bounded Phase 2 transfer protocol](LLMAIL_PHASE2_TRANSFER_PROTOCOL.md) is ready; no Phase 2 outcome is included until supplied and verified. New Phase 2 runner software checks bring current cloud suite to 126; historical lab handoff remains 123.
-
-Extension now authorized: [Phase 2 schema repair and full-token long-email window protocol](LLMAIL_LONG_EMAIL_PROTOCOL.md). First Phase 2 run failed before scoring on a suffix assumption; data bytes are cached and preserved. Retry reuses them. A bounded 300-email long-input test compares first/max/mean windows with frozen heads/cutoffs; results pending. Serving unchanged. Cloud software checks now include 130 tests; historical lab handoff remains 123.
+Native classifier 98.24% is training resubstitution, not held-out accuracy. Quarantine still uses CUDA ingress. Token avoidance is measured for the controlled workload; zero-total-GPU-cost/zero-VRAM/zero-FLOP claims are unsupported. Conversation/trust/session limits, cancellation and fresh independently reviewed/source-separated evaluation remain unresolved. Existing architecture documents include goals and historical simulations; measured reports govern the current claims.

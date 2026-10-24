@@ -2,8 +2,9 @@
   "source_sha256": {
     "reports/evidence/replication_v1_20261021/analysis/per_run.csv": "3f3c7c91b30c639276407548145828bc21fcea3dfae16ad78b9a54f521521407",
     "reports/evidence/llmail_reserved_20261023/verified_summary.json": "b7e0cd684b69584e931e5c1d1aaac8df2044d97d4ac16f5c8a2ce1768bef5b25",
-    "reports/evidence/llmail_short_cleaned_20261023/llmail_short_baseline_summary.json": "5605965e08d8bd624bc41e8a2387004c130901408e725f1cce1c1e075bc5d36c"
+    "reports/evidence/llmail_short_cleaned_20261023/llmail_short_baseline_summary.json": "5605965e08d8bd624bc41e8a2387004c130901408e725f1cce1c1e075bc5d36c",
+    "reports/evidence/report_extension_20261024/verified_summary.json": "cbac7d4464c7c1168a026c88ca53603332ea3b5432e0353760e1ccd4ab7e6a9f"
   },
-  "script_sha256": "a7e6df3a35de2f4185cb4b7218231011f262e8b421bcc40d7f1d412a130845db",
+  "script_sha256": "6b8a81e466d658eaa17ed42e8409640003d5a1b8486e97ffff9a3c1474306def",
   "scope": "Offline rendering from retained measurements; no new GPU or model experiment."
 }

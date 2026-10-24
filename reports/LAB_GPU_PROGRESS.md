@@ -361,3 +361,10 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - User expanded remaining-window scope to include long emails. Preserved Phase 2 failed preflight (unknown level1a, no predictions) and pinned cached payload digests. Relaxed defense suffix parsing while preserving validated numeric retrieval scenario mapping. Cached retry avoids redownload and retains original sampling/cutoffs.
 - Added token-ID preserving 254-token windows with overlap 32, explicit coverage, 300-email hash sample, whole-email window budget and first/max/mean aggregation comparisons on original reserved long projections. Frozen short-trained heads, no chunk-label invention or long cutoff tuning. Native live gateway unchanged.
 - Both results pending; original report evidence edition remains available and will receive a versioned addendum based on actual outcomes. See [extension protocol](LLMAIL_LONG_EMAIL_PROTOCOL.md).
+
+### 24 October — long-email experiment verified; contextual Phase 2 metadata unresolved
+
+- Preserved exact extension bundle. Verified 300 long emails, 276/24 source labels, 723 complete token windows, 130,735 content tokens, no whole-email exclusions. All three heads/aggregations/two cutoff metric sets reconcile. Raw scope-string inheritance is disclosed; derived reporting correctly describes long inputs.
+- Max pooling improves source-positive flags but also flags most negatives: pair 274/276 and 22/24 at 0.5; 218/276 and 18/24 at frozen higher cutoff. No production-readiness claim or integration.
+- Second Phase 2 schema attempt failed before predictions on level3c, retained alongside earlier failure. New explicitly content-only protocol avoids another unverified task mapping while preserving sample/model/cutoff/overlap rules. No long rerun or new download needed.
+- Final report edition 1.1 now includes long-input coverage and negative quality result. Phase 2 score outcome remains pending.

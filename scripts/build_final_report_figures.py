@@ -16,6 +16,7 @@ NAVY='#17324D';BLUE='#2379A8';TEAL='#18837E';ORANGE='#CB6E35';GRAY='#B9C3CD'
 paths=['reports/evidence/replication_v1_20261021/analysis/per_run.csv','reports/evidence/llmail_reserved_20261023/verified_summary.json','reports/evidence/llmail_short_cleaned_20261023/llmail_short_baseline_summary.json']
 def save(fig,name):
     fig.savefig(OUT/(name+'.png'),dpi=220,bbox_inches='tight');fig.savefig(OUT/(name+'.svg'),bbox_inches='tight');plt.close(fig)
+    svg=OUT/(name+'.svg');svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
 rows=list(csv.DictReader((ROOT/paths[0]).open()))
 conditions=['direct','static','adaptive'];labels=['Direct','Static','Adaptive'];colors=[ORANGE,BLUE,TEAL]
 fig,axes=plt.subplots(1,3,figsize=(12,3.6))
@@ -67,6 +68,22 @@ box(7,1.65,2.6,.7,'vLLM /metrics\nKV occupancy in [0, 1]',TEAL);arrow((8.3,3.3),
 box(.35,.2,5.7,.85,'Separate offline research: trusted task + one untrusted email\nPair / task-only / content-only heads; no serving integration',GRAY)
 ax.text(7.9,.65,'Long-email support\ndeferred from final submission',ha='center',va='center',fontsize=10,color=ORANGE)
 ax.text(.2,4.65,'Measured gateway and offline research remain separate',fontsize=14,color=NAVY,weight='bold');save(fig,'architecture')
+long_path='reports/evidence/report_extension_20261024/verified_summary.json'
+long=json.loads((ROOT/long_path).read_text())['long_email']
+fig,axes=plt.subplots(1,2,figsize=(10,3.8));names=['First','Max','Mean'];aggregations=['first_window','max_window','mean_window'];xx=np.arange(3)
+for ax,cutoff,title in [(axes[0],'original_cutoff','Original cutoff 0.5'),(axes[1],'frozen_short_validation_cutoff','Frozen short-validation cutoff')]:
+    metrics=[long['models']['pair'][a][cutoff] for a in aggregations]
+    recall=[r['source_positive_recall']*100 for r in metrics];flags=[(1-r['source_negative_specificity'])*100 for r in metrics]
+    a=ax.bar(xx-.17,recall,width=.32,color=BLUE,label='Source positives flagged / recall')
+    b=ax.bar(xx+.17,flags,width=.32,color=ORANGE,label='Source negatives flagged')
+    ax.set_xticks(xx,names);ax.set_ylim(0,115);ax.set_title(title);ax.grid(axis='y',alpha=.18);ax.set_axisbelow(True)
+    for bars in (a,b):
+        for bar in bars:ax.text(bar.get_x()+bar.get_width()/2,bar.get_height()+2,f'{bar.get_height():.1f}',ha='center',fontsize=8)
+axes[0].set_ylabel('Percentage of source class (%)')
+fig.suptitle('Long-email pair head: full coverage increases flags, not reliable separation',fontsize=12,color=NAVY,y=1.04)
+handles,labels=axes[0].get_legend_handles_labels();fig.legend(handles,labels,loc='lower center',bbox_to_anchor=(.5,-.06),ncol=2,frameon=False,fontsize=9)
+fig.tight_layout();save(fig,'long_email_tradeoff')
+paths.append(long_path)
 manifest={'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},'script_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'scope':'Offline rendering from retained measurements; no new GPU or model experiment.'}
 (OUT/'figure_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-print('Built four figures (PNG and SVG) with source manifest.')
+print('Built five figures (PNG and SVG) with source manifest.')

@@ -1,8 +1,8 @@
 ---
 title: "Adaptive LLM Security & Resource Risk Gateway"
-subtitle: "Final project report: GPU admission control and short-email injection evaluation"
+subtitle: "Final project report: GPU admission control and short/long-email injection evaluation"
 author: "Project operator: Reet — AI-assisted analysis and report preparation"
-date: "24 October 2026 | Evidence edition 1.0"
+date: "24 October 2026 | Evidence edition 1.1"
 lang: en
 ---
 
@@ -14,7 +14,7 @@ The strongest measured result is **controlled admission protection**, not genera
 
 The injection investigation produced important negative findings. A task/content pair model scored 59/60 on a synthetic topic test but reviewed only 4/16 redirections under new wording. A subsequent public LLMail short-email experiment used exact-team-component splits, conservative lexical cleanup and frozen operating cutoffs. On 13,989 reserved source-labeled rows, the adjusted pair model achieved 61.59% source-positive recall, 76.66% source-negative specificity and 69.13% balanced accuracy. That operating point did not meet its empirical validation specificity target. The candidate remains offline.
 
-The project therefore delivers a working resource-risk prototype, reproducible evidence and an explicit account of injection-model limitations. **Long-email support is deferred from this submission.** Short-email results are not extrapolated to long documents or complete conversations. A bounded Phase 2 transfer check is being prepared separately; no unobserved result from that check is included in this evidence edition.
+The project therefore delivers a working resource-risk prototype, reproducible evidence and an explicit account of injection-model limitations. An offline long-email extension now covers 300 sampled emails with 723 token windows and 130,735 unique content-token positions. Max pooling raises source-positive recall but flags most source negatives; coverage is not reliable protection. The live gateway is unchanged. Two Phase 2 attempts stopped before predictions on unresolved source identifiers; a narrower content-only check is prespecified, with no assumed result in this edition.
 
 # Problem, objectives and evaluation questions
 
@@ -153,7 +153,7 @@ Exact serialization joined 160,734 annotation texts to raw submissions; seven re
 
 ## Long-input deferral and lexical selection
 
-MiniLM's window is 256 tokens including special tokens, separately for task and full email. Before filtering, 59,924 training, 6,434 validation and 3,547 test emails exceeded the window. The submission therefore evaluates only eligible short emails and explicitly **defers long-email handling**; there is no silent truncation or implied long-document coverage.
+MiniLM's window is 256 tokens including special tokens, separately for task and full email. Before filtering, 59,924 training, 6,434 validation and 3,547 test emails exceeded the window. The initial baseline evaluated only eligible short emails, without silent truncation or implied long-document coverage. A later offline window extension is reported separately below.
 
 An initial lexical screen exhausted its comparison budget. The subsequent preparation completely removed cross-split normalized-text/token-bag exact collisions among short cases and applied approximate 64-permutation MinHash candidate screening with unigram Jaccard verification at 0.8. Oversized candidate sets were handled by conservative lower-priority exclusion rather than skipped. This may remove genuine diversity, and approximate screening cannot prove semantic/template independence.
 
@@ -190,6 +190,35 @@ At the adjusted cutoff, pair missed 5,101 source positives and content-only miss
 
 Source-negative flags are not automatically confirmed real-world false positives, and source-positive misses are not measured successful downstream attacks. The test was reserved from fitting/numerical cutoff selection but participated in documented dataset QA and priority cleanup. It is now inspected and cannot become fresh evidence after further tuning.
 
+# Long-email extension: complete coverage, limited discrimination
+
+Following the short-only baseline, the project added a bounded offline evaluation of the original reserved long emails. All frozen heads and cutoffs were retained. From 3,547 long candidates (3,283 source positives, 264 negatives), a fixed hash selected 300 emails: 276 positive and 24 negative source targets. No score-dependent sampling or balancing was used.
+
+The original content token IDs were covered by overlapping windows of 254 content tokens plus two special tokens, with overlap 32. Direct token-ID packing avoided decode/re-encode loss. All 300 were covered in full, using 723 windows and 130,735 unique content-token positions. No whole-email budget exclusions occurred. The approximately 26.8-second job wall time is batch experiment time, not per-request ingress latency.
+
+Three email-level aggregations were prespecified: first-window, maximum-window and arithmetic mean of window scores. Email labels were not assigned to individual chunks; malicious-span locations are unknown. Inference used pinned CUDA/FP16 MiniLM and the unchanged short-trained heads, so this also probes an input-distribution shift.
+
+| Pair aggregation | Cutoff policy | Source positives flagged / 276 | Source negatives flagged / 24 | Balanced accuracy |
+|---|---|---:|---:|---:|
+| First window | Original 0.5 | 187 | 20 | 42.21% |
+| Max window | Original 0.5 | 274 | 22 | 53.80% |
+| Mean window | Original 0.5 | 269 | 22 | 52.90% |
+| First window | Frozen short-validation | 105 | 17 | 33.61% |
+| Max window | Frozen short-validation | 218 | 18 | 51.99% |
+| Mean window | Frozen short-validation | 55 | 7 | 45.38% |
+
+![Long-email pair-head trade-off. Source negatives are publisher targets, not independently verified benign ground truth.](final_report/figures/long_email_tradeoff.png){width=95%}
+
+An always-positive rule already achieves 92% raw accuracy on this sample; pair max at 0.5 also scores 92% while flagging 22/24 negatives. Its 99.28% positive recall therefore must not be presented as useful general detection. At the higher cutoff, pair max positive recall is 78.99% but 75% of source negatives are still flagged. Content-only max has 53.26% balanced accuracy at 0.5 and 51.99% at the frozen higher cutoff. Task-only remains near 50% balanced accuracy. All aggregation/head/cutoff outcomes are preserved, rather than selecting a convenient winner.
+
+Max versus first at 0.5 adds 87 source-positive pair flags and two source-negative flags. This demonstrates a change from considering later windows, not verified malicious-span localization. Mean scoring illustrates dilution. Full token coverage is technically achieved offline; semantic detection quality and live full-context protection remain unresolved, with only 24 source negatives in the sample.
+
+Verification reconciles source/policy/model/scorer hashes, identities/class counts, all window intervals and aggregate probabilities, and all email-level confusion metrics. It does not independently reproduce the GPU embeddings or actual source token identities. The raw result inherits a metric-helper scope string referring to short emails; that textual metadata error is disclosed and corrected in derived reporting without modifying the original archive.
+
+## Phase 2 preflights and limited transfer scope
+
+The first Phase 2 attempt failed before predictions at `level1a`; a cached schema retry subsequently failed at `level3c`. Both are retained, including their unchanged payload hashes. No unsuccessful efficacy trial was discarded. The raw identifier set does not justify another guessed trusted-query mapping. The next prespecified diagnostic evaluates only the existing content head, which does not use a trusted task, and records the raw level IDs without interpreting them. It retains pinned files, Phase 1 exact overlap exclusions, hash sampling, author-overlap reporting, head weights and cutoffs. Pair/task transfer remains unevaluated until context provenance is resolved. No Phase 2 prediction result is included or assumed in this edition.
+
 # Benign checks, labeling policy and reviewer provenance
 
 The separate publisher benign collection contained 203 occurrences, reduced to 160 unique eligible emails after 43 duplicate exclusions. At cutoff 0.5, pair flagged 20/160 (12.5%), content-only eight (5%) and task-only all 160. Adjusted cutoffs flagged none of those already inspected emails; that recheck is reused diagnostic evidence, not independent confirmation.
@@ -204,9 +233,9 @@ The rubric separates recipient-facing email requests from assistant-directed tas
 
 **Supported:** the working gateway prevented the tested admitted demand workload from reaching the backend and preserved benign mean latency under a constrained KV pool. Recorded counters substantiate workload-specific avoided backend tokens. Software regressions and artifact integrity passed the final local checks.
 
-**Not established:** universal injection prevention, isolated adaptive-threshold benefit, full-default-cache OOM prevention, GPU cancellation on timeout, P99 latency, calibrated monetary/energy savings, consistent ingress latency targets, complete conversation/session robustness, or general long-email protection.
+**Not established:** universal injection prevention, isolated adaptive-threshold benefit, full-default-cache OOM prevention, GPU cancellation on timeout, P99 latency, calibrated monetary/energy savings, consistent ingress latency targets, complete conversation/session robustness, or general long-email protection. The completed window test establishes offline token coverage but poor discrimination, not a live defense.
 
-Long-email processing is deliberately deferred to protect the five-hour submission window. Implementing chunk aggregation, training with weak per-email labels, preserving attacks across chunk boundaries and evaluating a full-length corpus would require separate design and evidence. The short-only scope must stay explicit in all summaries.
+Long-email processing has now been evaluated through a bounded offline window extension. Broader corpus evaluation, learned aggregation, boundary-sensitive attack tests and live gateway integration remain future work. Do not extrapolate the initial short-only model or the small long-email sample into full-conversation safety.
 
 Other validity limits include only three GPU repetitions per condition, nonrandom balanced run order, operator-supplied rather than independently executed lab evidence, limited startup records, sampled telemetry, automated public labels, heavy conservative filtering, small negative validation count, related attack families, prior review exposure and unknown pretraining contamination. Public availability does not make data independent or labels correct.
 
@@ -216,7 +245,7 @@ No experimental injection head has replaced the native serving classifier. Exist
 
 The project reaches a defensible prototype milestone: GPU-backed routing, live cache telemetry, repeatable controlled admission protection and an auditable evaluation trail. It also demonstrates that strong training/synthetic scores and cutoff adjustments do not by themselves yield robust injection protection on varied external inputs.
 
-The immediate deliverable is this evidence-based report and reproducibility package. If additional bounded Phase 2 testing completes within the remaining window, it should appear as a clearly versioned addendum using frozen models/cutoffs and overlap reporting. It must not be assumed successful in advance. Further research should prioritize consistent task/trust targets, independently reviewed evaluation and full-context coverage before deployment claims.
+The immediate deliverable is this evidence-based report and reproducibility package. The long-email addendum preserves the limited quality result. Any completed Phase 2 content-only check will be added with frozen-model/cutoff identities and overlap reporting, without assuming success or claiming contextual-pair transfer. Further research should prioritize consistent task/trust targets, independently reviewed evaluation and full-context coverage before deployment claims.
 
 # Reproducibility and evidence index
 
@@ -229,6 +258,7 @@ The source repository is [reetshrivastav/cad_project](https://github.com/reetshr
 - **E5:** [Reserved LLMail evaluation](https://github.com/reetshrivastav/cad_project/blob/973d233/reports/LLMAIL_RESERVED_TEST_REPORT.md), both frozen cutoff policies.
 - **E6:** [Benign and cutoff diagnostic](https://github.com/reetshrivastav/cad_project/blob/973d233/reports/LLMAIL_BENIGN_AND_CUTOFF_REPORT.md), reused-evidence boundaries.
 - **E7:** [Label alignment diagnostic](https://github.com/reetshrivastav/cad_project/blob/973d233/reports/LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md); corrected reviewer records are indexed in the bundle.
+- **E9:** [Long-email extension and preserved Phase 2 preflights](https://github.com/reetshrivastav/cad_project/blob/main/reports/LLMAIL_LONG_EMAIL_RESULTS.md); window evidence accompanies the report index.
 - **E8:** [Final lab check summary](https://github.com/reetshrivastav/cad_project/blob/973d233/reports/evidence/project_handoff_20261024/verified_summary.json), software/artifact verification.
 
 The report figures are generated offline from retained CSV/JSON files; figure source digests accompany the assets. No new benchmark is implied by rendering figures or producing this document.
