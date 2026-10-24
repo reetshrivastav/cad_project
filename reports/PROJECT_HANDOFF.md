@@ -1,5 +1,7 @@
 # Project handoff — 24 October 2026
 
+**Local prototype verification passed.** The supplied lab bundle at source commit `e037df8693b08a76b9a28aadaa82fcd71b0cfb9a` records 123 tests passing in 30.224 seconds and all four native artifact hashes matching retained evidence, without deserializing models. The [verified final summary](evidence/project_handoff_20261024/verified_summary.json) and [exact uploaded logs](evidence/project_handoff_20261024/cad-project-handoff-v1.tar.gz) are archived. These checks close this handoff's software/artifact verification; they do not establish general injection protection. No further rerun or CSV review is required for this milestone.
+
 The project has a working GPU-backed admission gateway and a documented controlled resource-protection result. The injection work has produced reproducible experiments and exposed generalization/labeling weaknesses; it has not produced a broadly reliable injection defense. Preserve both outcomes in presentations and papers.
 
 ## Completed evidence package
@@ -46,7 +48,7 @@ tar -czf ~/Desktop/cad-project-handoff-v1.tar.gz \
   -C results project_handoff_v1
 ```
 
-Upload `cad-project-handoff-v1.tar.gz` for reconciliation. These checks require no running servers or new GPU experiment and do not download/install dependencies. Each subprocess has a five-minute timeout. A passing result closes the software reproducibility check for the current prototype; it does not close the unresolved security objectives.
+Completed: the supplied `cad-project-handoff-v1.tar.gz` has been reconciled and archived. Commands above document reproduction; no repeat is needed without new changes or failures. These checks require no running servers or new GPU experiment and do not download/install dependencies. Each subprocess has a five-minute timeout. A passing result closes the software reproducibility check for the current prototype; it does not close the unresolved security objectives.
 
 ## Remaining requirements for the broader security objective
 

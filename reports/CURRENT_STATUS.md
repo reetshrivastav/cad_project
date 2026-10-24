@@ -17,6 +17,6 @@ No experimental head has replaced the gateway native classifier. No source label
 
 Native classifier 98.24% is training resubstitution, not held-out accuracy. Quarantine still uses CUDA ingress work. Backend-token avoidance is measured only for the controlled resource workload; zero-GPU-cost/zero-VRAM/zero-FLOP claims are unsupported. Older architecture documents also contain targets and historical simulations.
 
-Cloud CPU regression verification: 123 tests passed. Actual GPU outcomes are operator-supplied and reconciled through hashes and probability/counter analysis; CPU tests do not independently reproduce lab inference or establish efficacy.
+Final lab handoff verification passed at source `e037df8`: 123 tests in 30.224 seconds, plus all four native artifact digests matching retained evidence without unpickling. See [final verified summary](evidence/project_handoff_20261024/verified_summary.json). Cloud CPU regression verification also passed 123 tests. Actual GPU outcomes are operator-supplied and reconciled through hashes and probability/counter analysis; CPU tests do not independently reproduce lab inference or establish efficacy.
 
 Primary reports: [GPU replications](GPU_REPLICATION_REPORT.md), [sandbox](SANDBOX_VALIDATION_REPORT.md), [context transfer](CONTEXT_V2_WORDING_TRANSFER_REPORT.md), [external reserved test](LLMAIL_RESERVED_TEST_REPORT.md), [label alignment](LLMAIL_LABEL_ALIGNMENT_DIAGNOSTIC.md), [handoff and final local checks](PROJECT_HANDOFF.md).

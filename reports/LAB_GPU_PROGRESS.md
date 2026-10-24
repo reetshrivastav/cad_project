@@ -344,3 +344,8 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Corrected upload records 13 injection, six benign, six unclear under supplied reviewer Reet. Twenty-four original-text rows match exactly; row 042 contains an explicit replacement placeholder and is excluded rather than sent through another repair loop. Nineteen clear, intact targeted cases support diagnostic-only score reuse. Prior AI exposure prevents a blinded-independent review claim.
 - Preserved review hashes/notes and integrity exclusion separately from publisher labels and original reserved results. No refit, cutoff change or serving change.
 - Consolidated current status and project handoff with measured claims and prioritized unresolved requirements. Prepared one CPU/software/artifact verification bundle for the lab; no additional GPU benchmark or CSV review required to close the current prototype evaluation.
+
+### 24 October — final lab prototype handoff checks passed
+
+- Archived exact final lab bundle at source e037df8. Summary/logs reconcile: all 123 named regressions passed in 30.224 seconds, no reported errors, and four native artifact hashes match retained model evidence. Metadata matches; no native model deserialization.
+- Final checks verify software/artifact integrity only, not a new GPU/live-server/security-efficacy run. Current prototype verification milestone complete; no further CSV repair or repeated run required. General injection protection and other research gaps remain explicit in the handoff.
