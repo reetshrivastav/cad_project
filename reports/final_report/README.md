@@ -11,3 +11,5 @@ Canonical Markdown is `reports/FINAL_PROJECT_REPORT.md`; summary is `reports/PRO
 A bounded frozen Phase 2 transfer test is separately prespecified in `reports/LLMAIL_PHASE2_TRANSFER_PROTOCOL.md`. Its unobserved results are not included in this edition. After operator evidence arrives, add a versioned addendum without erasing earlier negative results.
 
 Figure reproduction: `MPLCONFIGDIR=/tmp/cad-mpl-cache python scripts/build_final_report_figures.py` with Matplotlib/NumPy available. Documents were rendered with Pandoc/XeLaTeX in the cloud; no lab installation is needed to read the supplied PDF/DOCX.
+
+Scope update after edition 1.0: the operator authorized continued testing, including a bounded offline long-email window extension. See `reports/LLMAIL_LONG_EMAIL_PROTOCOL.md` for the cached Phase 2 schema retry and long-input experiment. The existing PDFs describe the earlier evidence cutoff; new outcomes will be added only after verification.

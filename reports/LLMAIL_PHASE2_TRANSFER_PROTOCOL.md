@@ -1,5 +1,7 @@
 # Bounded Phase 2 transfer check — frozen before execution
 
+Update: the first run stopped before predictions on a suffix-format assumption (`level1a`). The failed result is preserved. Use the cached-payload retry in [long-email extension / repair protocol](LLMAIL_LONG_EMAIL_PROTOCOL.md); sampling, scenario task mapping, models and cutoffs remain unchanged.
+
 This additional test fits within the remaining reporting window without new training or long-email engineering. It evaluates existing Phase 1 heads and both already frozen cutoffs on a deterministic bounded sample from the previously unused Phase 2 files. Phase 2 is the same publisher/challenge, not a separate-source benchmark or production incident corpus.
 
 ## Fixed protocol

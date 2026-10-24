@@ -9,7 +9,8 @@ class Phase2Tests(unittest.TestCase):
         scenarios={'scenario_1':{'user_query':'Summarize emails'},'scenario_3':{'user_query':'Summarize emails about Project Zenith.'},'scenario_4':{'user_query':'Summarize Q2 budget emails.'}}
         self.assertEqual(projected_task('level1k',scenarios)[0],'scenario_3')
         self.assertEqual(projected_task('level2v',scenarios)[0],'scenario_4')
-        with self.assertRaises(ValueError):projected_task('level1a',scenarios)
+        self.assertEqual(projected_task('level1a',scenarios)[0],'scenario_3')
+        with self.assertRaises(ValueError):projected_task('level3a',scenarios)
     def test_one_known_owner_prevents_new_team_claim(self):
         self.assertFalse(transfer_cohort({'new','old'},{'old'}))
         self.assertTrue(transfer_cohort({'new'},{'old'}))

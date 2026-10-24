@@ -355,3 +355,9 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Prepared full technical report, editable Word/PDF, one-page professor summary and four figures from preserved measurements. All performance claims remain scoped; long-email implementation deferred by user for submission window.
 - At user request to continue testing, prespecified bounded Phase 2 transfer with unchanged heads/cutoffs, exact Phase 1 overlap exclusions and separate author-novel cohort reporting. Up to 5,000 hash-selected texts inspected and 2,000 short cases scored; no outcome-dependent sampling or retraining. Phase 2 results pending, not assumed in report.
 - Current software suite: 126 cloud tests pass. Historical final lab verification remains 123 tests at e037df8.
+
+### 24 October — continued evaluation: Phase 2 parser correction and long-email coverage
+
+- User expanded remaining-window scope to include long emails. Preserved Phase 2 failed preflight (unknown level1a, no predictions) and pinned cached payload digests. Relaxed defense suffix parsing while preserving validated numeric retrieval scenario mapping. Cached retry avoids redownload and retains original sampling/cutoffs.
+- Added token-ID preserving 254-token windows with overlap 32, explicit coverage, 300-email hash sample, whole-email window budget and first/max/mean aggregation comparisons on original reserved long projections. Frozen short-trained heads, no chunk-label invention or long cutoff tuning. Native live gateway unchanged.
+- Both results pending; original report evidence edition remains available and will receive a versioned addendum based on actual outcomes. See [extension protocol](LLMAIL_LONG_EMAIL_PROTOCOL.md).

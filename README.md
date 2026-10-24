@@ -2,7 +2,7 @@
 
 A research gateway that routes LLM requests into full, sandbox or quarantine tiers using content/resource features and live cache telemetry. Native GPU experiments demonstrate admission protection under a constrained KV-cache workload. General prompt-injection protection and consistent sub-5 ms live ingress remain experimental.
 
-**Final report:** [PDF, editable Word and figures](reports/final_report/README.md) · [Technical report source](reports/FINAL_PROJECT_REPORT.md) · [Professor summary](reports/PROFESSOR_SUMMARY.md). Long-email work is deferred; an additional frozen Phase 2 test is prespecified separately.
+**Final report:** [PDF, editable Word and figures](reports/final_report/README.md) · [Technical report source](reports/FINAL_PROJECT_REPORT.md) · [Professor summary](reports/PROFESSOR_SUMMARY.md). The current report edition covers short-email evidence; a cached Phase 2 retry and offline long-email window extension are prespecified in [the extension protocol](reports/LLMAIL_LONG_EMAIL_PROTOCOL.md), with results pending.
 
 **Measured status:** see [Current lab evidence](reports/CURRENT_STATUS.md) and the [project handoff / final verification](reports/PROJECT_HANDOFF.md). Older sections/documents include prototype goals and simulation results; they are not independent native-lab security validation.
 

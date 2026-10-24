@@ -33,7 +33,7 @@ def keys(text):
 
 
 def projected_task(level,scenarios):
-    match=re.fullmatch(r'level([12])[k-v]',level)
+    match=re.fullmatch(r'level([12])[a-z]',level)
     if not match:raise ValueError('Unknown Phase 2 level: '+str(level))
     scenario=SCENARIO_MAP[match[1]];task=scenarios[scenario]['user_query']
     if not isinstance(task,str) or not task.strip():raise ValueError('Missing original user query')
@@ -50,6 +50,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-dir',type=Path,required=True);parser.add_argument('--group-dir',type=Path,required=True)
     parser.add_argument('--models-dir',type=Path,required=True);parser.add_argument('--output-dir',type=Path,required=True)
+    parser.add_argument('--phase2-source-dir',type=Path,help='Reuse the pinned payloads from a previous run; verify recorded digests, no redownload')
     args=parser.parse_args()
     if args.output_dir.exists() and any(args.output_dir.iterdir()):parser.error('Use a new empty output directory')
     args.output_dir.mkdir(parents=True,exist_ok=True)
@@ -80,16 +81,25 @@ def main():
         connection=sqlite3.connect((args.group_dir/'exact_join_index.sqlite').resolve().as_uri()+'?mode=ro',uri=True)
         phase1_teams={r[0] for r in connection.execute('SELECT team FROM team_components')};connection.close()
         if len(phase1_teams)!=group_summary['teams']:raise ValueError('Team index count mismatch')
+        phase2_root=args.phase2_source_dir or args.output_dir
+        if args.phase2_source_dir:
+            cache_manifest=json.loads((ROOT/'reports/evidence/llmail_phase2_preflight_20261024/failed_result.json').read_text())['files']
         for relative in PHASE2_FILES:
-            print('Downloading pinned '+relative+' ...',flush=True)
-            result['files'][relative]=download(relative,args.output_dir/relative)
+            if args.phase2_source_dir:
+                cached=phase2_root/relative;expected_cache=cache_manifest[relative]
+                if cached.stat().st_size!=expected_cache['bytes'] or digest(cached)!=expected_cache['sha256']:raise ValueError('Cached Phase 2 payload checksum mismatch')
+                result['files'][relative]=expected_cache
+            else:
+                print('Downloading pinned '+relative+' ...',flush=True)
+                result['files'][relative]=download(relative,args.output_dir/relative)
+        result['reused_payloads']=bool(args.phase2_source_dir)
         print('Indexing Phase 1 annotation overlap keys on CPU...',flush=True)
         phase1=json.loads((args.source_dir/'data/labelled_unique_submissions_phase1.json').read_text())
         seen_text=set();seen_bags=set()
         for text in phase1:
             a,b=keys(text);seen_text.add(a);seen_bags.add(b)
         del phase1
-        annotations=json.loads((args.output_dir/PHASE2_FILES[0]).read_text())
+        annotations=json.loads((phase2_root/PHASE2_FILES[0]).read_text())
         if not isinstance(annotations,dict):raise ValueError('Unexpected Phase 2 annotation schema')
         source_labels=Counter();excluded=Counter();candidates={}
         for text,annotation in annotations.items():
@@ -101,11 +111,11 @@ def main():
             if b in seen_bags:excluded['phase1_token_bag_overlap']+=1;continue
             key=hashlib.sha256(text.encode()).hexdigest();candidates[key]={'text':text,'label':label,'reason':annotation.get('reason')}
         del annotations,seen_text,seen_bags
-        owners=defaultdict(set);levels=defaultdict(set);raw_rows=0;missing_team_rows=0
-        with (args.output_dir/PHASE2_FILES[1]).open() as handle:
+        owners=defaultdict(set);levels=defaultdict(set);raw_rows=0;missing_team_rows=0;observed_levels=Counter()
+        with (phase2_root/PHASE2_FILES[1]).open() as handle:
             for line in handle:
                 if not line.strip():continue
-                raw_rows+=1;row=json.loads(line);text=text_key(row.get('subject'),row.get('body'))
+                raw_rows+=1;row=json.loads(line);observed_levels[str(row.get('scenario'))]+=1;text=text_key(row.get('subject'),row.get('body'))
                 if text is None:continue
                 key=hashlib.sha256(text.encode()).hexdigest()
                 if key not in candidates:continue
@@ -121,7 +131,7 @@ def main():
             matched.append({'id':'LLMAIL-P2-'+key,'task':task,'untrusted_content':value['text'],
                             'source_attack_attempt':value['label'],'source_reason':value['reason'],
                             'observed_scenario':scenario,'team_new':transfer_cohort(owners[key],phase1_teams)})
-        result.update(source_annotation_counts=dict(source_labels),raw_phase2_rows=raw_rows,matched_missing_team_raw_rows=missing_team_rows,
+        result.update(source_annotation_counts=dict(source_labels),raw_phase2_rows=raw_rows,observed_phase2_levels=dict(observed_levels),matched_missing_team_raw_rows=missing_team_rows,
                       novel_matched_candidate_count=len(matched),novel_matched_team_new_count=sum(r['team_new'] for r in matched),overlap_and_schema_exclusions=dict(excluded))
         matched.sort(key=lambda r:hashlib.sha256(('phase2-transfer-v1:'+r['id']).encode()).hexdigest())
         sample=matched[:5000];del candidates,matched
