@@ -1,0 +1,67 @@
+{
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "split_plan_sha256": "75d1292679c50efbf195aaef420b7d0a201f4af36f5eaf71af3b315d69574bed",
+  "script_sha256": "a175d008f79ec037c6a5e49c6cf286b3e54514ddd18736bd8dd7f28a57232d3e",
+  "counts_by_split_and_source_label": {
+    "train": {
+      "True": 93716,
+      "False": 8033
+    },
+    "validation": {
+      "True": 17089,
+      "False": 448
+    },
+    "test": {
+      "True": 16565,
+      "False": 971
+    }
+  },
+  "annotation_reasons": {
+    "train": {
+      "api_triggered": 16121,
+      "judge": 85628
+    },
+    "validation": {
+      "api_triggered": 2744,
+      "judge": 14793
+    },
+    "test": {
+      "api_triggered": 2527,
+      "judge": 15009
+    }
+  },
+  "excluded": {
+    "Unclear": 23911,
+    "unmatched_definite": 6,
+    "malformed": 2
+  },
+  "max_email_characters": {
+    "train": 32696,
+    "test": 32703,
+    "validation": 32188
+  },
+  "files": {
+    "train": {
+      "bytes": 302831941,
+      "sha256": "0a7c89f8d32931fc53ab43b3ae9bc261b9e35b8b270427961fa08540cba7cb7e"
+    },
+    "validation": {
+      "bytes": 53749129,
+      "sha256": "5e47727f9b6f363532d98cf4947128053b5c98e75a4535210dc67e4324bf822d"
+    },
+    "test": {
+      "bytes": 24705199,
+      "sha256": "b0b874e1e813a33d417b5b2bb749f315fa6231f3824ff82a5069d88c1cac3d97"
+    }
+  },
+  "training_performed": false,
+  "phase2_used": false,
+  "benign_fp_emails_used": false,
+  "limitations": [
+    "Source automated annotations, not independently reviewed malicious-intent labels.",
+    "One-email projection omits other retrieved emails, tool schemas and conversation state.",
+    "Exact group separation does not establish near-duplicate or template independence.",
+    "No tokenizer truncation or embedding applied. Token-window policy still required.",
+    "Phase 1 test is reserved for fitting decisions; source input schema has been inspected."
+  ]
+}

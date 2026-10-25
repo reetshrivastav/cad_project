@@ -1,0 +1,11 @@
+{
+  "source_sha256": "00d3fb1fbd5e2497a91973a51eccc6ca2b3e08e0568aede71e8dcc0362d33158",
+  "arithmetic_and_intake_hashes_reconcile": true,
+  "normalization_correction": {
+    "True": 127376,
+    "False": 9452,
+    "Unclear": 23911,
+    "malformed": 2
+  },
+  "scope": "Original grouping summary retained unchanged. Corrected full-data run pending; label type counts are operator-supplied console evidence, not independently parsed source payloads."
+}

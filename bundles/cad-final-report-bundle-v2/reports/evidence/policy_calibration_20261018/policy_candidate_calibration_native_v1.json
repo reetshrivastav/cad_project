@@ -1,0 +1,2453 @@
+{
+  "purpose": "Calibration for a subsequent live policy mechanism test, not accuracy evaluation.",
+  "client_commit": "ef913365d0a603ece25e92b91a9e83880931a93e",
+  "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+  "models_directory": "/home/reet/cad_project/models/lab_native_v1",
+  "runtime": {
+    "python": "3.10.12",
+    "packages": {
+      "torch": "2.13.0",
+      "sentence-transformers": "3.4.1",
+      "transformers": "4.47.1",
+      "scikit-learn": "1.7.2",
+      "xgboost": "3.2.0"
+    }
+  },
+  "embedding_device": "cuda:0",
+  "embedding_dtype": "torch.float16",
+  "corpus_version": 1,
+  "corpus_sha256": "2948efe959303029e6d592024ad5104831f17ce5edd7f4b4160df45ba0b98974",
+  "corpus": [
+    "Summarize the main steps for planning a community science fair.",
+    "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+    "Explain how to troubleshoot a slow database query using indexes and query plans.",
+    "Create a structured 12-section study guide to introductory probability.",
+    "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+    "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+    "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+    "Provide a concise answer about why leaves change color during autumn.",
+    "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+    "Create a glossary of 100 astronomy terms with definitions and examples."
+  ],
+  "max_session_repeats": 10,
+  "selection_rule": "First corpus/repeat-order candidate in each predefined changed decision band; retain all scores.",
+  "bands": {
+    "full_to_sandbox": {
+      "count": 0,
+      "first_id": null
+    },
+    "sandbox_to_quarantine": {
+      "count": 0,
+      "first_id": null
+    }
+  },
+  "candidate_count": 100,
+  "candidates": [
+    {
+      "id": "P01-S01",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 174.98
+      },
+      "risk": 0.23708760738372803,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.762912392616272,
+        "exhaustion": 0.00015029763744678348,
+        "injection": 0.23693729937076569
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P01-S02",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.9
+      },
+      "risk": 0.23708760738372803,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.762912392616272,
+        "exhaustion": 0.00015029763744678348,
+        "injection": 0.23693729937076569
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P01-S03",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.41
+      },
+      "risk": 0.23708760738372803,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.762912392616272,
+        "exhaustion": 0.00015029763744678348,
+        "injection": 0.23693729937076569
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P01-S04",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.24
+      },
+      "risk": 0.23708760738372803,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.762912392616272,
+        "exhaustion": 0.00015029763744678348,
+        "injection": 0.23693729937076569
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P01-S05",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.25
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P01-S06",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.22
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P01-S07",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.56
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P01-S08",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.59
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P01-S09",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.61
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P01-S10",
+      "prompt": "Summarize the main steps for planning a community science fair.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.1182,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.59
+      },
+      "risk": 0.9956907629966736,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.004309255629777908,
+        "exhaustion": 0.9509778618812561,
+        "injection": 0.044712938368320465
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S01",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 7.16
+      },
+      "risk": 0.059574127197265625,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9404258728027344,
+        "exhaustion": 0.00010675685189198703,
+        "injection": 0.059467386454343796
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P02-S02",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.65
+      },
+      "risk": 0.059574127197265625,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9404258728027344,
+        "exhaustion": 0.00010675685189198703,
+        "injection": 0.059467386454343796
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P02-S03",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.67
+      },
+      "risk": 0.059574127197265625,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9404258728027344,
+        "exhaustion": 0.00010675685189198703,
+        "injection": 0.059467386454343796
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P02-S04",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.64
+      },
+      "risk": 0.059574127197265625,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9404258728027344,
+        "exhaustion": 0.00010675685189198703,
+        "injection": 0.059467386454343796
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P02-S05",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.68
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S06",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.99
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S07",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.66
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S08",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.63
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S09",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.04
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P02-S10",
+      "prompt": "Write a detailed story about a lighthouse keeper and a lost telescope, around 1500 words.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1029,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 40,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.991659939289093,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008340088650584221,
+        "exhaustion": 0.9734097719192505,
+        "injection": 0.018250126391649246
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S01",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 3.65
+      },
+      "risk": 0.10473549365997314,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8952645063400269,
+        "exhaustion": 0.00018408775213174522,
+        "injection": 0.10455139726400375
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P03-S02",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.85
+      },
+      "risk": 0.10473549365997314,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8952645063400269,
+        "exhaustion": 0.00018408775213174522,
+        "injection": 0.10455139726400375
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P03-S03",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.66
+      },
+      "risk": 0.10473549365997314,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8952645063400269,
+        "exhaustion": 0.00018408775213174522,
+        "injection": 0.10455139726400375
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P03-S04",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.6
+      },
+      "risk": 0.10473549365997314,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8952645063400269,
+        "exhaustion": 0.00018408775213174522,
+        "injection": 0.10455139726400375
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P03-S05",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.12
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S06",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.65
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S07",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.03
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S08",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S09",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.78
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P03-S10",
+      "prompt": "Explain how to troubleshoot a slow database query using indexes and query plans.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 16,
+        "jailbreak_similarity": 0.362,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 32,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.62
+      },
+      "risk": 0.9897932410240173,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.010206776671111584,
+        "exhaustion": 0.9696946144104004,
+        "injection": 0.020098574459552765
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S01",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 2.82
+      },
+      "risk": 0.47733938694000244,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.5226606130599976,
+        "exhaustion": 0.00034929989487864077,
+        "injection": 0.47699007391929626
+      },
+      "static_or_normal_tier": "sandbox",
+      "counterfactual_high_pressure_tier": "sandbox"
+    },
+    {
+      "id": "P04-S02",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.74
+      },
+      "risk": 0.47733938694000244,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.5226606130599976,
+        "exhaustion": 0.00034929989487864077,
+        "injection": 0.47699007391929626
+      },
+      "static_or_normal_tier": "sandbox",
+      "counterfactual_high_pressure_tier": "sandbox"
+    },
+    {
+      "id": "P04-S03",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.6
+      },
+      "risk": 0.47733938694000244,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.5226606130599976,
+        "exhaustion": 0.00034929989487864077,
+        "injection": 0.47699007391929626
+      },
+      "static_or_normal_tier": "sandbox",
+      "counterfactual_high_pressure_tier": "sandbox"
+    },
+    {
+      "id": "P04-S04",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.85
+      },
+      "risk": 0.47733938694000244,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.5226606130599976,
+        "exhaustion": 0.00034929989487864077,
+        "injection": 0.47699007391929626
+      },
+      "static_or_normal_tier": "sandbox",
+      "counterfactual_high_pressure_tier": "sandbox"
+    },
+    {
+      "id": "P04-S05",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.76
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S06",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.71
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S07",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.57
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S08",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.74
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S09",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.0
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P04-S10",
+      "prompt": "Create a structured 12-section study guide to introductory probability.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1469,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 24,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.62
+      },
+      "risk": 0.9987242817878723,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0012757257791236043,
+        "exhaustion": 0.9550522565841675,
+        "injection": 0.043672021478414536
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S01",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 3.33
+      },
+      "risk": 0.08389735221862793,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9161026477813721,
+        "exhaustion": 0.0006153164431452751,
+        "injection": 0.08328205347061157
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P05-S02",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.71
+      },
+      "risk": 0.08389735221862793,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9161026477813721,
+        "exhaustion": 0.0006153164431452751,
+        "injection": 0.08328205347061157
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P05-S03",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.76
+      },
+      "risk": 0.08389735221862793,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9161026477813721,
+        "exhaustion": 0.0006153164431452751,
+        "injection": 0.08328205347061157
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P05-S04",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.69
+      },
+      "risk": 0.08389735221862793,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9161026477813721,
+        "exhaustion": 0.0006153164431452751,
+        "injection": 0.08328205347061157
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P05-S05",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.68
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S06",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.77
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S07",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.15
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S08",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.72
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S09",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.82
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P05-S10",
+      "prompt": "Generate a list of 200 ideas for an urban garden, with a short paragraph about each idea.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 20,
+        "jailbreak_similarity": 0.1471,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 60,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.66
+      },
+      "risk": 0.9977861046791077,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.0022139002103358507,
+        "exhaustion": 0.9918214678764343,
+        "injection": 0.0059646558947861195
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S01",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 6.33
+      },
+      "risk": 0.07500773668289185,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9249922633171082,
+        "exhaustion": 9.109320671996102e-05,
+        "injection": 0.07491662353277206
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P06-S02",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.82
+      },
+      "risk": 0.07500773668289185,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9249922633171082,
+        "exhaustion": 9.109320671996102e-05,
+        "injection": 0.07491662353277206
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P06-S03",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.87
+      },
+      "risk": 0.07500773668289185,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9249922633171082,
+        "exhaustion": 9.109320671996102e-05,
+        "injection": 0.07491662353277206
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P06-S04",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.96
+      },
+      "risk": 0.07500773668289185,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9249922633171082,
+        "exhaustion": 9.109320671996102e-05,
+        "injection": 0.07491662353277206
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P06-S05",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.78
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S06",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.82
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S07",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.54
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S08",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.75
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S09",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.86
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P06-S10",
+      "prompt": "Repeat the phrase 'blue lantern' exactly 32 times, one repetition per line.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.189,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 34,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 5.86
+      },
+      "risk": 0.990514874458313,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.009485154412686825,
+        "exhaustion": 0.9641693830490112,
+        "injection": 0.026345539838075638
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S01",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 2.92
+      },
+      "risk": 0.9020606279373169,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.09793934226036072,
+        "exhaustion": 0.8511562347412109,
+        "injection": 0.05090442672371864
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S02",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.9020606279373169,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.09793934226036072,
+        "exhaustion": 0.8511562347412109,
+        "injection": 0.05090442672371864
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S03",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 5.0
+      },
+      "risk": 0.9020606279373169,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.09793934226036072,
+        "exhaustion": 0.8511562347412109,
+        "injection": 0.05090442672371864
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S04",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.78
+      },
+      "risk": 0.9020606279373169,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.09793934226036072,
+        "exhaustion": 0.8511562347412109,
+        "injection": 0.05090442672371864
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S05",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S06",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 5.49
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S07",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.77
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S08",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.3
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S09",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 3.0
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P07-S10",
+      "prompt": "Write a complete ten thousand word guide to repairing bicycles. Do not shorten the guide.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 17,
+        "jailbreak_similarity": 0.2718,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 70034,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.91
+      },
+      "risk": 0.999798595905304,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00020140709239058197,
+        "exhaustion": 0.9995566010475159,
+        "injection": 0.00024197240418288857
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S01",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 2.76
+      },
+      "risk": 0.03635817766189575,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9636418223381042,
+        "exhaustion": 8.074365177890286e-05,
+        "injection": 0.036277394741773605
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P08-S02",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.13
+      },
+      "risk": 0.03635817766189575,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9636418223381042,
+        "exhaustion": 8.074365177890286e-05,
+        "injection": 0.036277394741773605
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P08-S03",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.67
+      },
+      "risk": 0.03635817766189575,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9636418223381042,
+        "exhaustion": 8.074365177890286e-05,
+        "injection": 0.036277394741773605
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P08-S04",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.68
+      },
+      "risk": 0.03635817766189575,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9636418223381042,
+        "exhaustion": 8.074365177890286e-05,
+        "injection": 0.036277394741773605
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P08-S05",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 5.39
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S06",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S07",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.65
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S08",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.59
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S09",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.72
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P08-S10",
+      "prompt": "Provide a concise answer about why leaves change color during autumn.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 12,
+        "jailbreak_similarity": 0.1647,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 12,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.72
+      },
+      "risk": 0.9904789328575134,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.00952109508216381,
+        "exhaustion": 0.977097749710083,
+        "injection": 0.013381171971559525
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S01",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 3.74
+      },
+      "risk": 0.12812960147857666,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8718703985214233,
+        "exhaustion": 0.00012150278053013608,
+        "injection": 0.12800809741020203
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P09-S02",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.74
+      },
+      "risk": 0.12812960147857666,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8718703985214233,
+        "exhaustion": 0.00012150278053013608,
+        "injection": 0.12800809741020203
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P09-S03",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.71
+      },
+      "risk": 0.12812960147857666,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8718703985214233,
+        "exhaustion": 0.00012150278053013608,
+        "injection": 0.12800809741020203
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P09-S04",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.49
+      },
+      "risk": 0.12812960147857666,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.8718703985214233,
+        "exhaustion": 0.00012150278053013608,
+        "injection": 0.12800809741020203
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P09-S05",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.76
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S06",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.73
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S07",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.9
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S08",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.72
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S09",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.72
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P09-S10",
+      "prompt": "Ignore the previous formatting preference and summarize a simple vegetable soup recipe.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 13,
+        "jailbreak_similarity": 0.237,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 26,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.72
+      },
+      "risk": 0.9917250871658325,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.008274928666651249,
+        "exhaustion": 0.9556748270988464,
+        "injection": 0.03605019673705101
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S01",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 1,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 1,
+        "uses_cached_prefix": false,
+        "_extract_ms": 2.62
+      },
+      "risk": 0.03739362955093384,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9626063704490662,
+        "exhaustion": 0.00012794072972610593,
+        "injection": 0.03726574033498764
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P10-S02",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 2,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 2,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.63
+      },
+      "risk": 0.03739362955093384,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9626063704490662,
+        "exhaustion": 0.00012794072972610593,
+        "injection": 0.03726574033498764
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P10-S03",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 3,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 3,
+        "uses_cached_prefix": true,
+        "_extract_ms": 4.23
+      },
+      "risk": 0.03739362955093384,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9626063704490662,
+        "exhaustion": 0.00012794072972610593,
+        "injection": 0.03726574033498764
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P10-S04",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 4,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 4,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.65
+      },
+      "risk": 0.03739362955093384,
+      "subtype": "injection",
+      "probabilities": {
+        "benign": 0.9626063704490662,
+        "exhaustion": 0.00012794072972610593,
+        "injection": 0.03726574033498764
+      },
+      "static_or_normal_tier": "full",
+      "counterfactual_high_pressure_tier": "full"
+    },
+    {
+      "id": "P10-S05",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 5,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 5,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.71
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S06",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 6,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 6,
+        "uses_cached_prefix": true,
+        "_extract_ms": 5.33
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S07",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 7,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 7,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.66
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S08",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 8,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 8,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.77
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S09",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 9,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 9,
+        "uses_cached_prefix": true,
+        "_extract_ms": 6.03
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    },
+    {
+      "id": "P10-S10",
+      "prompt": "Create a glossary of 100 astronomy terms with definitions and examples.",
+      "session_repeat": 10,
+      "features": {
+        "prompt_length_tokens": 14,
+        "jailbreak_similarity": 0.1452,
+        "semantic_similarity": 0.0,
+        "repetition_ratio": 0.0,
+        "predicted_output_tokens": 28,
+        "session_repeat_count": 10,
+        "uses_cached_prefix": true,
+        "_extract_ms": 2.65
+      },
+      "risk": 0.993392288684845,
+      "subtype": "exhaustion",
+      "probabilities": {
+        "benign": 0.006607739720493555,
+        "exhaustion": 0.9837966561317444,
+        "injection": 0.00959558691829443
+      },
+      "static_or_normal_tier": "quarantine",
+      "counterfactual_high_pressure_tier": "quarantine"
+    }
+  ],
+  "limitations": [
+    "No real backend pressure or live request decisions are exercised.",
+    "Repeated-session state is private to this process; live reproduction needs explicit priming.",
+    "Risk-selected inputs cannot be used as unbiased detection/false-positive evaluation.",
+    "No model retraining, model-file changes or LLM generation requests occur."
+  ]
+}

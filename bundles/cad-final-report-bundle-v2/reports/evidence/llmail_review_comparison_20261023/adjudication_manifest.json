@@ -1,0 +1,32 @@
+{
+  "rows": 25,
+  "csv_sha256": "3521db9002f50baf0f578d135b1a65657c263b4d7381cff32ca8f5ba06e2aa65",
+  "review_ids": [
+    "LLMAIL-REVIEW-003",
+    "LLMAIL-REVIEW-005",
+    "LLMAIL-REVIEW-008",
+    "LLMAIL-REVIEW-011",
+    "LLMAIL-REVIEW-013",
+    "LLMAIL-REVIEW-014",
+    "LLMAIL-REVIEW-017",
+    "LLMAIL-REVIEW-023",
+    "LLMAIL-REVIEW-030",
+    "LLMAIL-REVIEW-035",
+    "LLMAIL-REVIEW-036",
+    "LLMAIL-REVIEW-038",
+    "LLMAIL-REVIEW-041",
+    "LLMAIL-REVIEW-042",
+    "LLMAIL-REVIEW-045",
+    "LLMAIL-REVIEW-047",
+    "LLMAIL-REVIEW-049",
+    "LLMAIL-REVIEW-052",
+    "LLMAIL-REVIEW-054",
+    "LLMAIL-REVIEW-056",
+    "LLMAIL-REVIEW-057",
+    "LLMAIL-REVIEW-061",
+    "LLMAIL-REVIEW-067",
+    "LLMAIL-REVIEW-071",
+    "LLMAIL-REVIEW-079"
+  ],
+  "selection": "14 unclear plus 11 source-negative/AI-injection disagreements; labels/reviewer/notes remain blank. Targeted development review, not fresh benchmark."
+}

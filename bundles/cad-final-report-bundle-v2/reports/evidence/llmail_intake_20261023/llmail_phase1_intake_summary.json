@@ -1,0 +1,203 @@
+{
+  "timestamp_utc": "2026-10-23T11:49:43.380924+00:00",
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "phase2_downloaded": false,
+  "training_performed": false,
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 23628,
+      "sha256": "d85767e349ab1abbaf43db9390c4e906e34954e5df3a1335c8f1516efa64e812"
+    },
+    {
+      "file": "data/scenarios.json",
+      "bytes": 38812,
+      "sha256": "3d7c55fd04826dd29fa11b9f9912ae270fffb16a6c52a7eb2bff00457d378e4f"
+    },
+    {
+      "file": "data/system_prompt.json",
+      "bytes": 3065,
+      "sha256": "f5d0eb0b02f548476e32f39f190de7ebf1614c0816049c4d7b0047869c28131b"
+    },
+    {
+      "file": "data/levels_descriptions.json",
+      "bytes": 884,
+      "sha256": "d1391d6fa8bb074b1603bb20699df6c1ada3c6add64db495e1a39faebc0cd400"
+    },
+    {
+      "file": "data/objectives_descriptions.json",
+      "bytes": 379,
+      "sha256": "daed5cacc5126790073e1a8dfc650b8024c903c415f1e11a189a8171c0c0f183"
+    },
+    {
+      "file": "data/emails_for_fp_tests.json",
+      "bytes": 55486,
+      "sha256": "4ddd950b5dbaa8548f5597c886d8e09a051ba07f80a9291fdcca9c2397d22abe"
+    },
+    {
+      "file": "data/labelled_unique_submissions_phase1.json",
+      "bytes": 448194111,
+      "sha256": "691dfa1595d2bd0e731069f233bd5448f7af1c0ebd9732bc6f12dd6cee446586"
+    },
+    {
+      "file": "data/raw_submissions_phase1.jsonl",
+      "bytes": 1666413489,
+      "sha256": "a9c62eca699dd270fdfbbfbfcc1253f5e5017f6d5a34ff7cb0f2cbb80b7f7c0a"
+    }
+  ],
+  "schemas": {
+    "data/scenarios.json": {
+      "type": "dict",
+      "count": 4,
+      "value_types": {
+        "dict": 4
+      },
+      "nested_field_names": [
+        "emails",
+        "position",
+        "task",
+        "user_query"
+      ]
+    },
+    "data/system_prompt.json": {
+      "type": "dict",
+      "count": 2,
+      "value_types": {
+        "str": 2
+      },
+      "nested_field_names": []
+    },
+    "data/levels_descriptions.json": {
+      "type": "dict",
+      "count": 2,
+      "value_types": {
+        "dict": 2
+      },
+      "nested_field_names": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v"
+      ]
+    },
+    "data/objectives_descriptions.json": {
+      "type": "dict",
+      "count": 5,
+      "value_types": {
+        "str": 5
+      },
+      "nested_field_names": []
+    },
+    "data/emails_for_fp_tests.json": {
+      "type": "list",
+      "count": 203,
+      "item_types": {
+        "str": 203
+      }
+    },
+    "data/labelled_unique_submissions_phase1.json": {
+      "type": "dict",
+      "count": 160741,
+      "attack_attempt_values": {
+        "True": 127376,
+        "Unclear": 23911,
+        "False": 9452,
+        "['False', 'True', 'False', 'False']": 1,
+        "1.0": 1
+      },
+      "annotation_reasons": {
+        "api_triggered": 21394,
+        "judge": 139347
+      },
+      "annotation_fields": {
+        "attack_attempt": 160741,
+        "reason": 160741,
+        "judge_answer": 139347,
+        "judge_category": 139347
+      }
+    },
+    "data/raw_submissions_phase1.jsonl": {
+      "type": "jsonl",
+      "rows": 370724,
+      "field_occurrences": {
+        "RowKey": 370724,
+        "Timestamp": 370724,
+        "body": 370724,
+        "completed_time": 370724,
+        "job_id": 370724,
+        "objectives": 370724,
+        "output": 370724,
+        "scenario": 370724,
+        "scheduled_time": 370724,
+        "started_time": 370724,
+        "subject": 370724,
+        "team_id": 370724
+      },
+      "unique_teams": 224,
+      "missing_team": 0,
+      "scenarios": {
+        "level1a": 16261,
+        "level1c": 9576,
+        "level1b": 27230,
+        "level1e": 13340,
+        "level1d": 14846,
+        "level3a": 5233,
+        "level2a": 2175,
+        "level1g": 23411,
+        "level2e": 13171,
+        "level4a": 5590,
+        "level2g": 5716,
+        "level2c": 3812,
+        "level1h": 9387,
+        "level3e": 14185,
+        "level4e": 48373,
+        "level3g": 15509,
+        "level3h": 2673,
+        "level1j": 10621,
+        "level3f": 3000,
+        "level2i": 455,
+        "level1f": 6507,
+        "level1i": 28935,
+        "level2d": 6219,
+        "level4h": 12875,
+        "level4f": 3803,
+        "level3j": 649,
+        "level2f": 1908,
+        "level2h": 6593,
+        "level4g": 10695,
+        "level3b": 1993,
+        "level4c": 5464,
+        "level3c": 5754,
+        "level4j": 513,
+        "level3d": 1651,
+        "level4b": 2275,
+        "level2b": 4285,
+        "level2j": 7310,
+        "level4i": 4713,
+        "level4d": 5497,
+        "level3i": 8521
+      },
+      "max_subject_body_characters": 39168
+    }
+  },
+  "errors": {},
+  "scope": "External Phase 1 intake/schema audit only. No data splitting, classifier labels or efficacy claims."
+}

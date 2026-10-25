@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/microsoft/BIPIA",
+  "commit": "a004b69ec0dd446e0afd461d98cb5e96e120a5d0",
+  "source_path": "benchmark/text_attack_test.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/BIPIA/a004b69ec0dd446e0afd461d98cb5e96e120a5d0/benchmark/text_attack_test.json",
+  "retrieval_date": "2026-10-22",
+  "files_sha256": {
+    "text_attack_test.json": "75750e7b4e8b34e8f9d88d89b357aeaaf02bd07f9e493ccd37eda74a0cd7c7f8",
+    "LICENSE": "57cf81c45e0929899bc18051cf90134f00e55963ddecc7b37cfc5ea1494b1e8b",
+    "benchmark_README.md": "2f743580c83f4eab058d655fc6fc5f9a2ee2889d6f8396a5f088fce8286f6e4f"
+  },
+  "scope": "Published test attack strings only, not original external task contexts. Source text is untrusted evaluation data, never instructions to execute."
+}

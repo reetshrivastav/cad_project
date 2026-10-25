@@ -1,0 +1,22 @@
+{
+  "archive_sha256": "20a2d71210a6403ca602b0a550e5bf4ed509e65eb70f1756cff5fa6a74ecbe77",
+  "member_sha256": {
+    "project_handoff_v1/cpu_regressions.txt": "7b8f80fa012d521f96ea947f363591c5ae8eb595a961976ec2600905cac99058",
+    "project_handoff_v1/native_artifacts.txt": "ec17c052571b427b9032776ba27e929f48b09a3433a82d7846e73410aac0648c",
+    "project_handoff_v1/summary.json": "29f368d3dd113c3d3c100a1995400c49be8e286fb6944b9259eb80a8d7416bfb"
+  },
+  "lab_source_commit": "e037df8693b08a76b9a28aadaa82fcd71b0cfb9a",
+  "timestamp_utc": "2026-10-24T12:55:36.766050+00:00",
+  "tests_passed": 123,
+  "test_seconds": 30.224,
+  "artifact_hashes": {
+    "classifier.joblib": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+    "tfidf.joblib": "463ee22d078525d041b82acd8e5c27eedd68aadd93b1b1c15621b9f64e6591ba",
+    "ref_embeddings.npy": "039e785f3c1d07062aef9dcd26ecefebd81e23738917f21a49f471f53c88b46c",
+    "reference_jailbreaks.json": "032f0a5a1ca3ce9d05e95bfe8dc330c976c5509d0400048a7f6bd4901c0440ed"
+  },
+  "metadata_matches": true,
+  "deserialized_models": false,
+  "recorded_checks_passed": true,
+  "scope": "Uploaded lab logs reconciled with retained native artifact hashes, test listing/count and source ancestry. No new GPU workload, live server check or security efficacy evaluation performed."
+}

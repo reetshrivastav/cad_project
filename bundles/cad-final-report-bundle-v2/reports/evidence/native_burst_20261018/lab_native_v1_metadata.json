@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-10-18T11:08:42Z",
+  "accuracy_scope": "training_set_resubstitution_not_held_out",
+  "runtime": {
+    "python": "3.10.12",
+    "packages": {
+      "torch": "2.13.0",
+      "sentence-transformers": "3.4.1",
+      "transformers": "4.47.1",
+      "scikit-learn": "1.7.2",
+      "xgboost": "3.2.0"
+    }
+  },
+  "dataset_files": {
+    "advbench_harmful_behaviors.csv": "6cd1a5c63c07610d7eb67307772ee5606017ee950b5770ab288a2c487489d3e1",
+    "alpaca_sample.json": "2eddafc6b977608d778aaab8dfc7e50e547b3af9826dfb9e909d9fc362e4a419"
+  },
+  "artifact_sha256": {
+    "classifier.joblib": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+    "tfidf.joblib": "463ee22d078525d041b82acd8e5c27eedd68aadd93b1b1c15621b9f64e6591ba",
+    "ref_embeddings.npy": "039e785f3c1d07062aef9dcd26ecefebd81e23738917f21a49f471f53c88b46c",
+    "reference_jailbreaks.json": "032f0a5a1ca3ce9d05e95bfe8dc330c976c5509d0400048a7f6bd4901c0440ed"
+  },
+  "total_samples": 4329,
+  "benign_samples": 2700,
+  "injection_samples": 994,
+  "exhaustion_samples": 635,
+  "accuracy": 0.9824,
+  "features": [
+    "prompt_length_tokens",
+    "jailbreak_similarity",
+    "semantic_similarity",
+    "repetition_ratio",
+    "predicted_output_tokens",
+    "session_repeat_count"
+  ],
+  "embedding_model": "all-MiniLM-L6-v2"
+}

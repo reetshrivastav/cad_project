@@ -1,0 +1,5 @@
+Start with reports/final_report/Adaptive_LLM_Gateway_Final_Report.pdf or reports/README.md.
+Editable copy: reports/final_report/Adaptive_LLM_Gateway_Final_Report.docx
+Short copy: reports/final_report/Professor_Summary.pdf
+Evidence paths/digests: reports/final_report/EVIDENCE_INDEX.csv
+Includes preserved reports, evidence, scripts and tests; large lab source datasets and environment/model installations are not included.

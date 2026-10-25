@@ -1,0 +1,14 @@
+{
+  "cad-direct-validation-v1.tar.gz": "cd3169a5e4846d37fb8289117aa0ee140618b1462d9f22b7a4b99298af9fcae0",
+  "cad-final-lab-check-v2.tar.gz": "bbf8522a4b35c6cdfa0eccb959fbfe2d530f97b20dbf13250104ee4b31b08148",
+  "cad-gpu-performance.txt": "4e56876dbe2f680bddcc0b769d510d000a87693f02439d7d8e821fb8406d906b",
+  "cad-ingress-clocks-v1.tar.gz": "30cd12d066e556b9901b1ee942c1149d9106aa2366265d479d2db02028ecad2f",
+  "cad-ingress-final-v1.tar.gz": "ae22a7bb33943bdb70391ff24808f71e68df4b9c07efe46c39f4307206829dd9",
+  "cad-ingress-trace-v1.tar.gz": "3e391b65aff51922be7159166ea613c4d6dd8c4c6a247edc50a5057f360ae3a4",
+  "cloud_cpu_tests_edition2.txt": "5540959e36b285f156beb2414b67ff4b72647fbba2f44eeae172419b8c72e1a7",
+  "embedding_paths_v1.json": "3ebc50631f48ab6e901d7f1cda3486576651f680f0288be45b9f26674ec7939e",
+  "gpu_process_diagnostics.txt": "87baf964715b43bedd1be948ab85833205d171b6640b268b7f1fb330d31d4bd8",
+  "ingress_final_no_vllm_v1.json": "c9c968124ca90f680a8b69b892ff1c8a7ca30988591540305112c0308c386fac",
+  "live_gateway_direct_v1.json": "7ec87dc6827c3b3a765b9fdb048cf5358377810bfd0290508d3454b12c7a0563",
+  "live_gateway_final_v2.json": "1e55d0b3be79e1bbf37ca6c8a4cfd70c358dec67127b0550f8fa00aaa26fa862"
+}

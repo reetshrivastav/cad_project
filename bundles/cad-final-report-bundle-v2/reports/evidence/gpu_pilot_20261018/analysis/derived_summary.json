@@ -1,0 +1,162 @@
+{
+  "source_file": "gpu_protection_pilot.json",
+  "source_sha256": "2f8aa6111938c1e95a9834aecfd2f6fc6bb58ac8a42a8e555cf22b1a37757d51",
+  "source_client_commit": "9ea2103e6d051b4a0c4544b7c829e5eddec497dd",
+  "trials": [
+    {
+      "round": 1,
+      "arm": "direct",
+      "demand_http_status": 200,
+      "demand_http_ms": 4418.488016992342,
+      "benign_http_status": 200,
+      "benign_http_ms": 301.8441199674271,
+      "http_interval_overlap_ms": 301.21660797158256,
+      "observed_peak_kv_fraction": 0.002156566745740829,
+      "backend_prompt_tokens_delta": 107.0,
+      "backend_generation_tokens_delta": 272.0,
+      "backend_successful_requests_delta": 2.0,
+      "peak_running": 2.0,
+      "peak_waiting": 0.0,
+      "telemetry_samples": 18,
+      "gpu_ranges": {
+        "0": {
+          "name": "NVIDIA RTX A4000",
+          "memory_used_mib": {
+            "min": 12404.0,
+            "max": 12404.0
+          },
+          "utilization_percent": {
+            "min": 100.0,
+            "max": 100.0
+          },
+          "power_watts": {
+            "min": 81.81,
+            "max": 139.81
+          }
+        }
+      },
+      "benign_pressure_policy": null
+    },
+    {
+      "round": 1,
+      "arm": "gateway",
+      "demand_http_status": 403,
+      "demand_http_ms": 26.345284015405923,
+      "benign_http_status": 200,
+      "benign_http_ms": 306.31652096053585,
+      "http_interval_overlap_ms": 26.345284015405923,
+      "observed_peak_kv_fraction": 0.00043131334914814357,
+      "backend_prompt_tokens_delta": 37.0,
+      "backend_generation_tokens_delta": 16.0,
+      "backend_successful_requests_delta": 1.0,
+      "peak_running": 1.0,
+      "peak_waiting": 0.0,
+      "telemetry_samples": 4,
+      "gpu_ranges": {
+        "0": {
+          "name": "NVIDIA RTX A4000",
+          "memory_used_mib": {
+            "min": 12404.0,
+            "max": 12412.0
+          },
+          "utilization_percent": {
+            "min": 100.0,
+            "max": 100.0
+          },
+          "power_watts": {
+            "min": 139.68,
+            "max": 139.68
+          }
+        }
+      },
+      "benign_pressure_policy": {
+        "last_error": null,
+        "metric": "vllm:kv_cache_usage_perc",
+        "policy": "normal",
+        "pressure": 0.0019409100711667016,
+        "quarantine_threshold": 0.75,
+        "sample_age_seconds": 0.7653924429905601,
+        "sandbox_threshold": 0.35,
+        "stale": false
+      }
+    },
+    {
+      "round": 2,
+      "arm": "gateway",
+      "demand_http_status": 403,
+      "demand_http_ms": 18.194533011410385,
+      "benign_http_status": 200,
+      "benign_http_ms": 291.843596030958,
+      "http_interval_overlap_ms": 18.194533011410385,
+      "observed_peak_kv_fraction": 0.00043131334914814357,
+      "backend_prompt_tokens_delta": 37.0,
+      "backend_generation_tokens_delta": 16.0,
+      "backend_successful_requests_delta": 1.0,
+      "peak_running": 1.0,
+      "peak_waiting": 0.0,
+      "telemetry_samples": 4,
+      "gpu_ranges": {
+        "0": {
+          "name": "NVIDIA RTX A4000",
+          "memory_used_mib": {
+            "min": 12412.0,
+            "max": 12412.0
+          },
+          "utilization_percent": {
+            "min": 91.0,
+            "max": 100.0
+          },
+          "power_watts": {
+            "min": 130.45,
+            "max": 139.68
+          }
+        }
+      },
+      "benign_pressure_policy": {
+        "last_error": null,
+        "metric": "vllm:kv_cache_usage_perc",
+        "policy": "normal",
+        "pressure": 0.00043131334914814357,
+        "quarantine_threshold": 0.75,
+        "sample_age_seconds": 0.09916996100218967,
+        "sandbox_threshold": 0.35,
+        "stale": false
+      }
+    },
+    {
+      "round": 2,
+      "arm": "direct",
+      "demand_http_status": 200,
+      "demand_http_ms": 4417.28019999573,
+      "benign_http_status": 200,
+      "benign_http_ms": 292.2683589858934,
+      "http_interval_overlap_ms": 292.25031699752435,
+      "observed_peak_kv_fraction": 0.002156566745740829,
+      "backend_prompt_tokens_delta": 107.0,
+      "backend_generation_tokens_delta": 272.0,
+      "backend_successful_requests_delta": 2.0,
+      "peak_running": 2.0,
+      "peak_waiting": 0.0,
+      "telemetry_samples": 18,
+      "gpu_ranges": {
+        "0": {
+          "name": "NVIDIA RTX A4000",
+          "memory_used_mib": {
+            "min": 12412.0,
+            "max": 12412.0
+          },
+          "utilization_percent": {
+            "min": 91.0,
+            "max": 100.0
+          },
+          "power_watts": {
+            "min": 127.25,
+            "max": 140.1
+          }
+        }
+      },
+      "benign_pressure_policy": null
+    }
+  ],
+  "interpretation": "Observed interval counts and sampled peaks, not dollar savings or saturation protection."
+}

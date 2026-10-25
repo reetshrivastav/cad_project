@@ -1,0 +1,455 @@
+{
+  "timestamp_utc": "2026-10-18T12:04:18.695381+00:00",
+  "client_commit": "fc724e3450009197f6c275d4911a42a9ecf484da",
+  "gateway_status": {
+    "backend": "vllm",
+    "classifier_sha256": "25ea5790c5b0151e644322e1caa19329e5b8c73679b79cba4ad486c1c5ae2e05",
+    "models": [
+      "Qwen/Qwen2.5-3B-Instruct"
+    ],
+    "models_directory": "/home/reet/cad_project/models/lab_native_v1",
+    "router_ready": true,
+    "routing_mode": "adaptive",
+    "target_model": "Qwen/Qwen2.5-3B-Instruct",
+    "target_ready": true,
+    "vllm": true
+  },
+  "calibration_candidate_id": "P04-S01",
+  "calibration_risk": 0.47733938694000244,
+  "warmup_response": {
+    "id": "chatcmpl-ba77030a139e2e7f",
+    "object": "chat.completion",
+    "created": 1792325051,
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "ready",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.31.0-5dd0b973",
+    "usage": {
+      "prompt_tokens": 35,
+      "total_tokens": 37,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "request": {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Create a structured 12-section study guide to introductory probability."
+      }
+    ],
+    "max_tokens": 1024,
+    "temperature": 0,
+    "ignore_eos": true
+  },
+  "http_status": 200,
+  "http_ms": 4607.914307969622,
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "length",
+        "index": 0,
+        "message": {
+          "content": "Certainly! Below is a structured 12-section study guide for introductory probability. Each section includes key concepts, formulas, and practice problems to help you understand and apply the principles of probability.\n\n### Section 1: Introduction to Probability\n- **Definition of Probability**: The likelihood of an event occurring.\n- **Sample Space**: The set of all possible outcomes of an experiment.\n- **Event**: A subset of the sample space.\n- **Probability Scale**: Values range from 0 (impossible) to 1 (certain).\n\n**Practice Problem**: If you roll a fair six-sided die, what is the probability of rolling a 4?\n\n### Section 2: Basic Probability Rules\n- **Addition Rule**: \\( P(A \\cup B) = P(A) + P(B) - P(A \\cap B) \\)\n- **Multiplication Rule**: \\( P(A \\cap B) = P(A) \\cdot P(B|A) \\)\n- **Complement Rule**: \\( P(A^c) = 1 - P(A) \\)\n\n**Practice Problem**: If the probability of rain on any given day in a city is 0.3, what is the probability that it will not rain on a particular day?\n\n### Section 3",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792325055,
+    "id": "chatcmpl-eaadb555f8da",
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "object": "chat.completion",
+    "router_meta": {
+      "applied_max_tokens": 256,
+      "backend_read_timeout_seconds": 5,
+      "extract_ms": 180.43,
+      "pressure_policy": {
+        "last_error": "No successful sample yet",
+        "metric": "vllm:kv_cache_usage_perc",
+        "policy": "conservative_telemetry_unavailable",
+        "pressure": null,
+        "quarantine_threshold": 0.65,
+        "sample_age_seconds": null,
+        "sandbox_threshold": 0.25,
+        "stale": true
+      },
+      "risk_score": 0.4773,
+      "thresholds": {
+        "quarantine": 0.65,
+        "sandbox": 0.25
+      },
+      "tier": "sandbox"
+    },
+    "usage": {
+      "completion_tokens": 256,
+      "prompt_tokens": 42,
+      "total_tokens": 298
+    }
+  },
+  "checks": {
+    "policy_cap_applied": true,
+    "completed_at_cap": true,
+    "risk_matches_calibration": true
+  },
+  "before": {
+    "monotonic": 437573.650827626,
+    "metrics": [
+      {
+        "name": "vllm:num_requests_running",
+        "value": 0.0,
+        "raw": "vllm:num_requests_running{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      },
+      {
+        "name": "vllm:num_requests_waiting",
+        "value": 0.0,
+        "raw": "vllm:num_requests_waiting{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      },
+      {
+        "name": "vllm:kv_cache_usage_perc",
+        "value": 0.0,
+        "raw": "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      },
+      {
+        "name": "vllm:prefix_cache_queries_total",
+        "value": 405.0,
+        "raw": "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 405.0"
+      },
+      {
+        "name": "vllm:prefix_cache_hits_total",
+        "value": 304.0,
+        "raw": "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 304.0"
+      },
+      {
+        "name": "vllm:prompt_tokens_total",
+        "value": 405.0,
+        "raw": "vllm:prompt_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 405.0"
+      },
+      {
+        "name": "vllm:generation_tokens_total",
+        "value": 162.0,
+        "raw": "vllm:generation_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 162.0"
+      },
+      {
+        "name": "vllm:request_success_total",
+        "value": 1.0,
+        "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"stop\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 1.0"
+      },
+      {
+        "name": "vllm:request_success_total",
+        "value": 10.0,
+        "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"length\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 10.0"
+      },
+      {
+        "name": "vllm:request_success_total",
+        "value": 0.0,
+        "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"abort\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      },
+      {
+        "name": "vllm:request_success_total",
+        "value": 0.0,
+        "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"error\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      },
+      {
+        "name": "vllm:request_success_total",
+        "value": 0.0,
+        "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"repetition\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+      }
+    ]
+  },
+  "after_response": [
+    {
+      "monotonic": 437578.262441988,
+      "metrics": [
+        {
+          "name": "vllm:num_requests_running",
+          "value": 0.0,
+          "raw": "vllm:num_requests_running{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:num_requests_waiting",
+          "value": 0.0,
+          "raw": "vllm:num_requests_waiting{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:kv_cache_usage_perc",
+          "value": 0.0,
+          "raw": "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:prefix_cache_queries_total",
+          "value": 447.0,
+          "raw": "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:prefix_cache_hits_total",
+          "value": 320.0,
+          "raw": "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 320.0"
+        },
+        {
+          "name": "vllm:prompt_tokens_total",
+          "value": 447.0,
+          "raw": "vllm:prompt_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:generation_tokens_total",
+          "value": 418.0,
+          "raw": "vllm:generation_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 418.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 1.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"stop\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 1.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 11.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"length\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 11.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"abort\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"error\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"repetition\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        }
+      ]
+    },
+    {
+      "monotonic": 437579.267150731,
+      "metrics": [
+        {
+          "name": "vllm:num_requests_running",
+          "value": 0.0,
+          "raw": "vllm:num_requests_running{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:num_requests_waiting",
+          "value": 0.0,
+          "raw": "vllm:num_requests_waiting{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:kv_cache_usage_perc",
+          "value": 0.0,
+          "raw": "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:prefix_cache_queries_total",
+          "value": 447.0,
+          "raw": "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:prefix_cache_hits_total",
+          "value": 320.0,
+          "raw": "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 320.0"
+        },
+        {
+          "name": "vllm:prompt_tokens_total",
+          "value": 447.0,
+          "raw": "vllm:prompt_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:generation_tokens_total",
+          "value": 418.0,
+          "raw": "vllm:generation_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 418.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 1.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"stop\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 1.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 11.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"length\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 11.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"abort\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"error\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"repetition\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        }
+      ]
+    },
+    {
+      "monotonic": 437580.272074508,
+      "metrics": [
+        {
+          "name": "vllm:num_requests_running",
+          "value": 0.0,
+          "raw": "vllm:num_requests_running{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:num_requests_waiting",
+          "value": 0.0,
+          "raw": "vllm:num_requests_waiting{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:kv_cache_usage_perc",
+          "value": 0.0,
+          "raw": "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:prefix_cache_queries_total",
+          "value": 447.0,
+          "raw": "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:prefix_cache_hits_total",
+          "value": 320.0,
+          "raw": "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 320.0"
+        },
+        {
+          "name": "vllm:prompt_tokens_total",
+          "value": 447.0,
+          "raw": "vllm:prompt_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:generation_tokens_total",
+          "value": 418.0,
+          "raw": "vllm:generation_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 418.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 1.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"stop\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 1.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 11.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"length\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 11.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"abort\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"error\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"repetition\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        }
+      ]
+    },
+    {
+      "monotonic": 437581.276801143,
+      "metrics": [
+        {
+          "name": "vllm:num_requests_running",
+          "value": 0.0,
+          "raw": "vllm:num_requests_running{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:num_requests_waiting",
+          "value": 0.0,
+          "raw": "vllm:num_requests_waiting{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:kv_cache_usage_perc",
+          "value": 0.0,
+          "raw": "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:prefix_cache_queries_total",
+          "value": 447.0,
+          "raw": "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:prefix_cache_hits_total",
+          "value": 320.0,
+          "raw": "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 320.0"
+        },
+        {
+          "name": "vllm:prompt_tokens_total",
+          "value": 447.0,
+          "raw": "vllm:prompt_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 447.0"
+        },
+        {
+          "name": "vllm:generation_tokens_total",
+          "value": 418.0,
+          "raw": "vllm:generation_tokens_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 418.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 1.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"stop\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 1.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 11.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"length\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 11.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"abort\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"error\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        },
+        {
+          "name": "vllm:request_success_total",
+          "value": 0.0,
+          "raw": "vllm:request_success_total{engine=\"0\",finished_reason=\"repetition\",model_name=\"Qwen/Qwen2.5-3B-Instruct\"} 0.0"
+        }
+      ]
+    }
+  ],
+  "post_response_generation_counter_change": 0.0,
+  "limitations": [
+    "One calibration-selected sandbox request; not an accuracy/performance benchmark.",
+    "Forced ignore_eos decoding exercises the output cap.",
+    "Three seconds of aggregate post-response observations do not prove cancellation or a GPU deadline.",
+    "Aggregate counters may lag generation; a post-response counter change alone does not prove continued execution.",
+    "No other clients may send requests during this check."
+  ]
+}

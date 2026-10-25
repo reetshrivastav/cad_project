@@ -1,0 +1,31 @@
+{
+  "archive_sha256": "73d3e8a89180ec38acdf4fde5963e00495665be9960da101bada06a99b8e8640",
+  "source": "Operator-uploaded cad-gpu-results.tar.gz; file bytes preserved.",
+  "files": [
+    {
+      "name": "ingress_default.json",
+      "bytes": 5684,
+      "sha256": "1baf4a04d5fd2032a3284ff9540a3b133cc944cbd6a380aae466296946ed712a"
+    },
+    {
+      "name": "ingress_threads1.json",
+      "bytes": 5731,
+      "sha256": "b2523ab14676f88d3eee3e11146da3b08d4c3271044a4ed22072502425b92a26"
+    },
+    {
+      "name": "ingress_default_quiet.json",
+      "bytes": 5773,
+      "sha256": "0fc8a6c4af692eb4fa73862eb1817a0e15be58bfd91b43b92d433767c8574a55"
+    },
+    {
+      "name": "ingress_threads1_quiet.json",
+      "bytes": 5800,
+      "sha256": "1bf9f89592230f64e07aaf6912a4cd056f03825c6776ae08ac9341cf1a30b972"
+    },
+    {
+      "name": "live_gateway_quiet.json",
+      "bytes": 17918,
+      "sha256": "47cf61cd49bc20e1925d9377d98e74c1a652c2f7aa71d2b40571d5fdd74b9a5c"
+    }
+  ]
+}

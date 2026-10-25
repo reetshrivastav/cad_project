@@ -1,0 +1,640 @@
+{
+  "timestamp_utc": "2026-10-18T07:05:04.402453+00:00",
+  "client_commit": "50ea2e507b7376a8317f9c1b2a8633df9b261e83",
+  "server_commit": "Not exposed by server; restart gateway after pulling source.",
+  "gateway": "http://127.0.0.1:5000",
+  "status": {
+    "backend": "vllm",
+    "models": [
+      "Qwen/Qwen2.5-3B-Instruct"
+    ],
+    "router_ready": true,
+    "target_model": "Qwen/Qwen2.5-3B-Instruct",
+    "target_ready": true,
+    "vllm": true
+  },
+  "initial_pressure": {
+    "last_error": "No successful sample yet",
+    "metric": "vllm:kv_cache_usage_perc",
+    "policy": "conservative_telemetry_unavailable",
+    "pressure": null,
+    "quarantine_threshold": 0.65,
+    "sample_age_seconds": null,
+    "sandbox_threshold": 0.25,
+    "stale": true
+  },
+  "final_pressure": {
+    "last_error": null,
+    "metric": "vllm:kv_cache_usage_perc",
+    "policy": "normal",
+    "pressure": 0.0003234850118610799,
+    "quarantine_threshold": 0.75,
+    "sample_age_seconds": 0.20986730098957196,
+    "sandbox_threshold": 0.35,
+    "stale": false
+  },
+  "warmups": [
+    {
+      "status": 200,
+      "http_ms": 325.2161089912988,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307102,
+        "id": "chatcmpl-378c130bf348",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 166.54,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.16804214898729697,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 158.19480898790061,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307102,
+        "id": "chatcmpl-bb6d12355d08",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 7.03,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.33587441401323304,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 158.56373094720766,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307102,
+        "id": "chatcmpl-d0be6fe383a6",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.97,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.4931657789857127,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    }
+  ],
+  "samples": [
+    {
+      "status": 200,
+      "http_ms": 155.86945199174806,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307102,
+        "id": "chatcmpl-5ad5b237c31b",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 5.55,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.6500249700038694,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 156.19691996835172,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-a51ea258383b",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.8,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.807675105985254,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 158.2329940283671,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-ab609299b13d",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.83,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.9619071810157038,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 155.73183598462492,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-453686df0463",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.37,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.11483138601761311,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 153.7473620264791,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-9247a127dee4",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.21,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.2685630060150288,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 152.56748697720468,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-995dbf894449",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 4.24,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.41932457202346995,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 153.76063098665327,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307103,
+        "id": "chatcmpl-a07b86996d1b",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 5.31,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.5742680769762956,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 160.38809798192233,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307104,
+        "id": "chatcmpl-af8d65197a1f",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 8.57,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.7343787580030039,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 159.29240902187303,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307104,
+        "id": "chatcmpl-7baf4faf05a4",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.71,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.8926387790124863,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    },
+    {
+      "status": 200,
+      "http_ms": 158.8333200197667,
+      "body": {
+        "choices": [
+          {
+            "finish_reason": "length",
+            "index": 0,
+            "message": {
+              "content": "Binary search efficiently finds the position of a",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1792307104,
+        "id": "chatcmpl-dbec3b1d611a",
+        "model": "Qwen/Qwen2.5-3B-Instruct",
+        "object": "chat.completion",
+        "router_meta": {
+          "extract_ms": 6.98,
+          "pressure_policy": {
+            "last_error": null,
+            "metric": "vllm:kv_cache_usage_perc",
+            "policy": "normal",
+            "pressure": 0.0003234850118610799,
+            "quarantine_threshold": 0.75,
+            "sample_age_seconds": 0.04520423000212759,
+            "sandbox_threshold": 0.35,
+            "stale": false
+          },
+          "risk_score": 0.0041,
+          "thresholds": {
+            "quarantine": 0.75,
+            "sandbox": 0.35
+          },
+          "tier": "full"
+        },
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 37,
+          "total_tokens": 45
+        }
+      }
+    }
+  ],
+  "quarantine": {
+    "status": 403,
+    "http_ms": 17.19217700883746,
+    "body": {
+      "error": {
+        "code": "risk_quarantine",
+        "message": "Request blocked by Adaptive LLM Router under the current routing policy (Risk 0.990)",
+        "type": "security_quarantine_error"
+      }
+    }
+  },
+  "all_benign_passed": true,
+  "quarantine_passed": true,
+  "warmed_extraction": {
+    "count": 10,
+    "mean_ms": 6.357,
+    "p50_ms": 6.54,
+    "p95_ms": 7.854499999999999,
+    "p99_ms": 8.4269
+  },
+  "warmed_http_including_backend": {
+    "count": 10,
+    "mean_ms": 156.4620508986991,
+    "p50_ms": 156.0331859800499,
+    "p95_ms": 159.89503794990014,
+    "p99_ms": 160.2894859755179
+  },
+  "scope": "One short benign prompt, sequential requests, max_tokens=8. Unique session IDs avoid burst rejection. HTTP includes backend generation; extract_ms excludes classifier. Does not prove absent backend work for quarantine or high-pressure protection."
+}

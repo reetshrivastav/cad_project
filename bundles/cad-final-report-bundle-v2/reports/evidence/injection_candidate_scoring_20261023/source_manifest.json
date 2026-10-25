@@ -1,0 +1,5 @@
+{
+  "file": "injection_candidate_shadow_v1.json",
+  "sha256": "edb2582318c16fda0dd0d4636df7ea03eebbd7cebab21aa2d9c5876914d39bb0",
+  "source": "Operator-supplied candidate-only CUDA/FP16 diagnostic. Model weights not uploaded; their digest is recorded in result, not independently rehashed here."
+}

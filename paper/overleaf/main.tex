@@ -1,0 +1,311 @@
+\documentclass[runningheads]{article}
+
+% --- Overleaf & Publication Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{xcolor}
+\usepackage{authblk}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% --- Typography matching LNCS / Single-Column Style ---
+\usepackage{mathptmx} % Times font
+\linespread{1.08}
+
+\title{\textbf{Adaptive Ingress Admission Control for Multi-Tenant LLM Serving: GPU Memory Protection and the Limits of Upfront Semantic Screening}}
+
+\author[1]{\textbf{Reet Shrivastav}}
+\author[1]{\textbf{Pranshi Gupta}}
+\author[1]{\textbf{Anushka Thakur}}
+\affil[1]{Department of Computer Science and Engineering}
+\affil[ ]{\texttt{\{shrivastavreet03, pranshigupta, anushkathakur\}@example.com}}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+A coupled resource-allocation and security challenge affects multi-tenant Large Language Model (LLM) serving architectures on physical GPU infrastructure: volumetric output-demand floods and repetitive prompt loops saturate GPU Key-Value (KV) cache memory, while unconstrained execution leaves downstream pipelines vulnerable to adversarial prompt injection. We present an end-to-end, adaptive ingress admission control gateway deployed in front of vLLM serving Qwen2.5-3B-Instruct on an NVIDIA RTX A4000 GPU. The controller extracts an 6-dimensional lexical, semantic, and resource-demand feature vector in under 20 ms, assigning requests to Full, Sandboxed, or Quarantined execution tiers. In controlled experiments on a 256 MiB KV-cache pool, direct vLLM saturation causes benign request latency to skyrocket to 50.24 seconds with 100\% KV-cache occupancy. In contrast, gateway admission control preserves benign latency at $\sim$300 ms across all trials, avoiding 43,008 generation tokens with zero waiting queue formation. However, our comprehensive investigation on the public LLMail-Inject benchmark (160k+ samples) reveals critical negative findings: while upfront screening reliably defeats volumetric resource exhaustion, lightweight semantic similarity filters fail to generalize to contextual prompt injection (achieving only 61.59\% recall and 76.66\% specificity on reserved data, and collapsing under long-email window aggregation). We conclude that while ingress admission control is indispensable for GPU memory protection and service availability, contextual injection defense requires layered, task-aware execution sandboxing rather than ingress filtering alone.
+
+\vspace{0.8em}
+\noindent\textbf{Keywords:} Multi-Tenant LLM Serving, Admission Control, GPU Memory Management, KV-Cache Saturation, Prompt Injection, Systems for ML.
+\end{abstract}
+
+\section{Introduction}
+
+A multi-tenant Large Language Model (LLM) serving engine experiences severe queuing delays when its available memory pool becomes saturated. In modern serving runtimes, such as vLLM, TensorRT-LLM, and TGI, memory capacity is dominated by the dynamic Key-Value (KV) cache allocations managed via PagedAttention. While serving systems attempt to optimize scheduling through continuous batching, physical GPU hardware imposes strictly finite memory and compute limits. Consequently, when unvetted client ingress is admitted directly into the scheduling queue, resource-intensive requests compete directly with legitimate traffic for scarce KV-cache blocks.
+
+These operational choices interact directly. While an ingress proxy can drop suspected demand floods prior to GPU scheduling, an incorrect rejection degrades legitimate user experience. Conversely, admitting volumetric sponge prompts—queries engineered to demand maximum generation lengths (e.g., requesting 100,000 words)—rapidly exhausts available KV-cache blocks, stalling concurrent queries behind long-running decoding loops. Furthermore, downstream guardrails (e.g., Llama Guard or auxiliary safety classifiers) evaluate prompts after inference has already commenced, executing billions of FLOPs and allocating high-bandwidth VRAM before returning a refusal message.
+
+We propose an end-to-end, closed-loop ingress admission control framework that couples three key components: an 6-dimensional lexical, semantic, and resource-demand feature extractor, a multi-class XGBoost risk estimator with graduated execution tiers (Full, Sandbox, and Quarantine), and dynamic telemetry-driven threshold adaptation interfacing with vLLM's PagedAttention KV-cache manager. The system intercepts prompts at the network boundary, extracts features in under 20 ms, and prevents malicious resource drains from ever allocating GPU memory blocks.
+
+The contributions consist of:
+\begin{enumerate}
+    \item[(i)] A cohesive ingress architecture that extracts Byte-Pair Encoding (BPE) length, character/word $n$-gram TF-IDF similarity, CUDA-accelerated MiniLM dense embeddings, repetition density, heuristic output demand, and session burst counters in under 20 ms;
+    \item[(ii)] A controlled hardware evaluation on an NVIDIA RTX A4000 GPU serving vLLM Qwen2.5-3B-Instruct under a constrained 256 MiB KV-cache pool, demonstrating the preservation of $\sim$300 ms benign latency and avoidance of 43,008 generation tokens against direct vLLM saturation (50.24 seconds); and
+    \item[(iii)] An extensive trace-based assessment on the public LLMail-Inject benchmark (160k+ samples) evaluating task/content pairing, wording transfer, cutoff calibration, and long-context window extensions. The findings indicate areas where volumetric admission control succeeds and where upfront semantic screening fundamentally degrades.
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{LLM Serving Systems and Memory Management}
+Workload-aware resource management in serverless and cloud architectures has been studied extensively across containerized runtimes. In deep learning serving, PagedAttention is introduced by Kwon et al.~\cite{kwon2023vllm} to resolve external memory fragmentation in vLLM by partitioning the KV-cache into discrete physical memory pages. SGLang~\cite{zheng2024sglang} and chunked-prefill architectures optimize execution graphs and scheduling. However, these systems operate under the assumption of cooperative client workloads; without admission gating, unconstrained generation lengths still induce head-of-line blocking.
+
+\subsection{Resource Denial and Algorithmic Sponge Attacks}
+Sponge examples, as characterized by Shumailov et al.~\cite{shumailov2021sponge}, exploit the computational asymmetry of neural network inference to maximize energy consumption and latency. In LLM serving, this manifests as Denial-of-Wallet (DoW) and memory starvation: adversaries submit low-cost prompts that induce maximal decoding iteration. Traditional cloud rate-limiters track request frequency but fail to account for the superlinear token demands of individual queries.
+
+\subsection{Prompt Injection and Adversarial Evaluation}
+Direct adversarial jailbreaks have been benchmarked via AdvBench by Zou et al.~\cite{zou2023universal}. Indirect prompt injection, where malicious instructions are embedded within untrusted external data (such as emails or web documents), is formalized by BIPIA~\cite{bipia2023} and the LLMail-Inject challenge~\cite{abdelnabi2025llmail}. Downstream guardrails such as Llama Guard~\cite{inan2023llama} evaluate inputs and outputs via fine-tuned LLMs; however, invoking an auxiliary LLM burns substantial GPU compute. Our work investigates the feasibility and fundamental limitations of upfront, sub-millisecond ingress screening prior to model invocation.
+
+\section{System Model and Metrics}
+
+Requests arrive at the ingress boundary from concurrent client sessions. Each request $i$ consists of a prompt text $p_i$, an optional system context, and generation parameters. The total end-to-end response latency for invocation $i$ is formulated as:
+\begin{equation}
+L_i = T_{\text{ingress}}(p_i) + T_{\text{queue}} + T_{\text{prefill}}(p_i) + \sum_{k=1}^{G_i} T_{\text{decode}}(k)
+\end{equation}
+where $T_{\text{ingress}}$ represents the gateway feature extraction and routing latency, $T_{\text{queue}}$ denotes scheduling queue delay, $T_{\text{prefill}}$ is the prompt encoding time on GPU, and $G_i$ is the number of generated tokens. For quarantined requests rejected at ingress, $T_{\text{queue}} = T_{\text{prefill}} = T_{\text{decode}} = 0$, resulting in an immediate network refusal $L_i = T_{\text{ingress}}$.
+
+The primary availability metrics evaluated for a service-level agreement (SLA) latency threshold $D = 1.0\text{ s}$ across $n$ requests are:
+\begin{equation}
+\text{CSR} = \frac{1}{n}\sum_{i=1}^n \mathbf{1}[c_i = \text{quarantine}], \quad \text{SVR} = \frac{1}{n}\sum_{i=1}^n \mathbf{1}[L_i > D]
+\end{equation}
+where CSR denotes the admission quarantine rate and SVR signifies the SLA violation rate for admitted traffic. Furthermore, we record active KV-cache block occupancy $\mu_{\text{kv}} \in [0, 1]$ via Prometheus telemetry, waiting queue depth $Q_{\text{wait}}$, and backend generation token counters $\Delta_{\text{tokens}}$.
+
+\section{Unified Ingress Admission Framework}
+
+The overall controller architecture connects client ingress, lightweight feature extraction, multi-class risk scoring, and real-time GPU telemetry feedback (Fig.~\ref{fig:arch}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/architecture.png}
+\caption{System architecture. Ingress prompts are tokenized and extracted into a six-dimensional feature vector. The XGBoost risk classifier assigns execution tiers, while a background telemetry loop monitors vLLM KV-cache saturation.}
+\label{fig:arch}
+\end{figure}
+
+\subsection{Causal Ingress Feature Representation}
+For each incoming prompt $p_i$, the gateway constructs an 6-dimensional feature vector $x_i = [n_{\text{tokens}}, s_{\text{lexical}}, s_{\text{semantic}}, r_{\text{repeat}}, d_{\text{output}}, c_{\text{session}}]$ without relying on future session knowledge:
+\begin{itemize}
+    \item \textbf{Token Count ($n_{\text{tokens}}$):} Exact BPE token length computed via \texttt{tiktoken} (\texttt{cl100k\_base}).
+    \item \textbf{Lexical Similarity ($s_{\text{lexical}}$):} Maximum cosine similarity against an indexed corpus of adversarial patterns using character/word $n$-gram TF-IDF vectors.
+    \item \textbf{Dense Semantic Similarity ($s_{\text{semantic}}$):} Dot-product similarity against threat centroids computed over 384-dimensional \texttt{all-MiniLM-L6-v2} embeddings running on CUDA in FP16 precision, with a $0.30$ floor correction.
+    \item \textbf{Repetition Density ($r_{\text{repeat}}$):} Ratio of repeated word bigrams to total bigrams, detecting token loop attacks.
+    \item \textbf{Output Demand ($d_{\text{output}}$):} Heuristic combining requested completion caps and regex-based multipliers (e.g., detecting explicit requests for novels or chapter lengths).
+    \item \textbf{Session Burst Count ($c_{\text{session}}$):} Counter tracking prefix repetition frequency across short observation intervals.
+\end{itemize}
+
+\subsection{Multi-Class Risk Estimation and Tier Policy}
+A multi-class XGBoost model trained on empirical threat vectors predicts class probabilities $P(\text{benign})$, $P(\text{injection})$, and $P(\text{exhaustion})$. The composite risk score is defined as:
+\begin{equation}
+R = 1 - P(\text{benign}) \in [0, 1]
+\end{equation}
+The request is routed into one of three execution tiers:
+\begin{itemize}
+    \item \textbf{Full Tier ($R < 0.35$):} Direct passthrough to the primary LLM with full context window and default generation quotas.
+    \item \textbf{Sandbox Tier ($0.35 \le R < 0.75$):} Execution constrained to a hard 256-token completion limit and a 5.0-second backend HTTP read timeout.
+    \item \textbf{Quarantine Tier ($R \ge 0.75$):} Immediate termination at the proxy layer returning HTTP 403 (\texttt{risk\_quarantine}). Zero backend GPU tokens are allocated.
+\end{itemize}
+
+\subsection{Dynamic Telemetry-Driven Adaptation}
+A background polling thread queries vLLM's Prometheus endpoint at \texttt{/metrics} every 1.0 second, sampling \texttt{vllm:kv\_cache\_usage\_perc}. When KV-cache occupancy exceeds $0.85$, the gateway dynamically shifts thresholds to $0.25$ (Full/Sandbox) and $0.65$ (Sandbox/Quarantine), aggressively shedding load until memory saturation recedes.
+
+\section{Experimental Protocol}
+
+\subsection{Lab Hardware and Serving Infrastructure}
+All physical hardware experiments were executed on an Ubuntu workstation equipped with an NVIDIA RTX A4000 GPU (16 GB GDDR6 VRAM, PCIe 4.0). The serving backend was vLLM 0.31.0 serving \texttt{Qwen/Qwen2.5-3B-Instruct} in FP16 with FlashInfer sampling compilation disabled (\texttt{VLLM\_USE\_FLASHINFER\_SAMPLER=0}). To rigorously evaluate memory saturation under repeatable conditions without multi-hour synthetic loads, we configured a deliberately constrained KV-cache pool of 256 MiB ($268,435,456$ bytes, corresponding to exactly 455 memory blocks and 7,280 tokens). Maximum model length was 2,048 tokens with a sequence concurrency limit of 4.
+
+\subsection{Capped Workloads and Repeated Blocks}
+The benchmark compared three serving configurations across three balanced blocks with rotated execution order:
+\begin{itemize}
+    \item \textbf{Block 1:} Direct vLLM $\rightarrow$ Static Gateway $\rightarrow$ Adaptive Gateway
+    \item \textbf{Block 2:} Static Gateway $\rightarrow$ Adaptive Gateway $\rightarrow$ Direct vLLM
+    \item \textbf{Block 3:} Adaptive Gateway $\rightarrow$ Direct vLLM $\rightarrow$ Static Gateway
+\end{itemize}
+Between conditions, serving instances were restarted to verify clean zero-counter state. Each run offered eight concurrent high-demand requests demanding a 100,000-word novel (capped to 1,792 tokens with \texttt{ignore\_eos=true}) and eight short benign probes (16-token cap) staggered by 3.0 seconds.
+
+\subsection{External Adversarial Benchmark (LLMail-Inject)}
+To assess generalization against realistic contextual prompt injection, we utilized the public LLMail-Inject challenge dataset~\cite{abdelnabi2025llmail} containing 370,724 raw submissions across 224 teams. To prevent data leakage, we performed atomic connected-component deduplication across shared submission texts, followed by MinHash/Jaccard filtering at 0.8. This yielded a rigorously partitioned split of 3,896 training, 1,892 validation, and 13,989 reserved test emails.
+
+\section{Results and Analysis}
+
+\subsection{Controlled GPU Resource Protection on RTX A4000}
+The macro-averaged primary results across all nine balanced runs are summarized in Table~\ref{tab:main_results}. Under the unprotected Direct vLLM condition, the eight high-demand requests saturated the 256 MiB KV-pool almost immediately ($99.56\%$ to $100\%$ sampled KV occupancy), inducing extreme queueing ($Q_{\text{wait}} = 11$--$12$). As a result, mean benign probe latency exploded to $50.244$ seconds.
+
+\begin{table}[t]
+\centering
+\caption{Macro-averaged main results. Panel A: Latency and admission outcomes across 3 balanced blocks (24 probes per condition). Panel B: Reconciled backend token counters and active KV-cache utilization.}
+\label{tab:main_results}
+\small
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{l}{\textbf{Panel A: Latency and Admission Outcomes}} \\
+\midrule
+Policy & Block 1/2/3 Mean (s) & Overall Mean Latency & Benign Completed & Demands Quarantined \\
+\midrule
+Direct vLLM & 47.709 / 55.629 / 47.393 & 50.244 s & 24 / 24 & 0 / 24 \\
+Static Gateway & 0.301 / 0.299 / 0.307 & 0.302 s & 24 / 24 & 24 / 24 \\
+Adaptive Gateway & 0.297 / 0.300 / 0.297 & 0.298 s & 24 / 24 & 24 / 24 \\
+\midrule
+\multicolumn{5}{l}{\textbf{Panel B: Backend Workload Reconciliation and Telemetry}} \\
+\midrule
+Policy & Prompt Tokens & Generated Tokens & Successful Requests & Peak KV Occupancy \\
+\midrule
+Direct vLLM & 912 tokens & 14,464 tokens & 16 requests & 100.0\% \\
+Static Gateway & 296 tokens & 128 tokens & 8 requests & 0.881\% \\
+Adaptive Gateway & 296 tokens & 128 tokens & 8 requests & 0.881\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In contrast, both the Static and Adaptive gateway configurations intercepted all 24 demand requests at the network boundary (HTTP 403, risk score $R \ge 0.990$). Active KV-cache occupancy peaked at only $0.881\%$ (active benign blocks only), and waiting queue depth remained strictly zero throughout. Benign probe latency remained preserved at $\sim$300 ms across all blocks (Fig.~\ref{fig:gpu_bench}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/gpu_repeatability.png}
+\caption{Controlled GPU benchmark measurements across three balanced blocks on NVIDIA RTX A4000. Each point represents one complete run.}
+\label{fig:gpu_bench}
+\end{figure}
+
+\subsection{Backend Token and Workload Reconciliation}
+By reconciling internal vLLM Prometheus counters before and after each trial, we verify compute avoidance. Across the three experimental blocks, each protected gateway condition avoided exactly 43,008 generation tokens (14,336 per run) and 1,848 prompt tokens compared to the direct baseline.
+
+However, operating-system device memory observed via \texttt{nvidia-smi} remained largely flat between 7,403 MiB and 7,509 MiB across all direct and protected trials. This confirms that vLLM preallocates its memory arena upon initialization. Claims of ``zero device VRAM allocated'' are therefore technically unfounded; the defensible metric is active KV-block occupancy.
+
+\subsection{Limitations of Upfront Semantic Screening}
+While volumetric demand screening succeeds decisively, evaluating semantic filters against the LLMail-Inject benchmark exposed critical generalization limits. On in-distribution synthetic templates, an offline Task/Content Pair model scored 59 / 60 (98.3\%) on a held-out topic test. However, when evaluated on a 48-case wording-transfer diagnostic, the model detected only 4 of 16 injections (25.0\% recall), revealing severe template overfitting.
+
+\begin{table}[t]
+\centering
+\caption{Reserved test set evaluation on 13,989 LLMail-Inject samples comparing default vs.\ validation-calibrated operating points.}
+\label{tab:llmail_results}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Model Architecture & Cutoff & Positive Recall & Negative Specificity & Balanced Acc & False Flags / 707 \\
+\midrule
+Pair Head & 0.500 & 98.06\% & 21.22\% & 59.64\% & 557 \\
+Pair Head (Calibrated) & 0.954 & 61.59\% & 76.66\% & 69.13\% & 165 \\
+Content Head & 0.500 & 97.42\% & 30.41\% & 63.91\% & 492 \\
+Content Head (Calibrated) & 0.957 & 54.46\% & 80.06\% & 67.26\% & 141 \\
+Task Head & 0.500 & 93.25\% & 6.51\% & 49.88\% & 661 \\
+Task Head (Calibrated) & 0.752 & 0.14\% & 99.43\% & 49.79\% & 4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+When evaluated on the 13,989 reserved test emails (Table~\ref{tab:llmail_results} and Fig.~\ref{fig:roc}), the Pair model at cutoff 0.5 flagged 557 of 707 source-negative emails (78.8\% false-positive rate). Shifting to the calibrated 0.954 cutoff improved specificity to 76.66\%, but positive recall dropped to 61.59\% (missing 5,101 attacks). The Content-only model achieved comparable ROC AUC ($0.779$ vs.\ $0.763$ for Pair), demonstrating that task pairing provides minimal incremental discrimination on natural adversarial distributions.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/reserved_operating_points.png}
+\caption{Operating trade-offs and ROC behavior on reserved LLMail-Inject evaluation samples.}
+\label{fig:roc}
+\end{figure}
+
+\subsection{Long-Context Windowing and False-Positive Amplification}
+Extending evaluation to 300 sampled long emails using 723 overlapping 256-token windows ($130,735$ content tokens) revealed a severe aggregation failure mode (Fig.~\ref{fig:long}). While max-window pooling at cutoff 0.5 flagged 274 of 276 attacks (99.28\% recall), it also falsely flagged 22 of 24 benign samples (91.7\% false-positive rate, yielding 53.80\% balanced accuracy). At the higher cutoff, 18 of 24 benign samples remained falsely flagged (51.99\% balanced accuracy). Thus, while windowing achieves 100\% token coverage, lightweight embedding aggregations suffer catastrophic false-alarm amplification.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/long_email_tradeoff.png}
+\caption{Aggregation trade-offs on 300 long-email candidates across window aggregation strategies.}
+\label{fig:long}
+\end{figure}
+
+\subsection{Ingress Latency Breakdown and CUDA Optimization}
+Isolated profiling of the ingress pipeline on the RTX A4000 GPU across 100 warmed samples indicated that tokenization and repetition analysis require $< 0.25\text{ ms}$, TF-IDF vectorization requires $\sim$0.45 ms, MiniLM dense embedding on CUDA FP16 requires $\sim$2.10 ms, and XGBoost inference takes $\sim$0.20 ms (totaling $\sim$3.0 ms).
+
+In live Flask serving, high-level SentenceTransformer wrapper overhead initially inflated extraction latency to $24.623\text{ ms}$. Developing an opt-in direct inference path (\texttt{GATEWAY\_EMBEDDING\_MODE=direct}) utilizing \texttt{torch.inference\_mode()} reduced mean live extraction by 23.5\% to $18.837\text{ ms}$ (Fig.~\ref{fig:latency}) while maintaining 100\% numerical and routing decision parity across 39 paired test configurations.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/latency_tuning.png}
+\caption{Ingress extraction latency distributions before and after direct inference path optimization.}
+\label{fig:latency}
+\end{figure}
+
+\section{Limitations}
+
+Generalization is subject to several empirical constraints:
+\begin{enumerate}
+    \item[(i)] \textbf{Controlled Workload Scope:} The GPU benchmark evaluated eight concurrent synthetic demand queries under a constrained 256 MiB KV-pool; unconstrained production clusters require validation under mixed dynamic arrival processes.
+    \item[(ii)] \textbf{Adaptive Mechanism Isolation:} Because all demand queries were already assigned $R \ge 0.990$ by the baseline static policy, these experiments do not isolate an incremental causal advantage of dynamic threshold tightening.
+    \item[(iii)] \textbf{Public Dataset Annotations:} LLMail-Inject labels originate from automated challenge evaluation rather than exhaustive human consensus.
+    \item[(iv)] \textbf{Long-Context Discrimination:} While sliding windows provide complete token coverage, lightweight embedding aggregations lack the capacity to distinguish injected instructions from benign contextual references in long documents.
+\end{enumerate}
+
+\section{Conclusion}
+
+We designed and evaluated an adaptive ingress admission control gateway for multi-tenant LLM serving architectures. On an NVIDIA RTX A4000 GPU serving vLLM, upfront admission control eliminated KV-cache saturation, maintained sub-second benign response times ($\sim$300 ms vs.\ 50.24 s), and prevented over 43,000 wasted generation tokens. However, extensive evaluation on the LLMail-Inject benchmark demonstrated that lightweight semantic embeddings cannot reliably generalize to contextual prompt injection, suffering severe false-positive amplification on long-context aggregations. These results demonstrate that while upfront admission control is indispensable for hardware availability, robust security requires a defense-in-depth architecture combining upfront capacity protection with sandboxed execution environments.
+
+\subsubsection*{Disclosure of Interests}
+The authors declare no competing interests.
+
+\begin{thebibliography}{10}
+
+\bibitem{abdelnabi2025llmail}
+Abdelnabi, S., Greshake, K., Mishra, S., Grundmann, C., Swoboda, P., Fritz, M.:
+\newblock LLMail-Inject: A dataset from a realistic adaptive prompt injection challenge.
+\newblock In: IEEE Symposium on Security and Privacy (S\&P) (2025). \url{https://arxiv.org/abs/2506.09956}
+
+\bibitem{bipia2023}
+Microsoft BIPIA Team:
+\newblock Benchmarking and defending against indirect prompt injection attacks on large language models.
+\newblock arXiv preprint arXiv:2312.14197 (2023)
+
+\bibitem{chen2016xgboost}
+Chen, T., Guestrin, C.:
+\newblock XGBoost: A scalable tree boosting system.
+\newblock In: ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), pp. 785--794 (2016)
+
+\bibitem{debenedetti2024agentdojo}
+Debenedetti, E., Rando, J., Paleka, D., Tram{\`e}r, F., et al.:
+\newblock AgentDojo: A dynamic environment to evaluate prompt injection attacks and defenses for LLM agents.
+\newblock arXiv preprint arXiv:2406.13352 (2024)
+
+\bibitem{inan2023llama}
+Inan, H., Upasani, K., Chi, J., Rungta, R., Iyer, K., Mao, Y., Tontchev, M., Hu, Q., Fuller, B., Testuggine, D., Pasupuleti, M.:
+\newblock Llama Guard: LLM-based input-output moderation for human-ai conversation.
+\newblock arXiv preprint arXiv:2312.06674 (2023)
+
+\bibitem{kwon2023vllm}
+Kwon, W., Li, Z., Zhuang, S., Sheng, Y., Zheng, L., Yu, C.H., Gonzalez, J.E., Zhang, H., Stoica, I.:
+\newblock Efficient memory management for large language model serving with PagedAttention.
+\newblock In: ACM Symposium on Operating Systems Principles (SOSP) (2023). \url{https://arxiv.org/abs/2309.06180}
+
+\bibitem{reimers2019sentence}
+Reimers, N., Gurevych, I.:
+\newblock Sentence-BERT: Sentence embeddings using Siamese BERT-networks.
+\newblock In: Empirical Methods in Natural Language Processing (EMNLP) (2019). \url{https://arxiv.org/abs/1908.10084}
+
+\bibitem{shumailov2021sponge}
+Shumailov, I., Zhao, Y., Bates, D., Papernot, N., Mullins, R., Anderson, R.:
+\newblock Sponge examples: Energy-latency attacks on neural networks.
+\newblock In: IEEE European Symposium on Security and Privacy (EuroS\&P) (2021)
+
+\bibitem{zheng2024sglang}
+Zheng, L., Yin, L., Xie, Z., Huang, J., Zheng, C., Cao, S., Kozyrakis, C., Stoica, I., Gonzalez, J.E., Barrett, C.:
+\newblock SGLang: Efficient execution of structured language model programs.
+\newblock arXiv preprint arXiv:2312.07104 (2024)
+
+\bibitem{zou2023universal}
+Zou, A., Wang, Z., Kolter, J.Z., Fredrikson, M.:
+\newblock Universal and transferable adversarial attacks on aligned language models.
+\newblock arXiv preprint arXiv:2307.15043 (2023)
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,13 @@
+{
+  "source_sha256": {
+    "reports/evidence/replication_v1_20261021/analysis/per_run.csv": "3f3c7c91b30c639276407548145828bc21fcea3dfae16ad78b9a54f521521407",
+    "reports/evidence/llmail_reserved_20261023/verified_summary.json": "b7e0cd684b69584e931e5c1d1aaac8df2044d97d4ac16f5c8a2ce1768bef5b25",
+    "reports/evidence/llmail_short_cleaned_20261023/llmail_short_baseline_summary.json": "5605965e08d8bd624bc41e8a2387004c130901408e725f1cce1c1e075bc5d36c",
+    "reports/evidence/report_extension_20261024/verified_summary.json": "cbac7d4464c7c1168a026c88ca53603332ea3b5432e0353760e1ccd4ab7e6a9f",
+    "results/phase2_content_verified.json": "3d7c8e926fe2f1beccf4d711abfb63a72cb0bb4446c2120ef3aadae637b8a9a1",
+    "results/final_validation_20261025/live_gateway_final_v2.json": "1e55d0b3be79e1bbf37ca6c8a4cfd70c358dec67127b0550f8fa00aaa26fa862",
+    "results/final_validation_20261025/live_gateway_direct_v1.json": "7ec87dc6827c3b3a765b9fdb048cf5358377810bfd0290508d3454b12c7a0563"
+  },
+  "script_sha256": "90ace398a1ec299f3da5f31661138194fb385d85098f21be4eaaa2bd840b15ba",
+  "scope": "Offline rendering from retained measurements; no new GPU or model experiment."
+}

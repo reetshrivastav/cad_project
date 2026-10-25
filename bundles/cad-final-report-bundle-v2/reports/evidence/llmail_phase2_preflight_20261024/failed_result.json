@@ -1,0 +1,38 @@
+{
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "script_sha256": "3e4a42f9a235bded6dad78e1dbfb24b44b8abe6e94e04d18290ff14a9d76a266",
+  "training_performed": false,
+  "protocol": {
+    "inspect_hash_first": 5000,
+    "score_maximum": 2000,
+    "seed": "phase2-transfer-v1",
+    "phase2_level_to_original_scenario": {
+      "1": "scenario_3",
+      "2": "scenario_4"
+    },
+    "cutoffs": "Unchanged original and validation-selected policy.",
+    "overlap_policy": "Exclude normalized exact text or exact token-bag match against ALL Phase 1 annotation texts; report team overlap separately."
+  },
+  "files": {
+    "data/labelled_unique_submissions_phase2.json": {
+      "file": "data/labelled_unique_submissions_phase2.json",
+      "bytes": 68586935,
+      "sha256": "f89af984e345430c3b357903890e30867bf4676f4ef10c138cc7bad218e890b8"
+    },
+    "data/raw_submissions_phase2.jsonl": {
+      "file": "data/raw_submissions_phase2.jsonl",
+      "bytes": 263506099,
+      "sha256": "a9207e1d893ccb74ca6f9cc5eecea433bc49c23a26bed88088afd385c7ab18b6"
+    }
+  },
+  "status": "failed",
+  "limitations": [
+    "Same publisher/challenge across phases, not independent-source or production telemetry.",
+    "Automated source annotations, one-email projection, selectively short full emails.",
+    "Exact lexical overlap filtering does not rule out near-duplicate/template/pretraining contamination.",
+    "Cutoffs and models fixed before Phase 2 inspection. Hash-bounded sample is not the entire Phase 2 corpus."
+  ],
+  "error": "ValueError: Unknown Phase 2 level: level1a",
+  "timestamp_utc": "2026-10-24T13:17:09.669444+00:00",
+  "client_commit": "0b208f96b0bb871f4c122eb5e9421d86bd43fd30"
+}
