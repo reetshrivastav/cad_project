@@ -37,6 +37,7 @@ from flask_cors import CORS
 import tiktoken
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
+from embedding_runtime import encode_prompt
 from sentence_transformers import SentenceTransformer
 
 from cache_pressure import snapshot as pressure_snapshot
@@ -91,6 +92,7 @@ def _init_models():
     _embedder = SentenceTransformer("all-MiniLM-L6-v2", device=device)
     if device == "cuda":
         _embedder.half()
+    _embedder.eval()
     log.info("MiniLM device=%s, dtype=%s",
              _embedder.device, next(_embedder.parameters()).dtype)
 
@@ -169,7 +171,7 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
         jb_sim = 0.0
 
     # 4. Dense Semantic Similarity (Calibrated above 0.30 natural text floor)
-    prompt_emb = _embedder.encode([prompt], convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False)
+    prompt_emb = encode_prompt(_embedder, prompt, os.getenv("GATEWAY_EMBEDDING_MODE", "encode"))
     raw_sem_sim = float(np.max(np.dot(prompt_emb, _ref_embeddings.T)[0]))
     sem_sim = max(0.0, (raw_sem_sim - 0.30) / 0.70)
 
