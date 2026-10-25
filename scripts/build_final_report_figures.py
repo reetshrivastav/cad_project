@@ -66,7 +66,7 @@ arrow((1.45,3.65),(2,3.65));arrow((4,3.65),(4.6,3.65));arrow((6.1,3.65),(7,3.65)
 box(4.6,1.65,1.5,.7,'Quarantine\nHTTP 403',ORANGE);arrow((5.35,3.1),(5.35,2.35),ORANGE)
 box(7,1.65,2.6,.7,'vLLM /metrics\nKV occupancy in [0, 1]',TEAL);arrow((8.3,3.3),(8.3,2.35),TEAL);arrow((7,2),(6.1,3.1),TEAL)
 box(.35,.2,5.7,.85,'Separate offline research: trusted task + one untrusted email\nPair / task-only / content-only heads; no serving integration',GRAY)
-ax.text(7.9,.65,'Long-email support\ndeferred from final submission',ha='center',va='center',fontsize=10,color=ORANGE)
+ax.text(7.9,.65,'Long-email windows tested offline\nDetection quality remains limited',ha='center',va='center',fontsize=10,color=ORANGE)
 ax.text(.2,4.65,'Measured gateway and offline research remain separate',fontsize=14,color=NAVY,weight='bold');save(fig,'architecture')
 long_path='reports/evidence/report_extension_20261024/verified_summary.json'
 long=json.loads((ROOT/long_path).read_text())['long_email']
@@ -84,6 +84,31 @@ fig.suptitle('Long-email pair head: full coverage increases flags, not reliable 
 handles,labels=axes[0].get_legend_handles_labels();fig.legend(handles,labels,loc='lower center',bbox_to_anchor=(.5,-.06),ncol=2,frameon=False,fontsize=9)
 fig.tight_layout();save(fig,'long_email_tradeoff')
 paths.append(long_path)
+phase2_path='results/phase2_content_verified.json'
+phase2=json.loads((ROOT/phase2_path).read_text())['cohorts']
+fig,axes=plt.subplots(1,2,figsize=(10,3.8))
+for ax,(name,title) in zip(axes,[('all_text_novel','All text-novel (n=2,000)'),('text_and_team_new','Reported new-team subset (n=1,429)')]):
+    metrics=[phase2[name][key] for key in ('original_cutoff','validation_selected_cutoff')]
+    xx=np.arange(2)
+    for offset,key,label,color in [(-.18,'source_positive_recall','Source-positive recall',BLUE),(.18,'source_negative_specificity','Source-negative specificity',TEAL)]:
+        bars=ax.bar(xx+offset,[100*m[key] for m in metrics],width=.34,label=label,color=color)
+        for bar in bars:ax.text(bar.get_x()+bar.get_width()/2,bar.get_height()+2,f'{bar.get_height():.1f}',ha='center',fontsize=8)
+    ax.set_xticks(xx,['Original 0.5','Frozen higher']);ax.set_ylim(0,110);ax.set_title(title,fontsize=10);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
+axes[0].set_ylabel('Percentage of source class (%)')
+handles,labels=axes[0].get_legend_handles_labels();fig.legend(handles,labels,loc='lower center',bbox_to_anchor=(.5,-.05),ncol=2,frameon=False)
+fig.suptitle('Phase 2 content-only transfer: fixed model and operating points',fontsize=12)
+fig.tight_layout();save(fig,'phase2_transfer');paths.append(phase2_path)
+old_path='results/final_validation_20261025/live_gateway_final_v2.json'
+new_path='results/final_validation_20261025/live_gateway_direct_v1.json'
+old=json.loads((ROOT/old_path).read_text());new=json.loads((ROOT/new_path).read_text())
+fig,axes=plt.subplots(1,2,figsize=(9,3.6))
+for ax,key,title in [(axes[0],'warmed_extraction','Live feature extraction'),(axes[1],'warmed_http_including_backend','HTTP including generation')]:
+    bars=ax.bar(['Original encode','Opt-in direct'],[old[key]['mean_ms'],new[key]['mean_ms']],color=[GRAY,BLUE])
+    ax.set_ylabel('Mean milliseconds');ax.set_title(title,fontsize=11);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
+    for bar in bars:ax.text(bar.get_x()+bar.get_width()/2,bar.get_height()*1.02,f'{bar.get_height():.2f}',ha='center',fontsize=9)
+    ax.set_ylim(0,max(old[key]['mean_ms'],new[key]['mean_ms'])*1.2)
+fig.suptitle('Separate ten-probe smoke tests; no production tail-latency claim',fontsize=11)
+fig.tight_layout();save(fig,'latency_tuning');paths.extend([old_path,new_path])
 manifest={'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},'script_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'scope':'Offline rendering from retained measurements; no new GPU or model experiment.'}
 (OUT/'figure_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-print('Built five figures (PNG and SVG) with source manifest.')
+print('Built seven figures (PNG and SVG) with source manifest.')

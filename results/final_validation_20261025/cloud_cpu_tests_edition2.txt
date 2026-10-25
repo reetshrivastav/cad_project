@@ -1,0 +1,303 @@
+test_all_uploaded_annotations_match_frozen_inputs (test_benign_evaluation.BenignEvaluationTests.test_all_uploaded_annotations_match_frozen_inputs) ... ok
+test_changed_prompt_duplicate_id_and_missing_review_are_rejected (test_benign_evaluation.BenignEvaluationTests.test_changed_prompt_duplicate_id_and_missing_review_are_rejected) ... ok
+test_excluded_rows_are_not_scored_and_nonbenign_not_in_false_positive_denominator (test_benign_evaluation.BenignEvaluationTests.test_excluded_rows_are_not_scored_and_nonbenign_not_in_false_positive_denominator) ... ok
+test_threshold_boundaries_and_errors_are_preserved (test_benign_evaluation.BenignEvaluationTests.test_threshold_boundaries_and_errors_are_preserved) ... ok
+test_wilson_zero_events_does_not_claim_zero_population_risk (test_benign_evaluation.BenignEvaluationTests.test_wilson_zero_events_does_not_claim_zero_population_risk) ... ok
+test_all_rows_and_restrictions_reconcile (test_benign_evidence.BenignEvidenceTests.test_all_rows_and_restrictions_reconcile) ... ok
+test_input_and_provenance_changes_are_rejected (test_benign_evidence.BenignEvidenceTests.test_input_and_provenance_changes_are_rejected) ... ok
+test_tier_probability_and_metric_inconsistencies_are_rejected (test_benign_evidence.BenignEvidenceTests.test_tier_probability_and_metric_inconsistencies_are_rejected) ... ok
+test_all_failures_have_no_success_rate (test_bipia_candidates.BIPIAPreparationTests.test_all_failures_have_no_success_rate) ... ok
+test_coverage_distinguishes_quarantine_sandbox_errors_and_control (test_bipia_candidates.BIPIAPreparationTests.test_coverage_distinguishes_quarantine_sandbox_errors_and_control) ... ok
+test_mutated_corpus_stops_before_model_loading (test_bipia_candidates.BIPIAPreparationTests.test_mutated_corpus_stops_before_model_loading) ... ok
+test_pinned_source_reproduces_all_frozen_contexts (test_bipia_candidates.BIPIAPreparationTests.test_pinned_source_reproduces_all_frozen_contexts) ... ok
+test_corpus_and_source_changes_are_rejected (test_bipia_evidence.BIPIAEvidenceTests.test_corpus_and_source_changes_are_rejected) ... ok
+test_negative_result_and_control_are_preserved (test_bipia_evidence.BIPIAEvidenceTests.test_negative_result_and_control_are_preserved) ... ok
+test_row_and_metric_inconsistencies_are_rejected (test_bipia_evidence.BIPIAEvidenceTests.test_row_and_metric_inconsistencies_are_rejected) ... ok
+test_all_supplied_trial_counters_reconcile (test_burst_analysis.BurstEvidenceTests.test_all_supplied_trial_counters_reconcile) ... ok
+test_controls_share_workload_model_and_reconcile_counters (test_burst_analysis.BurstEvidenceTests.test_controls_share_workload_model_and_reconcile_counters) ... ok
+test_rejects_mismatched_classifier_metadata (test_burst_analysis.BurstEvidenceTests.test_rejects_mismatched_classifier_metadata) ... ok
+test_supplied_negative_result_and_candidate (test_calibration_evidence.CalibrationEvidenceTests.test_supplied_negative_result_and_candidate) ... ok
+test_timeout_is_not_successful_cap_completion (test_calibration_evidence.CalibrationEvidenceTests.test_timeout_is_not_successful_cap_completion) ... ok
+test_clean_control_failure_is_retained_with_attack_flags (test_candidate_evidence.CandidateEvidenceTests.test_clean_control_failure_is_retained_with_attack_flags) ... ok
+test_control_removal_probability_and_metrics_changes_are_rejected (test_candidate_evidence.CandidateEvidenceTests.test_control_removal_probability_and_metrics_changes_are_rejected) ... ok
+test_model_source_and_card_changes_are_rejected (test_candidate_evidence.CandidateEvidenceTests.test_model_source_and_card_changes_are_rejected) ... ok
+test_encoder_receives_only_two_text_fields_and_never_truncates (test_context_v2.ContextV2Tests.test_encoder_receives_only_two_text_fields_and_never_truncates) ... ok
+test_export_roundtrip_and_no_test_input_in_fitting_or_validation (test_context_v2.ContextV2Tests.test_export_roundtrip_and_no_test_input_in_fitting_or_validation) ... ok
+test_group_leak_and_duplicate_pairs_are_rejected (test_context_v2.ContextV2Tests.test_group_leak_and_duplicate_pairs_are_rejected) ... ok
+test_group_splits_and_contrasting_same_content_are_real (test_context_v2.ContextV2Tests.test_group_splits_and_contrasting_same_content_are_real) ... ok
+test_workflow_metrics_are_explicit_and_probabilities_validated (test_context_v2.ContextV2Tests.test_workflow_metrics_are_explicit_and_probabilities_validated) ... ok
+test_changed_metrics_rejected (test_context_v2_evidence.ContextEvidenceTests.test_changed_metrics_rejected) ... ok
+test_recorded_evidence_reconciles (test_context_v2_evidence.ContextEvidenceTests.test_recorded_evidence_reconciles) ... ok
+test_transfer_is_separate_and_has_task_contrasts (test_context_v2_evidence.ContextEvidenceTests.test_transfer_is_separate_and_has_task_contrasts) ... ok
+test_changed_inputs_models_and_metrics_rejected (test_context_v2_transfer_evidence.TransferEvidenceTests.test_changed_inputs_models_and_metrics_rejected) ... ok
+test_recorded_misses_are_retained (test_context_v2_transfer_evidence.TransferEvidenceTests.test_recorded_misses_are_retained) ... ok
+test_default_uses_existing_encode (test_embedding_runtime.EmbeddingRuntimeTests.test_default_uses_existing_encode) ... ok
+test_direct_normalizes_and_disables_gradients (test_embedding_runtime.EmbeddingRuntimeTests.test_direct_normalizes_and_disables_gradients) ... ok
+test_invalid_or_training_mode_rejected (test_embedding_runtime.EmbeddingRuntimeTests.test_invalid_or_training_mode_rejected) ... ok
+test_changed_revision_is_rejected (test_external_dataset_audit.DatasetAuditTests.test_changed_revision_is_rejected) ... ok
+test_hf_pins_card_and_listing_without_fetching_payloads (test_external_dataset_audit.DatasetAuditTests.test_hf_pins_card_and_listing_without_fetching_payloads) ... ok
+test_sandbox_timeout_reports_tier_and_cap (test_gpu_gateway.BackendFailureMetadataTests.test_sandbox_timeout_reports_tier_and_cap) ... ok
+test_forwarder_preserves_conversation_and_finish_reason (test_gpu_gateway.GatewayTests.test_forwarder_preserves_conversation_and_finish_reason) ... ok
+test_forwarder_timeout (test_gpu_gateway.GatewayTests.test_forwarder_timeout) ... ok
+test_quarantine_does_not_call_backend (test_gpu_gateway.GatewayTests.test_quarantine_does_not_call_backend) ... ok
+test_sandbox_caps_and_reports_policy (test_gpu_gateway.GatewayTests.test_sandbox_caps_and_reports_policy) ... ok
+test_high_pressure_and_boundaries (test_gpu_gateway.PressureTests.test_high_pressure_and_boundaries) ... ok
+test_invalid_metrics (test_gpu_gateway.PressureTests.test_invalid_metrics) ... ok
+test_labeled_metrics_and_multiple_engines (test_gpu_gateway.PressureTests.test_labeled_metrics_and_multiple_engines) ... ok
+test_stale_telemetry_is_conservative (test_gpu_gateway.PressureTests.test_stale_telemetry_is_conservative) ... ok
+test_static_policy_preserves_telemetry_but_uses_base_thresholds (test_gpu_gateway.StaticPolicyTests.test_static_policy_preserves_telemetry_but_uses_base_thresholds) ... ok
+test_gateway_only_skips_direct_load (test_gpu_pilot.PilotTests.test_gateway_only_skips_direct_load) ... ok
+test_generation_requires_actual_output_and_token_cap (test_gpu_pilot.PilotTests.test_generation_requires_actual_output_and_token_cap) ... ok
+test_metrics_preserve_labels_and_filter_histograms (test_gpu_pilot.PilotTests.test_metrics_preserve_labels_and_filter_histograms) ... ok
+test_missing_pressure_target_keeps_evidence_and_fails (test_gpu_pilot.PilotTests.test_missing_pressure_target_keeps_evidence_and_fails) ... ok
+test_multi_request_burst_and_staggered_probes (test_gpu_pilot.PilotTests.test_multi_request_burst_and_staggered_probes) ... ok
+test_only_gateway_quarantine_is_successful_block (test_gpu_pilot.PilotTests.test_only_gateway_quarantine_is_successful_block) ... ok
+test_pilot_records_both_arms_and_alternates_order (test_gpu_pilot.PilotTests.test_pilot_records_both_arms_and_alternates_order) ... ok
+test_required_mode_mismatch_stops_before_generation (test_gpu_pilot.PilotTests.test_required_mode_mismatch_stops_before_generation) ... ok
+test_unexpected_outcome_stops_following_arms_and_preserves_data (test_gpu_pilot.PilotTests.test_unexpected_outcome_stops_following_arms_and_preserves_data) ... ok
+test_all_nine_runs_reconcile_and_retain_three_units_per_condition (test_gpu_replications.ReplicationTests.test_all_nine_runs_reconcile_and_retain_three_units_per_condition) ... ok
+test_changed_workload_and_code_are_rejected (test_gpu_replications.ReplicationTests.test_changed_workload_and_code_are_rejected) ... ok
+test_missing_run_and_wrong_mode_are_rejected (test_gpu_replications.ReplicationTests.test_missing_run_and_wrong_mode_are_rejected) ... ok
+test_unexpected_request_and_counter_mismatch_remain_visible (test_gpu_replications.ReplicationTests.test_unexpected_request_and_counter_mismatch_remain_visible) ... ok
+test_dataset_checksum_mismatch_stops_reconstruction (test_heldout_preparation.HeldoutPreparationTests.test_dataset_checksum_mismatch_stops_reconstruction) ... ok
+test_native_training_reconstruction_and_frozen_candidates (test_heldout_preparation.HeldoutPreparationTests.test_native_training_reconstruction_and_frozen_candidates) ... ok
+test_normalization_and_near_duplicates_are_excluded (test_heldout_preparation.HeldoutPreparationTests.test_normalization_and_near_duplicates_are_excluded) ... ok
+test_all_failed_group_has_no_false_success_fraction (test_injection_candidate.CandidateTests.test_all_failed_group_has_no_false_success_fraction) ... ok
+test_diagnostic_corpora_match_frozen_results (test_injection_candidate.CandidateTests.test_diagnostic_corpora_match_frozen_results) ... ok
+test_errors_and_strict_threshold_boundaries_are_visible (test_injection_candidate.CandidateTests.test_errors_and_strict_threshold_boundaries_are_visible) ... ok
+test_label_index_comes_from_config_not_assumed_position (test_injection_candidate.CandidateTests.test_label_index_comes_from_config_not_assumed_position) ... ok
+test_refuses_nonempty_output_before_loading_models (test_lab_training.LabTrainingTests.test_refuses_nonempty_output_before_loading_models) ... ok
+test_versioned_export_and_runtime_metadata (test_lab_training.LabTrainingTests.test_versioned_export_and_runtime_metadata) ... ok
+test_http_failure_is_preserved (test_live_check.LiveCheckTests.test_http_failure_is_preserved) ... ok
+test_partial_or_error_responses_are_not_success (test_live_check.LiveCheckTests.test_partial_or_error_responses_are_not_success) ... ok
+test_quantiles (test_live_check.LiveCheckTests.test_quantiles) ... ok
+test_changed_training_metric_rejected (test_llmail_benign.BenignDiagnosticTests.test_changed_training_metric_rejected) ... ok
+test_fixed_cutoff_and_probabilities (test_llmail_benign.BenignDiagnosticTests.test_fixed_cutoff_and_probabilities) ... ok
+test_overlap_duplicates_and_lengths_are_excluded_explicitly (test_llmail_benign.BenignDiagnosticTests.test_overlap_duplicates_and_lengths_are_excluded_explicitly) ... ok
+test_training_evidence_reconciles (test_llmail_benign.BenignDiagnosticTests.test_training_evidence_reconciles) ... ok
+test_join_preserves_cross_team_components_and_unmatched (test_llmail_groups.LlmailGroupsTests.test_join_preserves_cross_team_components_and_unmatched) ... Loading source annotations (448 MB JSON; allow several GB of host RAM)...
+Streaming raw submissions; checking exact serialization matches...
+ok
+test_literal_labels_only (test_llmail_groups.LlmailGroupsTests.test_literal_labels_only) ... ok
+test_numeric_truthiness_does_not_create_positive_labels (test_llmail_groups.LlmailGroupsTests.test_numeric_truthiness_does_not_create_positive_labels) ... ok
+test_duplicate_ids_or_unfilled_reviews_rejected (test_llmail_human_review.HumanReviewTests.test_duplicate_ids_or_unfilled_reviews_rejected) ... ok
+test_placeholder_is_excluded_not_silently_repaired_as_ground_truth (test_llmail_human_review.HumanReviewTests.test_placeholder_is_excluded_not_silently_repaired_as_ground_truth) ... ok
+test_annotations_remain_source_values_not_new_ground_truth (test_llmail_intake.LlmailIntakeTests.test_annotations_remain_source_values_not_new_ground_truth) ... ok
+test_raw_schema_preserves_team_and_scenario_statistics (test_llmail_intake.LlmailIntakeTests.test_raw_schema_preserves_team_and_scenario_statistics) ... ok
+test_aggregation_preserves_tail_signal_and_dilution (test_llmail_long.LongWindowTests.test_aggregation_preserves_tail_signal_and_dilution) ... ok
+test_direct_token_embedding_preserves_ids (test_llmail_long.LongWindowTests.test_direct_token_embedding_preserves_ids) ... ok
+test_every_token_is_covered_without_decoding_or_truncation (test_llmail_long.LongWindowTests.test_every_token_is_covered_without_decoding_or_truncation) ... ok
+test_invalid_or_empty_windows_rejected (test_llmail_long.LongWindowTests.test_invalid_or_empty_windows_rejected) ... ok
+test_content_only_mode_never_needs_or_encodes_a_task (test_llmail_phase2.Phase2Tests.test_content_only_mode_never_needs_or_encodes_a_task) ... ok
+test_normalized_text_and_token_bag_overlap_differ (test_llmail_phase2.Phase2Tests.test_normalized_text_and_token_bag_overlap_differ) ... ok
+test_one_known_owner_prevents_new_team_claim (test_llmail_phase2.Phase2Tests.test_one_known_owner_prevents_new_team_claim) ... ok
+test_phase2_retrieval_levels_do_not_use_phase1_summary_mapping (test_llmail_phase2.Phase2Tests.test_phase2_retrieval_levels_do_not_use_phase1_summary_mapping) ... ok
+test_export_roundtrip_from_audited_index (test_llmail_preparation.LlmailPreparationTests.test_export_roundtrip_from_audited_index) ... {
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "annotation_count": 2,
+  "source_label_counts": {
+    "True": 1,
+    "Unclear": 1
+  },
+  "source_label_types": {
+    "bool": 1,
+    "str": 1
+  },
+  "label_policy": "Exact True/False strings and JSON booleans accepted; Unclear preserved; other types excluded.",
+  "script_sha256": "697ab56d3e0bf1a1801cf59bc0fbc8a244181dcf8981d37ca5a5292e5b2c2d83",
+  "component_details": [
+    {
+      "component_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+      "teams": 2,
+      "matched_annotations_by_label": {
+        "True": 1
+      }
+    },
+    {
+      "component_sha256": "6b23c0d5f35d1b11f9b683f0b0a617355deb11277d91ae091d399c655b87940d",
+      "teams": 1,
+      "matched_annotations_by_label": {}
+    }
+  ],
+  "raw_rows": 3,
+  "matched_raw_rows": 2,
+  "matched_unique_annotations": 1,
+  "unmatched_annotations": 1,
+  "matched_annotations_by_label": {
+    "True": 1
+  },
+  "teams": 3,
+  "team_components": 2,
+  "component_team_sizes_descending": [
+    2,
+    1
+  ],
+  "missing_team_rows": 0,
+  "invalid_text_field_rows": 0,
+  "unknown_scenario_rows": 0,
+  "source_hashes": {
+    "data/labelled_unique_submissions_phase1.json": "443799ab0640b2d7ce8e16e6e15611c22f29ab25bfb61c375ab3b8d697c245ca",
+    "data/raw_submissions_phase1.jsonl": "3af0f3f8ed9cb0e0559e19cc25c8bea9508e811f4dfaa2c2820a7c0d732727f4"
+  },
+  "join_recipe": "Exact SHA256 of published Subject of the email serialization; no normalization/fuzzy repair.",
+  "split_created": false,
+  "training_performed": false,
+  "phase2_used": false,
+  "limitations": [
+    "Exact matching only; near-duplicate/template leakage is not resolved.",
+    "Team components are diagnostic, not proof of independent authoring.",
+    "False/Unclear/malformed source annotations have not been converted to benign ground truth.",
+    "No task/context adapter, token-length policy or held-out evaluation has been applied."
+  ]
+}
+Loading source annotations (448 MB JSON; allow several GB of host RAM)...
+Streaming raw submissions; checking exact serialization matches...
+{
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "annotation_count": 1,
+  "source_label_counts": {
+    "True": 1
+  },
+  "source_label_types": {
+    "bool": 1
+  },
+  "label_policy": "Exact True/False strings and JSON booleans accepted; Unclear preserved; other types excluded.",
+  "script_sha256": "697ab56d3e0bf1a1801cf59bc0fbc8a244181dcf8981d37ca5a5292e5b2c2d83",
+  "component_details": [
+    {
+      "component_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+      "teams": 1,
+      "matched_annotations_by_label": {
+        "True": 1
+      }
+    }
+  ],
+  "raw_rows": 1,
+  "matched_raw_rows": 1,
+  "matched_unique_annotations": 1,
+  "unmatched_annotations": 0,
+  "matched_annotations_by_label": {
+    "True": 1
+  },
+  "teams": 1,
+  "team_components": 1,
+  "component_team_sizes_descending": [
+    1
+  ],
+  "missing_team_rows": 0,
+  "invalid_text_field_rows": 0,
+  "unknown_scenario_rows": 0,
+  "source_hashes": {
+    "data/labelled_unique_submissions_phase1.json": "cd637be3bd156b6a86fbde8654cca1678e065033983801d14c698c1b3d99303b",
+    "data/raw_submissions_phase1.jsonl": "61b4646172e8a47c4ac7eca9d967038aa56ab502038b746cd9d585344fb2380d"
+  },
+  "join_recipe": "Exact SHA256 of published Subject of the email serialization; no normalization/fuzzy repair.",
+  "split_created": false,
+  "training_performed": false,
+  "phase2_used": false,
+  "limitations": [
+    "Exact matching only; near-duplicate/template leakage is not resolved.",
+    "Team components are diagnostic, not proof of independent authoring.",
+    "False/Unclear/malformed source annotations have not been converted to benign ground truth.",
+    "No task/context adapter, token-length policy or held-out evaluation has been applied."
+  ]
+}
+Reading annotations and exporting component-disjoint projections...
+ok
+test_plan_is_order_independent_and_whole_component (test_llmail_preparation.LlmailPreparationTests.test_plan_is_order_independent_and_whole_component) ... ok
+test_projection_uses_legitimate_query_not_attacker_task (test_llmail_preparation.LlmailPreparationTests.test_projection_uses_legitimate_query_not_attacker_task) ... ok
+test_unclear_and_malformed_are_not_exported (test_llmail_preparation.LlmailPreparationTests.test_unclear_and_malformed_are_not_exported) ... ok
+test_caps_are_reported (test_llmail_readiness.ReadinessTests.test_caps_are_reported) ... ok
+test_detects_cross_split_reordered_content (test_llmail_readiness.ReadinessTests.test_detects_cross_split_reordered_content) ... ok
+test_token_overlap_is_lexical_not_semantic (test_llmail_readiness.ReadinessTests.test_token_overlap_is_lexical_not_semantic) ... ok
+test_blinded_export_is_deterministic_and_development_only (test_llmail_reserved_evidence.ReservedEvidenceTests.test_blinded_export_is_deterministic_and_development_only) ... ok
+test_changed_count_rejected (test_llmail_reserved_evidence.ReservedEvidenceTests.test_changed_count_rejected) ... ok
+test_reserved_metrics_reconcile (test_llmail_reserved_evidence.ReservedEvidenceTests.test_reserved_metrics_reconcile) ... ok
+test_review_disagreements_do_not_erase_original_reserved_findings (test_llmail_review_diagnostic.ReviewDiagnosticTests.test_review_disagreements_do_not_erase_original_reserved_findings) ... ok
+test_stored_diagnostic_probabilities_reproduce_confusions (test_llmail_review_diagnostic.ReviewDiagnosticTests.test_stored_diagnostic_probabilities_reproduce_confusions) ... ok
+test_changed_text_or_duplicate_id_rejected (test_llmail_review_import.ReviewImportTests.test_changed_text_or_duplicate_id_rejected) ... ok
+test_unclear_and_ai_provenance_not_recast_as_ground_truth (test_llmail_review_import.ReviewImportTests.test_unclear_and_ai_provenance_not_recast_as_ground_truth) ... ok
+test_bands_are_deterministic_and_order_independent (test_llmail_short_baseline.ShortBaselineTests.test_bands_are_deterministic_and_order_independent) ... ok
+test_budget_overflow_excludes_candidates_instead_of_skipping (test_llmail_short_baseline.ShortBaselineTests.test_budget_overflow_excludes_candidates_instead_of_skipping) ... ok
+test_exact_cleanup_is_complete_and_preserves_reserved_priority (test_llmail_short_baseline.ShortBaselineTests.test_exact_cleanup_is_complete_and_preserves_reserved_priority) ... ok
+test_balanced_training_weights (test_llmail_short_model.ShortModelTests.test_balanced_training_weights) ... ok
+test_export_never_encodes_test_and_model_roundtrips (test_llmail_short_model.ShortModelTests.test_export_never_encodes_test_and_model_roundtrips) ... ok
+test_long_inputs_are_rejected (test_llmail_short_model.ShortModelTests.test_long_inputs_are_rejected) ... ok
+test_majority_accuracy_does_not_hide_poor_balance (test_llmail_short_model.ShortModelTests.test_majority_accuracy_does_not_hide_poor_balance) ... ok
+test_benign_evidence_reconciles (test_llmail_thresholds.ThresholdTests.test_benign_evidence_reconciles) ... ok
+test_cutoff_uses_negative_scores_not_positive_labels (test_llmail_thresholds.ThresholdTests.test_cutoff_uses_negative_scores_not_positive_labels) ... ok
+test_development_overlap_rejected_before_test_encoding (test_llmail_thresholds.ThresholdTests.test_development_overlap_rejected_before_test_encoding) ... ok
+test_frozen_policy_matches_recorded_validation_scores (test_llmail_thresholds.ThresholdTests.test_frozen_policy_matches_recorded_validation_scores) ... ok
+test_validation_only_and_float32_ties (test_llmail_thresholds.ThresholdTests.test_validation_only_and_float32_ties) ... ok
+test_altered_archive_rejected_before_opening (test_native_artifacts.NativeArtifactTests.test_altered_archive_rejected_before_opening) ... ok
+test_directory_corruption_and_metadata_drift_are_rejected (test_native_artifacts.NativeArtifactTests.test_directory_corruption_and_metadata_drift_are_rejected) ... ok
+test_retained_archive_matches_experiment (test_native_artifacts.NativeArtifactTests.test_retained_archive_matches_experiment) ... ok
+test_corrupt_predictions_and_scope_are_rejected (test_phase2_content_evidence.Phase2ContentTests.test_corrupt_predictions_and_scope_are_rejected) ... ok
+test_recorded_metrics_reconcile (test_phase2_content_evidence.Phase2ContentTests.test_recorded_metrics_reconcile) ... ok
+test_counter_reset_is_rejected (test_pilot_analysis.AnalysisTests.test_counter_reset_is_rejected) ... ok
+test_labeled_counter_series_are_summed (test_pilot_analysis.AnalysisTests.test_labeled_counter_series_are_summed) ... ok
+test_missing_counter_not_zero (test_pilot_analysis.AnalysisTests.test_missing_counter_not_zero) ... ok
+test_original_plot_refuses_burst_data (test_pilot_analysis.AnalysisTests.test_original_plot_refuses_burst_data) ... ok
+test_empty_band_is_reported_without_inventing_a_candidate (test_policy_calibration.CalibrationTests.test_empty_band_is_reported_without_inventing_a_candidate) ... ok
+test_retains_all_scores_and_does_not_forward (test_policy_calibration.CalibrationTests.test_retains_all_scores_and_does_not_forward) ... ok
+test_coverage_and_negative_results_are_retained (test_report_extension.ExtensionEvidenceTests.test_coverage_and_negative_results_are_retained) ... ok
+test_missing_tail_window_is_rejected (test_report_extension.ExtensionEvidenceTests.test_missing_tail_window_is_rejected) ... ok
+test_clean_failures_and_attack_errors_stay_separate (test_wrapper_diagnostic.WrapperDiagnosticTests.test_clean_failures_and_attack_errors_stay_separate) ... ok
+test_factor_interventions_do_not_change_memo_or_insertion (test_wrapper_diagnostic.WrapperDiagnosticTests.test_factor_interventions_do_not_change_memo_or_insertion) ... ok
+test_factorial_counts_and_frozen_source_reproduction (test_wrapper_diagnostic.WrapperDiagnosticTests.test_factorial_counts_and_frozen_source_reproduction) ... ok
+test_original_guard_tag_cell_matches_prior_prompts (test_wrapper_diagnostic.WrapperDiagnosticTests.test_original_guard_tag_cell_matches_prior_prompts) ... ok
+test_case_and_weight_identity_changes_are_rejected (test_wrapper_evidence.WrapperEvidenceTests.test_case_and_weight_identity_changes_are_rejected) ... ok
+test_factorial_control_failure_and_low_plain_coverage_preserved (test_wrapper_evidence.WrapperEvidenceTests.test_factorial_control_failure_and_low_plain_coverage_preserved) ... ok
+test_invented_summary_and_invalid_probability_are_rejected (test_wrapper_evidence.WrapperEvidenceTests.test_invented_summary_and_invalid_probability_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 138 tests in 9.888s
+
+OK
+{
+  "source_revision": "1063bdf01ec8762b812d5e06ee768a06faa5a6f7",
+  "split_plan_sha256": "39646630f09f1f03bc59c27371f19620f83fb300f7b2ccdd54523a2a4b354eb0",
+  "script_sha256": "a175d008f79ec037c6a5e49c6cf286b3e54514ddd18736bd8dd7f28a57232d3e",
+  "counts_by_split_and_source_label": {
+    "train": {
+      "True": 1
+    },
+    "validation": {},
+    "test": {}
+  },
+  "annotation_reasons": {
+    "train": {
+      "judge": 1
+    },
+    "validation": {},
+    "test": {}
+  },
+  "excluded": {},
+  "max_email_characters": {
+    "train": 43
+  },
+  "files": {
+    "train": {
+      "bytes": 521,
+      "sha256": "5ddb369fc9fa9843eeb04fda4cacaf1ad215c6f46f7bd4f36cbcb31a0a9ce912"
+    },
+    "validation": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "test": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "training_performed": false,
+  "phase2_used": false,
+  "benign_fp_emails_used": false,
+  "limitations": [
+    "Source automated annotations, not independently reviewed malicious-intent labels.",
+    "One-email projection omits other retrieved emails, tool schemas and conversation state.",
+    "Exact group separation does not establish near-duplicate or template independence.",
+    "No tokenizer truncation or embedding applied. Token-window policy still required.",
+    "Phase 1 test is reserved for fitting decisions; source input schema has been inspected."
+  ]
+}

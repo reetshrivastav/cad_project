@@ -1,11 +1,15 @@
-# Final report bundle — evidence edition 1.1
+# Final report bundle — evidence edition 2.0
 
-- `Adaptive_LLM_Gateway_Final_Report.pdf`: current submission copy, now with verified long-email results.
-- `Adaptive_LLM_Gateway_Final_Report.docx`: editable copy.
-- `Professor_Summary.pdf`: brief project summary.
-- `EVIDENCE_INDEX.csv`: primary evidence paths and SHA256 digests.
-- `figures/`: five PNG/SVG figures and source manifest.
+25 October 2026. Start with [all reports/evidence](../README.md).
 
-Canonical Markdown: `reports/FINAL_PROJECT_REPORT.md`. Full raw evidence remains in GitHub. Long emails now have verified offline token coverage, but detection quality remains poor; native live serving is unchanged. Phase 2 contextual attempts failed before predictions and are preserved. A frozen content-only transfer diagnostic is pending; no future result is assumed. See `reports/LLMAIL_LONG_EMAIL_RESULTS.md` for the only next lab command, without a long rerun.
+- [Complete PDF](Adaptive_LLM_Gateway_Final_Report.pdf): download with GitHub's Download raw file button.
+- [Editable Word](Adaptive_LLM_Gateway_Final_Report.docx).
+- [Professor summary PDF](Professor_Summary.pdf).
+- [Canonical technical Markdown](../FINAL_PROJECT_REPORT.md).
+- [Evidence index with SHA256](EVIDENCE_INDEX.csv).
+- [Render validation](document_checks.json).
+- [Figures and source hashes](figures/).
 
-Figure reproduction: `MPLCONFIGDIR=/tmp/cad-mpl-cache python scripts/build_final_report_figures.py`. Pandoc/XeLaTeX generated documents in cloud; no new lab installation is needed to read the supplied files.
+Includes GPU protection, realistic-data studies, long-email coverage/quality, completed Phase 2 content-only transfer, final software/live checks, opt-in tuning and explicit novelty/claim boundaries. Default serving embedding path remains unchanged unless `GATEWAY_EMBEDDING_MODE=direct` is supplied. Models are not retrained by report generation.
+
+Reproduce figures with `MPLCONFIGDIR=/tmp/cad-mpl-cache python scripts/build_final_report_figures.py`. Rendering requires Pandoc/XeLaTeX; supplied PDFs need no lab installation. Full raw evidence remains at the indexed GitHub paths; large source email datasets remain lab-local.

@@ -1,3 +1,5 @@
+> Historical architecture/early-results document. Current measured results and claim boundaries: [final report](reports/FINAL_PROJECT_REPORT.md) and [evidence index](reports/README.md). Targets such as zero GPU cost and sub-2-ms latency below are not established observations.
+
 # ⚡ GPU Implementation & Roadmap Guide
 **Scaling Adaptive LLM Gateway from CPU/Simulated to Real Lab GPU + LLM Infrastructure**  
 *Document Purpose: Technical blueprint for setting up, running, accelerating, and stress-testing the gateway against real GPU-backed LLM engines (vLLM / Ollama) on the lab workstation.*

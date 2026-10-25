@@ -1,3 +1,5 @@
+> Update, 25 October 2026: the cached content-only Phase 2 check is complete. See the [final report](FINAL_PROJECT_REPORT.md#phase-2-content-only-transfer). Commands below are historical reproduction instructions, not pending required work.
+
 # Long-email result and Phase 2 scope correction — 24 October 2026
 
 The long-email extension completed in the lab. **All 300 sampled emails were covered by 723 token windows, representing 130,735 unique content-token positions.** There were 276 source-positive and 24 source-negative email targets. The unchanged models remain unsuitable for general deployment: max pooling increases positive recall but also flags most source negatives.

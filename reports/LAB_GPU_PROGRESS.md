@@ -368,3 +368,7 @@ The new 400-case AI/programmatic synthetic corpus has topic-family-disjoint 280/
 - Max pooling improves source-positive flags but also flags most negatives: pair 274/276 and 22/24 at 0.5; 218/276 and 18/24 at frozen higher cutoff. No production-readiness claim or integration.
 - Second Phase 2 schema attempt failed before predictions on level3c, retained alongside earlier failure. New explicitly content-only protocol avoids another unverified task mapping while preserving sample/model/cutoff/overlap rules. No long rerun or new download needed.
 - Final report edition 1.1 now includes long-input coverage and negative quality result. Phase 2 score outcome remains pending.
+
+## Final consolidation — 25 October 2026
+
+Phase 2 content-only results reconciled on 2,000 rows. Lab final check passed 135 tests and four native artifact hashes. Opt-in direct inference passed 138 cloud tests and 39 native lab parity cases; live routing/quarantine passed with extraction 18.837 ms. Raw final uploads are in `results/final_validation_20261025/`. Edition 2.0 consolidates all findings with measured limitations and novelty boundaries; see `reports/README.md`. No experimental email head is deployed.

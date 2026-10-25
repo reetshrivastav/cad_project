@@ -1,154 +1,87 @@
-# 🛡️ Adaptive LLM Security & Resource Risk Gateway
+# Adaptive LLM Security & Resource Risk Gateway
 
-A research gateway that routes LLM requests into full, sandbox or quarantine tiers using content/resource features and live cache telemetry. Native GPU experiments demonstrate admission protection under a constrained KV-cache workload. General prompt-injection protection and consistent sub-5 ms live ingress remain experimental.
+A research prototype that screens LLM requests using lexical, semantic and resource-demand features, then assigns full, output-capped sandbox or quarantine admission. The native gateway runs CUDA/FP16 MiniLM and forwards admitted requests to Qwen2.5-3B-Instruct through vLLM. Live KV-cache telemetry can tighten thresholds.
 
-**Final report:** [PDF, editable Word and figures](reports/final_report/README.md) · [Technical report source](reports/FINAL_PROJECT_REPORT.md) · [Professor summary](reports/PROFESSOR_SUMMARY.md). Edition 1.1 includes verified offline long-email coverage and quality limits. The remaining [content-only Phase 2 diagnostic](reports/LLMAIL_LONG_EMAIL_RESULTS.md) avoids unresolved trusted-task mapping; its results are pending.
+**Start here: [Reports, findings and evidence](reports/README.md).**
 
-**Measured status:** see [Current lab evidence](reports/CURRENT_STATUS.md) and the [project handoff / final verification](reports/PROJECT_HANDOFF.md). Older sections/documents include prototype goals and simulation results; they are not independent native-lab security validation.
+## Final deliverables — 25 October 2026, edition 2.0
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![XGBoost](https://img.shields.io/badge/model-XGBoost-orange.svg)](https://xgboost.readthedocs.io/)
-[![Sentence-Transformers](https://img.shields.io/badge/embeddings-all--MiniLM--L6--v2-green.svg)](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
-[![OpenAI Compatible](https://img.shields.io/badge/API-OpenAI_Compatible-purple.svg)](http://localhost:5000/v1/chat/completions)
+- [Complete technical report](reports/FINAL_PROJECT_REPORT.md).
+- [PDF, editable Word, professor summary and figures](reports/final_report/README.md).
+- [Current status](reports/CURRENT_STATUS.md).
+- [Evidence paths and SHA256 digests](reports/final_report/EVIDENCE_INDEX.csv).
+- [All scripts and test modules](reports/SCRIPT_TEST_INDEX.md).
 
----
+For PDF/Word on GitHub, open the file and select **Download raw file**. The Markdown reports can be read directly in the browser.
 
-## ⚡ Why This Project Matters
+## Measured findings
 
-When traditional LLMs (ChatGPT, Claude, Llama 3) receive malicious jailbreaks or massive 100,000-word sponge prompts, **the GPU cluster still executes billions of FLOPs and allocates gigabytes of KV-cache memory just to generate a polite refusal message.**
+| Evaluation | Observation | Scope |
+|---|---|---|
+| Nine GPU demand-burst runs | Benign mean: direct 50.24 s; static 302 ms; adaptive 298 ms | Three runs per condition, controlled 256 MiB KV pool |
+| Admission protection | 24/24 demands blocked per protected condition; all 24 benign probes completed | Tested capped generation workload, not default-cache OOM |
+| KV occupancy | Direct 99.56–100%; protected 0.881% | Active cache blocks, not total device allocation |
+| Reserved short-email pair model | Adjusted recall 61.59%, specificity 76.66%, balanced accuracy 69.13% | 13,989 selectively retained publisher-labeled rows; offline |
+| Long-email extension | 300 emails, 723 windows completely covered | Detection discrimination remains weak |
+| Phase 2 content-only transfer | Adjusted recall 53.92%, specificity 84.26% | 2,000 short emails, related challenge, offline |
+| Opt-in inference tuning | Mean live extraction 24.62 to 18.84 ms; 39 parity cases matched | Separate small smoke tests; sub-5-ms target unmet |
 
-This creates two critical vulnerabilities:
-1. **Denial of Wallet (DoW):** Attackers burn thousands of dollars in cloud GPU compute by forcing the model to generate refusal essays.
-2. **GPU Memory Starvation (OOM):** Unconstrained generation requests exhaust GPU VRAM pages on multi-tenant inference nodes (vLLM / TGI).
+The study supports controlled resource admission protection. General prompt-injection prevention, a causal advantage from adaptation, GPU cancellation at timeout, population P99, measured dollar/energy savings and patent novelty are **not established**. Native training accuracy is resubstitution, not held-out security accuracy. Quarantine avoids backend forwarding but still incurs CUDA ingress work.
 
-**Our Gateway Intercepts Prompts at Ingress:**
-- **Backend admission control:** Quarantine prevents LLM forwarding; ingress still uses CUDA embeddings. Zero total GPU cost and a sub-5 ms live SLA are not established.
-- **Dense Semantic + Lexical Features:** Combines 384-dimensional `all-MiniLM-L6-v2` embeddings and TF-IDF n-grams for an experimental risk classifier; unseen/contextual injection efficacy remains unresolved.
-- **Graduated Tiered Execution:** Routes queries into **Full Access**, **Constrained Sandbox** (256-token cap), or **Quarantine Drop**.
+## Lab demonstration
 
----
+The existing lab uses separate `.venv` gateway and `.venv-vllm` backend environments. Preserve that separation; do not install backend dependencies into the gateway environment. The supplied launchers use lab-native artifacts in `models/lab_native_v1` and a constrained cache configuration matching the controlled study. Those operator-generated artifacts/source datasets are not all distributed at their lab paths.
 
-## 🏗️ System Architecture
+Terminal 1:
 
-```
-User / Client Request
-        │
-        ▼
-┌─────────────────────────────────────────────────────────────┐
-│             ADAPTIVE INGRESS GATEWAY                        │
-│                                                             │
-│  1. Feature Extractor (tiktoken BPE, Repetition, Heuristics) │
-│  2. Lexical Vectorizer (TF-IDF n-grams)                     │
-│  3. Dense Semantic Embedder (Sentence-Transformers MiniLM)  │
-│  4. XGBoost Multi-Class Risk Classifier                    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-            ┌──────────────────┼──────────────────┐
-            ▼                  ▼                  ▼
-     [ Risk < 0.35 ]    [ 0.35 ≤ R < 0.75 ]   [ Risk ≥ 0.75 ]
-       FULL TIER          SANDBOX TIER        QUARANTINE TIER
-            │                  │                  │
-            ▼                  ▼                  ▼
-     Standard Context   Hard 256-Token Cap  Dropped at Gateway
-     Requested Cap      5s HTTP Timeout     No LLM Forwarding
-            │                  │                  │
-            └──────────┬───────┘                  │
-                       ▼                          ▼
-               ┌───────────────┐           ┌──────────────┐
-               │  Ollama / GPU │           │ 403 Blocked  │
-               │ (llama3.2:3b) │           │ JSON Notice  │
-               └───────────────┘           └──────────────┘
-```
-
----
-
-## 📊 Empirical Training & Datasets
-
-Trained via `train_on_datasets.py` on **4,264 real-world empirical samples**:
-
-| Dataset | Samples | Purpose in Pipeline |
-| :--- | :---: | :--- |
-| **AdvBench Benchmark** (Berkeley / CMU) + Real Jailbreak Corpus (DAN v11, System Overrides) | **994** | Teaches latent semantic intent of adversarial jailbreaks. |
-| **Stanford Alpaca & LMSYS Chatbot Arena** | **2,700** | Real-world distributions of legitimate coding, academic, and technical queries. |
-| **Empirical Resource Exhaustion Corpus** | **570** | Sponge volume demands ($>100\text{k}$ words), repetition loops, and session burst anomalies. |
-
----
-
-## 🚀 Quick Start Guide
-
-### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/adaptive-llm-router.git
-cd adaptive-llm-router
-
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install requirements
-pip install -r requirements_demo.txt
+cd ~/cad_project
+bash scripts/start_lab_vllm.sh
 ```
 
-### 2. Train / Export Model Artifacts (Optional — Pretrained models included in `models/`)
+After vLLM is ready, terminal 2:
+
 ```bash
-python train_on_datasets.py
+cd ~/cad_project
+GATEWAY_EMBEDDING_MODE=direct \
+bash scripts/start_lab_gateway.sh adaptive
 ```
 
-### 3. Run Benchmark Verification Suite
+`direct` is opt-in; omitting the variable uses the original `encode` path. Use `static` instead of `adaptive` for the static threshold control. Experimental LLMail/context heads remain offline and must not replace the native model silently.
+
+After gateway readiness, terminal 3:
+
 ```bash
-python verify_empirical_pipeline.py
+cd ~/cad_project
+.venv/bin/python scripts/check_live_gateway.py \
+  --output results/live_demo_new.json
 ```
-*Expected Output: `9 / 9 (100%) BENCHMARK TEST CASES PASSED`*
 
-### 4. Launch the Interactive Gateway Dashboard
+Readiness: `http://127.0.0.1:5000/api/status`; telemetry: `http://127.0.0.1:5000/api/pressure`. Use fresh output names to preserve evidence.
+
+## Verification
+
+With both servers stopped:
+
 ```bash
-python app.py
-```
-Open **`http://localhost:5000`** in your browser.
-
----
-
-## 🔌 OpenAI-Compatible API Integration
-
-The gateway is a drop-in replacement for OpenAI SDK, LangChain, or LlamaIndex:
-
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="http://localhost:5000/v1",
-    api_key="not-needed"
-)
-
-# Benign query -> Processed on Ollama llama3.2:3b
-response = client.chat.completions.create(
-    model="llama3.2:3b",
-    messages=[{"role": "user", "content": "Explain binary search in Python."}]
-)
-print(response.choices[0].message.content)
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python scripts/verify_native_artifacts.py \
+  --model-dir models/lab_native_v1
 ```
 
----
+The current cloud suite passes 138 CPU tests. The final supplied lab regression passed 135 tests before the optional inference path was added; later lab parity/live checks passed. These checks have different scopes and are not a replacement for physical GPU replication.
 
-## 📁 Repository Structure
+## Repository map
 
-```
-├── app.py                         # Flask server with OpenAI-compatible /v1 endpoints & UI
-├── classifier.py                  # XGBoost multi-class RiskClassifier wrapper
-├── features.py                    # BPE tokenization, repetition density, cache locality
-├── router.py                      # Tier assignment policy and cost calculation
-├── train_on_datasets.py           # Offline training pipeline (AdvBench + Alpaca + MiniLM)
-├── verify_empirical_pipeline.py   # Benchmark test suite (9 real-world scenarios)
-├── data/
-│   └── harmful_behaviors.csv      # 520+ AdvBench benchmark prompts
-├── demo/
-│   └── index.html                 # Glassmorphic dashboard interface
-├── models/                        # Serialized model weights & vectorizers
-│   ├── classifier.joblib          # Trained XGBoost model
-│   ├── tfidf.joblib               # Lexical TF-IDF vectorizer
-│   ├── ref_embeddings.npy         # 384-d dense embedding vector space
-│   └── model_metadata.json        # Dataset & training metadata
-├── PROFESSOR_PRESENTATION.md      # Presentation guide & academic defense script
-├── RESULTS_SUMMARY.md             # Reduction to practice technical summary
-└── RESUME_PROJECT_SUMMARY.md      # Resume bullet points & technical summary for teammates
-```
+| Location | Purpose |
+|---|---|
+| `app.py`, `router.py`, `cache_pressure.py`, `embedding_runtime.py` | Live gateway, pressure-aware policy and optional inference path |
+| `classifier.py`, `features.py`, training/simulation modules | Native model utilities and historical simulation |
+| `context_pair_v2.py`, `llmail_*.py` | Separate offline research helpers; frozen evidence dependencies |
+| `scripts/` | Launchers, datasets, experiments, analyzers and rendering |
+| `tests/` | CPU behavior and preserved-evidence checks |
+| `reports/` | Technical reports, protocols, historical evidence and final documents |
+| `results/final_validation_20261025/` | Final unchanged lab uploads and source hashes |
+| `data/external/`, lab-native model directories | Large/operator-generated local artifacts; follow protocols |
+
+Historical architecture guides, simulation summaries and patent drafts are retained for provenance. Their aspirational numbers and claims do not supersede the measured final report. AI-assisted labeling is disclosed separately from reviewer judgments; source annotations and failed/negative results are preserved.

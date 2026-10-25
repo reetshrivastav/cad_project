@@ -2,7 +2,7 @@
 title: "Adaptive LLM Security & Resource Risk Gateway"
 subtitle: "Final project report: GPU admission control and short/long-email injection evaluation"
 author: "Project operator: Reet — AI-assisted analysis and report preparation"
-date: "24 October 2026 | Evidence edition 1.1"
+date: "25 October 2026 | Evidence edition 2.0"
 lang: en
 ---
 
@@ -14,7 +14,7 @@ The strongest measured result is **controlled admission protection**, not genera
 
 The injection investigation produced important negative findings. A task/content pair model scored 59/60 on a synthetic topic test but reviewed only 4/16 redirections under new wording. A subsequent public LLMail short-email experiment used exact-team-component splits, conservative lexical cleanup and frozen operating cutoffs. On 13,989 reserved source-labeled rows, the adjusted pair model achieved 61.59% source-positive recall, 76.66% source-negative specificity and 69.13% balanced accuracy. That operating point did not meet its empirical validation specificity target. The candidate remains offline.
 
-The project therefore delivers a working resource-risk prototype, reproducible evidence and an explicit account of injection-model limitations. An offline long-email extension now covers 300 sampled emails with 723 token windows and 130,735 unique content-token positions. Max pooling raises source-positive recall but flags most source negatives; coverage is not reliable protection. The live gateway is unchanged. Two Phase 2 attempts stopped before predictions on unresolved source identifiers; a narrower content-only check is prespecified, with no assumed result in this edition.
+The project therefore delivers a working resource-risk prototype, reproducible evidence and an explicit account of injection-model limitations. An offline long-email extension now covers 300 sampled emails with 723 token windows and 130,735 unique content-token positions. Max pooling raises source-positive recall but flags most source negatives; coverage is not reliable protection. The native serving classifier is unchanged. A completed frozen content-only Phase 2 check scored 2,000 emails; its adjusted recall was 53.92% and specificity 84.26%. An opt-in inference path subsequently reduced measured live extraction from 24.62 to 18.84 ms while preserving the 39 checked feature/risk/tier outcomes. These results do not establish general injection reliability or the original sub-5 ms target.
 
 # Problem, objectives and evaluation questions
 
@@ -77,11 +77,11 @@ The gateway's current message selection and session accounting do not establish 
 | Native ML packages | scikit-learn 1.7.2; XGBoost 3.2.0; NumPy 2.2.6 |
 | Recorded PyTorch version | 2.13.0 in later supplied runtime metadata; CUDA/FP16 device recorded |
 | Backend launch configuration | FP16; prefix caching; 256 MiB KV pool; max model length 2,048; max running sequences four |
-| Final local verification | 123 regression tests passed in 30.224 seconds; four native artifact hashes matched |
+| Final local verification | 135 lab tests passed in 4.609 seconds; four native artifact hashes matched; later optimized code passed 138 cloud CPU tests plus lab parity/live checks |
 
 Version values above are preserved as reported. They were not independently re-snapshotted for each GPU replication. The controlled benchmark JSON records consistent cache configuration: 268,435,456 bytes, 7,280 tokens and 455 blocks. Complete startup logs were not supplied, limiting independent confirmation of every launch flag and process restart.
 
-The lab operator executed GPU workloads and supplied JSON/log archives. Cloud analysis checked identities, hashes, counts, per-request usage, aggregate counters and recorded probabilities. It did not independently rerun physical GPU inference. Final software checks were run at source commit `e037df8`; the evidence consolidation baseline is `973d233`. Later report generation does not change the historical measurements.
+The lab operator executed GPU workloads and supplied JSON/log archives. Cloud analysis checked identities, hashes, counts, per-request usage, aggregate counters and recorded probabilities. It did not independently rerun physical GPU inference. Historical handoff checks were run at `e037df8`; the latest lab regression run used `b27e2d6`, and optimized parity/live measurements used `0d0dd31`. Final validation evidence was consolidated at `87dfb0c`. Later report generation does not change historical measurements.
 
 # GPU resource-protection experiment
 
@@ -215,9 +215,70 @@ Max versus first at 0.5 adds 87 source-positive pair flags and two source-negati
 
 Verification reconciles source/policy/model/scorer hashes, identities/class counts, all window intervals and aggregate probabilities, and all email-level confusion metrics. It does not independently reproduce the GPU embeddings or actual source token identities. The raw result inherits a metric-helper scope string referring to short emails; that textual metadata error is disclosed and corrected in derived reporting without modifying the original archive.
 
-## Phase 2 preflights and limited transfer scope
+# Phase 2 content-only transfer
 
-The first Phase 2 attempt failed before predictions at `level1a`; a cached schema retry subsequently failed at `level3c`. Both are retained, including their unchanged payload hashes. No unsuccessful efficacy trial was discarded. The raw identifier set does not justify another guessed trusted-query mapping. The next prespecified diagnostic evaluates only the existing content head, which does not use a trusted task, and records the raw level IDs without interpreting them. It retains pinned files, Phase 1 exact overlap exclusions, hash sampling, author-overlap reporting, head weights and cutoffs. Pair/task transfer remains unevaluated until context provenance is resolved. No Phase 2 prediction result is included or assumed in this edition.
+Two contextual attempts failed before predictions at `level1a` and `level3c`. Both failures remain preserved. The completed follow-up intentionally evaluates only the frozen content head, without inferring a trusted task from ambiguous level identifiers. Pair/task Phase 2 transfer remains unevaluated.
+
+The pinned Phase 2 annotation file contains 21,007 True, 2,500 False and 13,796 Unclear records; the raw file contains 90,916 submissions. Unclear labels were excluded. Normalized exact text and token-bag matches against all Phase 1 annotations were excluded; this does not remove every near duplicate or template. Team ownership was checked against all 224 Phase 1 teams. All owners must be absent from Phase 1 for a record to enter the new-team cohort.
+
+A fixed hash order inspected 5,000 candidates, excluded 2,106 long inputs, and selected the first 2,000 of 2,894 eligible short emails. Selection was not balanced by label or model score. The sample contains 1,784 source positives and 216 source negatives; 1,429 records are in the reported new-team subset. The model, encoder revision and cutoffs are unchanged from Phase 1. No training was performed.
+
+| Cohort / cutoff | TP | FN | FP | TN | Recall | Specificity | Balanced accuracy |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| All / 0.5 | 1,728 | 56 | 168 | 48 | 96.86% | 22.22% | 59.54% |
+| All / higher | 962 | 822 | 34 | 182 | 53.92% | 84.26% | 69.09% |
+| New / 0.5 | 1,246 | 52 | 95 | 36 | 95.99% | 27.48% | 61.74% |
+| New / higher | 638 | 660 | 5 | 126 | 49.15% | 96.18% | 72.67% |
+
+![Phase 2 operating points on related source-labeled data; the new-team cohort is a subset, not an independent replication.](final_report/figures/phase2_transfer.png){width=95%}
+
+The higher cutoff is 0.9574561119079591. ROC AUC is 0.7660 overall and 0.8230 in the new-team subset. Better specificity in the subset coexists with missing 660 of 1,298 source positives. Cohorts overlap and are not independent replications; differences can reflect composition rather than causal generalization gains. This is cross-phase transfer within the same challenge, not an independent-source benchmark or downstream attack-success evaluation.
+
+Verification reconstructs metrics from saved probabilities and checks model/policy/source hashes, row identities, sample order, labels and cohort accounting. Full source joins, team ownership and physical GPU embeddings are operator-recorded, not independently rerun in cloud. The experimental head remains offline.
+
+# Final latency investigation and opt-in tuning
+
+The initial final live smoke test passed routing but recorded 24.623 ms mean extraction, slower than earlier approximately 6 ms observations. The project retained the regression and investigated it rather than reporting only the fastest historical result.
+
+| Measurement | Mean extraction | Mean embedding | Interpretation |
+|---|---:|---:|---|
+| Offline, vLLM running, 24 CPU threads | 17.605 ms | 13.950 ms | Original encode path |
+| Offline, vLLM running, one CPU thread | 18.249 ms | 14.533 ms | Thread reduction did not improve this run |
+| Offline, vLLM stopped, 24 CPU threads | 17.466 ms | 13.767 ms | Little change without backend sharing |
+| Offline, clock capture, 300 samples | 17.890 ms | 14.262 ms | GPU reached P2 / 1,560 MHz |
+| Offline, direct inference path | 12.513 ms | 13.888 ms reference | Extraction uses direct path; separate embedding field still times original encode |
+| Live, original path, ten probes | 24.623 ms | Not separately timed | HTTP including generation averaged 218.868 ms |
+| Live, opt-in direct path, ten probes | 18.837 ms | Not separately timed | HTTP including generation averaged 212.224 ms |
+
+The idle snapshot showed no active thermal/power throttle, but it cannot exclude throttling during inference. The subsequent sampled clock trace shows performance-state promotion rather than a GPU stuck at idle. Neither snapshot nor CPU thread comparisons identify the complete historical slowdown. Whole-program cProfile includes startup/import/network activity; those startup costs are not assigned to warmed ingress.
+
+A separate alternating-order 100-sample comparison across ten prompts measured original encoding at 14.621 ms and direct inference at 9.314 ms (36.3% lower). All ten embedding arrays matched exactly. The direct path tokenizes every request, transfers tensors to the existing device, runs the evaluation-mode model under `torch.inference_mode()`, normalizes and copies results to CPU. There is no prompt-result cache or pretrained-weight change.
+
+Lab validation compared all six features, native risk and normal/high-pressure tiers across 13 prompts and three session-repeat states: all 39 paired outcomes matched exactly. This finite corpus is diagnostic, not a proof of universal equivalence. Tests include empty, Unicode and longer inputs. Cloud regression tests cover default-path compatibility, normalization, disabled gradients and invalid/training-mode rejection.
+
+The live optimized smoke test completed benign generation and returned HTTP 403 for quarantine; the native classifier hash matched and telemetry became fresh. The measured live extraction reduction was 23.5%, while total HTTP time fell only about 3%. These are separate ten-probe runs, not randomized paired production trials. They provide no population P99 guarantee. The server does not expose its code commit or selected embedding mode; operator launch instructions establish the requested mode, while status independently identifies the model hash.
+
+![Live latency before and after opt-in tuning, measured in separate ten-probe checks.](final_report/figures/latency_tuning.png){width=95%}
+
+The setting is explicitly opt-in: `GATEWAY_EMBEDDING_MODE=direct`. Default remains `encode`. The original sub-2 ms embedding and sub-5 ms live extraction targets remain unmet. Broader performance engineering is deferred; the measured improvement is retained without claiming that latency is solved.
+
+# Contribution, novelty and claim boundaries
+
+The candidate contribution is a working integration of semantic/resource screening, graduated admission and cache-pressure feedback, evaluated with real backend counters and controlled queue saturation. The accompanying study also documents wrapper sensitivity, dataset selection effects, cross-phase transfer limitations and long-window aggregation failures.
+
+These engineering contributions are not by themselves a finding of scientific or patent novelty. vLLM paging, semantic embeddings, risk classifiers, output caps and load-aware admission are established components. The reviewed technical references provide context, not an exhaustive prior-art search. No priority, patentability or freedom-to-operate conclusion is made.
+
+| Proposed statement | Evidence assessment |
+|---|---|
+| The gateway preserves service under the tested demand burst | Supported for the constrained cache/workload and observed benign probes |
+| Pressure adaptation improves over static gating | Not isolated; protected adaptive decisions stayed in normal policy |
+| Quarantine avoids backend generation for tested demand traffic | Supported by HTTP outcomes and reconciled aggregate usage in controlled runs |
+| Quarantine consumes zero total GPU resources | Unsupported; ingress itself uses CUDA and backend memory remains allocated |
+| The classifier reliably prevents general contextual injection | Unsupported by external/transfer diagnostics |
+| Direct inference improves current ingress timing | Supported on the bounded diagnostic corpus and small live check |
+| The design is novel/patentable | Requires dedicated prior-art and claim analysis; not established here |
+
+A publication should frame the work as an evaluated prototype with qualified resource-protection results and negative security-transfer findings. Further efficacy claims require a distinct, prespecified experiment and fresh data rather than retuning inspected tests.
 
 # Benign checks, labeling policy and reviewer provenance
 
@@ -245,7 +306,7 @@ No experimental injection head has replaced the native serving classifier. Exist
 
 The project reaches a defensible prototype milestone: GPU-backed routing, live cache telemetry, repeatable controlled admission protection and an auditable evaluation trail. It also demonstrates that strong training/synthetic scores and cutoff adjustments do not by themselves yield robust injection protection on varied external inputs.
 
-The immediate deliverable is this evidence-based report and reproducibility package. The long-email addendum preserves the limited quality result. Any completed Phase 2 content-only check will be added with frozen-model/cutoff identities and overlap reporting, without assuming success or claiming contextual-pair transfer. Further research should prioritize consistent task/trust targets, independently reviewed evaluation and full-context coverage before deployment claims.
+The immediate deliverable is this evidence-based report and reproducibility package. The long-email addendum preserves the limited quality result. The completed Phase 2 content-only check and opt-in inference optimization are included with frozen identities and explicit scope; contextual-pair transfer remains unresolved. Further research should prioritize consistent task/trust targets, independently reviewed evaluation and full-context coverage before deployment claims.
 
 # Reproducibility and evidence index
 
@@ -261,6 +322,9 @@ The source repository is [reetshrivastav/cad_project](https://github.com/reetshr
 - **E9:** [Long-email extension and preserved Phase 2 preflights](https://github.com/reetshrivastav/cad_project/blob/main/reports/LLMAIL_LONG_EMAIL_RESULTS.md); window evidence accompanies the report index.
 - **E8:** [Final lab check summary](https://github.com/reetshrivastav/cad_project/blob/973d233/reports/evidence/project_handoff_20261024/verified_summary.json), software/artifact verification.
 
+- **E10:** [Phase 2 reconciled predictions](https://github.com/reetshrivastav/cad_project/blob/main/results/phase2_content_verified.json) and frozen fixture, with both operating points and both cohorts.
+- **E11:** [Latest lab verification and tuning evidence](https://github.com/reetshrivastav/cad_project/tree/main/results/final_validation_20261025), including raw uploads, original/optimized live runs and SHA256 manifest.
+
 The report figures are generated offline from retained CSV/JSON files; figure source digests accompany the assets. No new benchmark is implied by rendering figures or producing this document.
 
 To check software/artifacts locally with servers stopped:
@@ -271,7 +335,7 @@ To check software/artifacts locally with servers stopped:
   --output-dir results/project_handoff_new
 ```
 
-The final retained run passed 123 tests in 30.224 seconds and matched all four native artifact hashes without deserializing models. Illustrative simulation cost constants are not used as measured billing data in this report.
+The latest retained lab regression run passed 135 tests in 4.609 seconds and matched all four native artifact hashes without deserializing models. After the opt-in implementation, 138 cloud CPU tests passed; lab paired and live checks subsequently passed. These are different check scopes, not one combined laboratory test count. Illustrative simulation cost constants are not used as measured billing data in this report.
 
 For a live demonstration, use the backend launcher `start_lab_vllm.sh` and the gateway launcher `start_lab_gateway.sh adaptive`, both in the scripts directory. Terminal 3 can query `/api/status` and `/api/pressure`. Follow the pinned environment setup and controlled-cache scope. Experimental offline heads must not be substituted silently.
 
@@ -285,3 +349,19 @@ For a live demonstration, use the backend launcher `start_lab_vllm.sh` and the g
 6. Debenedetti et al. *AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents*. [arXiv:2406.13352](https://arxiv.org/abs/2406.13352). Relevant future agent-level evaluation, not executed here.
 
 **Preparation disclosure:** lab runs and reviewer judgments were supplied by the project operator. AI assistance supported code development, offline evidence reconciliation, diagnostic labeling with explicit provenance, figure generation and report preparation. Raw labels and negative results were preserved; human and AI judgments are not merged into a claimed independent ground-truth test set.
+
+# Practical navigation and reproduction
+
+Start at [the report directory index](https://github.com/reetshrivastav/cad_project/blob/main/reports/README.md). The final PDF is for reading/submission, Word is editable, and this Markdown file is the canonical technical text. The evidence catalog links experiments to source scripts, raw/derived results, checks and limitations. Historical evidence is retained in place; files have not been moved in ways that break analyzer paths.
+
+For an optimized live demonstration, terminal 1 runs `bash scripts/start_lab_vllm.sh`. Once ready, terminal 2 runs:
+
+```bash
+cd ~/cad_project
+GATEWAY_EMBEDDING_MODE=direct \
+bash scripts/start_lab_gateway.sh adaptive
+```
+
+Terminal 3 runs `scripts/check_live_gateway.py --output` with a fresh filename using the gateway environment's Python. Stop servers before offline artifact/regression checks. Do not replace the serving classifier with an experimental LLMail head. Use separate backend/gateway environments; recorded runtime versions are authoritative for these measurements, not assumptions from the initial migration plan.
+
+Final evidence locations: `results/final_validation_20261025/` contains unchanged operator uploads and source hashes; `tests/fixtures/llmail-phase2-content-v1.tar.gz` retains Phase 2 predictions without email bodies; `results/phase2_content_verified.json` contains reconstructed metrics. Source-level short/long email payloads remain lab-local and are not redistributed in the report bundle.

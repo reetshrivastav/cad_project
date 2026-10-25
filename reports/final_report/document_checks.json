@@ -1,17 +1,18 @@
 {
   "Adaptive_LLM_Gateway_Final_Report.pdf": {
-    "pages": 13,
+    "pages": 17,
     "out_of_page_text_blocks": [],
-    "bytes": 654357
+    "bytes": 828603
   },
   "Professor_Summary.pdf": {
     "pages": 1,
     "out_of_page_text_blocks": [],
-    "bytes": 34343
+    "bytes": 34686
   },
   "docx": {
-    "embedded_figures": 5,
-    "tables": 8,
-    "paragraphs": 125
-  }
+    "embedded_figures": 7,
+    "tables": 11,
+    "paragraphs": 152
+  },
+  "scope": "Document layout validation only; experiment evidence and software tests are separate."
 }
