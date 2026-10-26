@@ -45,11 +45,14 @@ from features import FEATURE_COLUMNS
 from classifier import RiskClassifier
 from router import (
     assign_tier,
+    assign_decoupled_tier,
     estimate_cost_dollars,
     SANDBOX_THRESHOLD,
     REJECT_THRESHOLD,
     SANDBOX_MAX_OUTPUT_TOKENS,
+    CLAMPED_QUOTA_MAX_TOKENS,
 )
+from sandbox import GatewaySandbox
 
 # ── Logging ────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -79,13 +82,17 @@ _ref_embeddings = None
 _tokenizer      = None
 _ref_phrases    = []
 _session_counts: dict = {}
+_sandbox        = None
 
 
 def _init_models():
-    global _classifier, _tfidf, _jb_matrix, _embedder, _ref_embeddings, _tokenizer, _ref_phrases, _artifact_id
+    global _classifier, _tfidf, _jb_matrix, _embedder, _ref_embeddings, _tokenizer, _ref_phrases, _artifact_id, _sandbox
 
     log.info("Initializing Tokenizer (tiktoken cl100k_base)...")
     _tokenizer = tiktoken.get_encoding("cl100k_base")
+
+    log.info("Initializing Gateway Sandbox Tier...")
+    _sandbox = GatewaySandbox(max_tokens=SANDBOX_MAX_OUTPUT_TOKENS, timeout=5.0)
 
     log.info("Loading SentenceTransformer ('all-MiniLM-L6-v2')...")
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -153,7 +160,7 @@ def _session_repeat(session_id: str, prompt: str) -> int:
     return _session_counts[key]
 
 
-def extract_real_features(prompt: str, session_id: str) -> dict:
+def extract_real_features(prompt: str, session_id: str, requested_max_tokens: int = None) -> dict:
     t0 = time.perf_counter()
 
     # 1. Exact Token Length
@@ -175,11 +182,13 @@ def extract_real_features(prompt: str, session_id: str) -> dict:
     raw_sem_sim = float(np.max(np.dot(prompt_emb, _ref_embeddings.T)[0]))
     sem_sim = max(0.0, (raw_sem_sim - 0.30) / 0.70)
 
-    # 5. Output Demand Heuristic
+    # 5. Output Demand Heuristic (Expanded to address circularity, client max_tokens, and paraphrased demands)
     vh = len(re.findall(r"\b(write|list|explain|describe|generate|create|summarize|translate|detail|give|produce|outline|repeat|enumerate)\b", prompt.lower()))
-    qh = len(re.findall(r"\b(thousand|million|10[,\s]?000|100[,\s]?000|50\s+essays?|40\s+chapters?|every\s+prime|all\s+prime)\b", prompt.lower()))
-    nth = len(re.findall(r"do not truncate|do not skip|do not shorten|do not summarize|never stop|without stopping", prompt.lower()))
+    qh = len(re.findall(r"\b(thousand|million|10[,\s]?000|100[,\s]?000|50\s+essays?|40\s+chapters?|every\s+prime|all\s+prime|\d{2,}\s*(?:pages|chapters|essays|items|sections))\b", prompt.lower()))
+    nth = len(re.findall(r"(?:do not (?:truncate|skip|shorten|summarize|condense|abbreviate)|never stop|without stopping|unabridged|exhaustive|in full completeness|leave no detail out|maximum length|encyclopedic depth|fill the entire context)", prompt.lower()))
     pred_out = n_tokens + vh * n_tokens + qh * 50_000 + nth * 20_000
+    if requested_max_tokens is not None and requested_max_tokens > 1024:
+        pred_out = max(pred_out, int(requested_max_tokens) * 6)
 
     # 6. Session Burst Frequency
     sess = _session_repeat(session_id, prompt)
@@ -294,6 +303,7 @@ def route_request():
     body       = request.get_json(force=True)
     prompt     = (body.get("prompt") or "").strip()
     session_id = body.get("session_id", "anon")
+    req_max_tok = body.get("max_tokens")
 
     if not prompt:
         return jsonify({"error": "empty prompt"}), 400
@@ -301,21 +311,27 @@ def route_request():
     t_total = time.perf_counter()
 
     # 1. Feature Extraction
-    raw = extract_real_features(prompt, session_id)
+    raw = extract_real_features(prompt, session_id, requested_max_tokens=req_max_tok)
 
-    # 2. Risk Classification
+    # 2. Decoupled Risk Classification
     feat_df = pd.DataFrame([{c: raw[c] for c in FEATURE_COLUMNS}])
-    risk_s, subtype_s, proba_df = _classifier.risk_scores(feat_df)
+    r_inject_s, r_exhaust_s, r_comp_s, subtype_s, proba_df = _classifier.risk_decoupled(feat_df)
 
-    risk  = float(risk_s.iloc[0])
+    r_inj = float(r_inject_s.iloc[0])
+    r_exh = float(r_exhaust_s.iloc[0])
+    risk  = float(r_comp_s.iloc[0])
     sub   = str(subtype_s.iloc[0])
     probs = {k: round(float(v), 4) for k, v in proba_df.iloc[0].items()}
 
-    # 3. Tier Decision
+    # 3. Decoupled Tier Decision
     policy = routing_policy()
     thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
-    tier_s     = assign_tier(risk_s, thresholds=thresholds)
-    tier       = str(tier_s.iloc[0])
+    dec_df = assign_decoupled_tier(r_inject_s, r_exhaust_s, thresholds=thresholds)
+    tier = str(dec_df["tier"].iloc[0])
+    action = str(dec_df["action"].iloc[0])
+    token_cap = int(dec_df["token_cap"].iloc[0])
+
+    tier_s = dec_df["tier"]
     cache_prob = np.array([0.85 if raw["uses_cached_prefix"] else 0.03])
     cost_usd   = round(float(estimate_cost_dollars(feat_df, tier_s, cache_prob).iloc[0]), 6)
 
@@ -326,19 +342,46 @@ def route_request():
             "blocked": True,
             "text":    None,
             "reason":  (
-                f"Risk score {risk:.3f} triggered quarantine under the current routing policy. "
-                "Request halted before backend LLM inference; gateway embedding compute was used."
+                f"Adversarial injection risk {r_inj:.3f} triggered quarantine (threshold {thresholds[1]:.2f}). "
+                "Request halted before backend LLM inference to protect prompt integrity."
             ),
         }
-    else:
-        sys_msg  = "You are a helpful AI assistant. Keep your response concise and under 150 words." if tier == "sandbox" else None
-        max_tok  = SANDBOX_MAX_OUTPUT_TOKENS if tier == "sandbox" else None
-        llm      = call_vllm(prompt, sys_msg, max_tok, timeout=5 if tier == "sandbox" else 90)
+    elif tier == "sandbox":
+        # Genuine Sandbox Isolation: tool stripping, prompt spotlighting, output inspection
+        sb_payload, sb_meta = _sandbox.sanitize_request({
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": req_max_tok or SANDBOX_MAX_OUTPUT_TOKENS,
+        })
+        llm = call_vllm(
+            messages=sb_payload["messages"],
+            max_tokens=sb_payload["max_tokens"],
+            timeout=_sandbox.timeout,
+        )
+        llm["blocked"] = False
+        llm["sandbox_meta"] = sb_meta
+        if llm.get("ok") and llm.get("text"):
+            filtered_text, redacted, leak_reason = _sandbox.inspect_output(llm["text"])
+            llm["text"] = filtered_text
+            llm["output_filtered"] = redacted
+            if redacted:
+                llm["filter_reason"] = leak_reason
+    elif tier == "clamped_quota":
+        # Graceful Resource Degradation: clamp output tokens to safe ceiling instead of 403 rejection!
+        clamp_cap = min(req_max_tok or CLAMPED_QUOTA_MAX_TOKENS, CLAMPED_QUOTA_MAX_TOKENS)
+        llm = call_vllm(prompt, sys_msg=None, max_tokens=clamp_cap, timeout=60)
+        llm["blocked"] = False
+        llm["clamped_quota_applied"] = True
+        llm["clamped_max_tokens"] = clamp_cap
+    else:  # full
+        llm = call_vllm(prompt, sys_msg=None, max_tokens=req_max_tok or 1024, timeout=90)
         llm["blocked"] = False
 
     return jsonify({
         "tier":               tier,
+        "action":             action,
         "risk_score":         round(risk, 4),
+        "r_inject":           round(r_inj, 4),
+        "r_exhaust":          round(r_exh, 4),
         "subtype":            sub,
         "probabilities":      probs,
         "features":           {k: v for k, v in raw.items() if not k.startswith("_")},
@@ -347,8 +390,9 @@ def route_request():
         "total_latency_ms":   round((time.perf_counter() - t_total) * 1000),
         "llm":                llm,
         "thresholds":         {"sandbox": thresholds[0], "quarantine": thresholds[1]},
-        "pressure_policy": policy,
+        "pressure_policy":    policy,
         "model":              VLLM_MODEL,
+        "token_cap":          token_cap,
         "sandbox_token_cap":  SANDBOX_MAX_OUTPUT_TOKENS,
     })
 
@@ -370,44 +414,93 @@ def openai_compatible_completions():
             break
 
     session_id = request.headers.get("X-Session-ID", "api_client")
-    raw = extract_real_features(user_prompt, session_id)
+    req_max_tok = body.get("max_tokens")
+    raw = extract_real_features(user_prompt, session_id, requested_max_tokens=req_max_tok)
     feat_df = pd.DataFrame([{c: raw[c] for c in FEATURE_COLUMNS}])
-    risk_s, _, _ = _classifier.risk_scores(feat_df)
+    r_inject_s, r_exhaust_s, r_comp_s, subtype_s, proba_df = _classifier.risk_decoupled(feat_df)
+    r_inj = float(r_inject_s.iloc[0])
+    r_exh = float(r_exhaust_s.iloc[0])
+    risk = float(r_comp_s.iloc[0])
+
     policy = routing_policy()
     thresholds = (policy["sandbox_threshold"], policy["quarantine_threshold"])
-    tier = str(assign_tier(risk_s, thresholds=thresholds).iloc[0])
+    dec_df = assign_decoupled_tier(r_inject_s, r_exhaust_s, thresholds=thresholds)
+    tier = str(dec_df["tier"].iloc[0])
+    action = str(dec_df["action"].iloc[0])
+    token_cap = int(dec_df["token_cap"].iloc[0])
 
+    # 1. Malicious Injection -> HTTP 403 Quarantine
     if tier == "quarantine":
         return jsonify({
             "error": {
-                "message": f"Request blocked by Adaptive LLM Router under the current routing policy (Risk {float(risk_s.iloc[0]):.3f})",
+                "message": f"Request blocked by Adaptive Security Gateway (R_inject={r_inj:.3f} >= {thresholds[1]:.2f})",
                 "type": "security_quarantine_error",
-                "code": "risk_quarantine"
+                "code": "injection_quarantine"
             },
-            "router_meta": {"risk_score": float(risk_s.iloc[0]), "tier": tier,
-                            "pressure_policy": policy,
-                            "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]}}
+            "router_meta": {
+                "risk_score": risk,
+                "r_inject": r_inj,
+                "r_exhaust": r_exh,
+                "tier": tier,
+                "action": action,
+                "pressure_policy": policy,
+                "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]}
+            }
         }), 403
 
-    max_tok = body.get("max_tokens", 1024)
-    if tier == "sandbox":
-        max_tok = min(max_tok, SANDBOX_MAX_OUTPUT_TOKENS)
+    # 2. Execution Tiers
+    backend_timeout = 90
+    applied_max_tokens = body.get("max_tokens", 1024)
+    active_messages = messages
+    sandbox_meta = None
 
-    resp = call_vllm(messages=messages, max_tokens=max_tok,
-                     timeout=5 if tier == "sandbox" else 90,
-                     temperature=body.get("temperature"), ignore_eos=body.get("ignore_eos"))
+    if tier == "sandbox":
+        # True Sandbox: strip tools, spotlight prompt, set tight token/time budget
+        sanitized_payload, sandbox_meta = _sandbox.sanitize_request(body)
+        active_messages = sanitized_payload.get("messages", messages)
+        applied_max_tokens = sanitized_payload.get("max_tokens", SANDBOX_MAX_OUTPUT_TOKENS)
+        backend_timeout = _sandbox.timeout
+    elif tier == "clamped_quota":
+        # Graceful Resource Degradation: clamp tokens, preserve user request, protect cache!
+        applied_max_tokens = min(body.get("max_tokens", CLAMPED_QUOTA_MAX_TOKENS), CLAMPED_QUOTA_MAX_TOKENS)
+        backend_timeout = 60
+
+    resp = call_vllm(
+        messages=active_messages,
+        max_tokens=applied_max_tokens,
+        timeout=backend_timeout,
+        temperature=body.get("temperature"),
+        ignore_eos=body.get("ignore_eos"),
+    )
+
+    # Post-generation inspection for sandbox
+    if tier == "sandbox" and resp.get("ok") and resp.get("text"):
+        filtered_text, redacted, leak_reason = _sandbox.inspect_output(resp["text"])
+        resp["text"] = filtered_text
+        if redacted:
+            sandbox_meta["leakage_redacted"] = True
+            sandbox_meta["leakage_pattern"] = leak_reason
+
     backend_meta = {
-        "tier": tier, "risk_score": round(float(risk_s.iloc[0]), 4),
+        "tier": tier,
+        "action": action,
+        "risk_score": round(risk, 4),
+        "r_inject": round(r_inj, 4),
+        "r_exhaust": round(r_exh, 4),
         "extract_ms": raw["_extract_ms"],
         "thresholds": {"sandbox": thresholds[0], "quarantine": thresholds[1]},
-        "pressure_policy": policy, "applied_max_tokens": max_tok,
-        "backend_read_timeout_seconds": 5 if tier == "sandbox" else 90,
+        "pressure_policy": policy,
+        "applied_max_tokens": applied_max_tokens,
+        "backend_read_timeout_seconds": backend_timeout,
     }
+    if sandbox_meta:
+        backend_meta["sandbox"] = sandbox_meta
+
     if not resp.get("ok"):
         return jsonify({"error": {"message": resp.get("error", "LLM error"), "type": "backend_error"},
                         "router_meta": backend_meta}), 502
 
-    return jsonify({
+    response_payload = jsonify({
         "id": f"chatcmpl-{hashlib.md5(str(time.time()).encode()).hexdigest()[:12]}",
         "object": "chat.completion",
         "created": int(time.time()),
@@ -424,6 +517,14 @@ def openai_compatible_completions():
         },
         "router_meta": backend_meta
     })
+
+    # Graceful degradation headers
+    response_payload.headers["X-Admission-Tier"] = tier
+    response_payload.headers["X-Admission-Action"] = action
+    if tier == "clamped_quota":
+        response_payload.headers["X-Admission-Policy"] = "clamped_quota"
+
+    return response_payload
 
 
 # ── Benchmark Example Library ──────────────────────────────────────────────

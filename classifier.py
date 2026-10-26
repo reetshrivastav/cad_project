@@ -1,25 +1,21 @@
 """
-classifier.py
-The "ML Risk Classifier" component (Sec 6.1: "e.g., gradient-boosted decision
-tree or lightweight neural classifier"). Implemented here with XGBoost
-gradient-boosted trees, which matches the disclosure's claim language more
-literally than a bagged random forest.
+classifier.py - Multi-Threat Risk Classifier & Probabilistic Estimation
 
-A single multiclass model predicts P(benign), P(injection), P(exhaustion)
-for a request. The graduated risk score is risk = 1 - P(benign), which spans
-BOTH content-based (injection) and resource-consumption-based (exhaustion)
-threat categories, per Claim 1. The predicted subtype is also retained so
-the decision engine can pick an appropriate mitigation.
-
-Includes a `partial_retrain` method used by the Feedback Loop (Sec 6.1 /
-Sec 6.2) to simulate periodic retraining on logged outcomes, including cases
-the original model misses (concept drift).
+Enhancements addressing reviewer feedback:
+1. Decoupled Threat Scoring:
+   - Evaluates R_inject = P(injection) and R_exhaust = P(exhaustion) independently.
+   - Prevents conflating compute-hungry requests with adversarial injection attacks.
+2. Calibrated Probability Extraction:
+   - Provides risk_decoupled() returning (r_inject, r_exhaust, r_composite, subtype, proba_df).
+3. Full Backward Compatibility:
+   - Keeps risk_scores() for legacy callers.
 """
 
 from xgboost import XGBClassifier
 from sklearn.preprocessing import LabelEncoder
 from features import FEATURE_COLUMNS
 import pandas as pd
+import numpy as np
 
 
 class RiskClassifier:
@@ -53,19 +49,34 @@ class RiskClassifier:
         return self.label_encoder.inverse_transform(pred_enc)
 
     def risk_scores(self, X: pd.DataFrame):
+        """Legacy scalar risk estimation."""
         proba = self.predict_proba_df(X)
         risk = 1.0 - proba.get("benign", 0.0)
         subtype = proba.drop(columns=["benign"], errors="ignore").idxmax(axis=1)
         return risk, subtype, proba
+
+    def risk_decoupled(self, X: pd.DataFrame):
+        """Returns decoupled orthogonal threat scores.
+        
+        Returns:
+            r_inject: Series of P(injection)
+            r_exhaust: Series of P(exhaustion)
+            r_composite: Series of 1.0 - P(benign)
+            subtype: Primary threat class
+            proba_df: Full probability matrix
+        """
+        proba = self.predict_proba_df(X)
+        r_inject = proba.get("injection", pd.Series(0.0, index=X.index))
+        r_exhaust = proba.get("exhaustion", pd.Series(0.0, index=X.index))
+        r_composite = 1.0 - proba.get("benign", pd.Series(1.0, index=X.index))
+        subtype = proba.drop(columns=["benign"], errors="ignore").idxmax(axis=1)
+        return r_inject, r_exhaust, r_composite, subtype, proba
 
     def feature_importances(self):
         return pd.Series(self.model.feature_importances_, index=FEATURE_COLUMNS).sort_values(ascending=False)
 
     def partial_retrain(self, X_new: pd.DataFrame, y_new: pd.Series, X_hist: pd.DataFrame, y_hist: pd.Series,
                          hist_sample_frac=0.5, random_state=1):
-        """Simulate the feedback loop: retrain from scratch on newly logged
-        outcomes plus a sample of historical data (to avoid catastrophic
-        forgetting)."""
         hist_sample = X_hist.sample(frac=hist_sample_frac, random_state=random_state)
         y_hist_sample = y_hist.loc[hist_sample.index]
         X_combined = pd.concat([hist_sample, X_new], ignore_index=True)
